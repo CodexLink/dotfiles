@@ -11,7 +11,6 @@ no-cv-ss = true
   inherits = "ss08"
 
     [buildPlans.iosevka-codex-link-normal.variants.design]
-    underscore = "above-baseline"
     pilcrow = "high"
     caret = "high"
     number-sign = "upright"
@@ -71,7 +70,6 @@ no-cv-ss = true
   inherits = "ss08"
 
     [buildPlans.iosevka-codex-link-term.variants.design]
-    underscore = "above-baseline"
     pilcrow = "high"
     caret = "high"
     number-sign = "upright"
