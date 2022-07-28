@@ -9,7 +9,9 @@ no-cv-ss = true
 
   [buildPlans.iosevka-codex-link-pref.variants]
   inherits = "ss08"
-  underscore = "high"
+
+    [buildPlans.iosevka-codex-link-pref.variants.design]
+    underscore = "high"
 
   [buildPlans.iosevka-codex-link-pref.ligations]
   inherits = "dlig"
