@@ -50,6 +50,10 @@ Please fetch the `font-patcher.py` from the [feature/process-tcc] branch and rep
 
 > To be continued.
 
+```
+.\fontforge -script font-patcher.py --glyphdir ./glyphs/ --mono --windows --complete --careful --progressbars E:\Developments\Forks\iosevka-docker\dist/.super-ttc/iosevka-codex-link.ttc -out E:\Developments\Forks\iosevka-docker\dist\patched-nerd-fonts
+```
+
 ## Credits
 
 —
