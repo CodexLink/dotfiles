@@ -12,6 +12,20 @@ no-cv-ss = true
 
     [buildPlans.iosevka-codex-link-pref.variants.design]
     underscore = "high"
+    pilcrow = "high"
+    caret = "high"
+    number-sign = "upright"
+    at = "fourfold"
+    dollar = "through"
+    cent = "open"
+    percent = "dots"
+    bar = "force-upright"
+    lig-ltgteq = "slanted"
+    ascii-single-quote = "raised-comma"
+    ascii-grave = "raised-inverse-comma"
+    question = "corner"
+    punctuation-dot = "square"
+    diacritic-dot = "square"
 
   [buildPlans.iosevka-codex-link-pref.ligations]
   inherits = "dlig"
@@ -31,11 +45,6 @@ shape = 500
 menu = 500
 css = 500
 
-[buildPlans.iosevka-codex-link-pref.weights.semibold]
-shape = 600
-menu = 600
-css = 600
-
 [buildPlans.iosevka-codex-link-pref.weights.bold]
 shape = 700
 menu = 700
@@ -47,8 +56,8 @@ shape = "upright"
 menu = "upright"
 css = "normal"
 
-[buildPlans.iosevka-codex-link-pref.slopes.oblique]
+[buildPlans.iosevka-codex-link-pref.slopes.italic]
 angle = 9.4
-shape = "oblique"
-menu = "oblique"
-css = "oblique"
+shape = "italic"
+menu = "italic"
+css = "italic"
