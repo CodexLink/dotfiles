@@ -1,20 +1,34 @@
-# Win32 CLI Configuration with OHM (Oh-My-Poosh)
-# Updated as of 07/17/2022
+# pwsh (Powershell) Config for Win32 with Oh-My-Posh as Prompt.
+# Updated as of 08/12/2022
 
-# For Python
+# # Aliases
+Set-Alias ccp CopyCurrentPath
+Set-Alias elev ElevateCommandAsAdmin
+Set-Alias ex explorer
+Set-Alias g GithubAliasProcessor
+Set-Alias ld lazydocker
+Set-Alias lg lazygit
+Set-Alias ls PowerColorLS
+Set-Alias mk mkdir
+Set-Alias n nvim
+Set-Alias p ping
+Set-Alias py python
+Set-Alias ipy ipython
+
+# # Env Variables
+# - For Python
 $env:VIRTUAL_ENV_DISABLE_PROMPT = 1 # Hide Duplicated Virtual Env on Prompt.
-$env:PYTHONIOENCODING="utf-8"				# Force Encoding to "UTF-8"
+$env:PYTHONIOENCODING = "utf-8"			# Force Encoding to "UTF-8"
 
-# Custom Made Function, Critical
+# # Functions
 function CopyCurrentPath {
-	(pwd).Path | Set-Clipboard
+	return (pwd).Path | Set-Clipboard
 }
-
 # ! Some parts of this function were not yet tested.
 function ElevateCommandAsAdmin {
 	Param(
-		[Parameter(Mandatory=$false, Position=0)][String] $exec = "",
-		[Parameter(Mandatory=$false, Position=1)][String] $args = ""
+		[Parameter(Mandatory=$true, Position=0)][String] $exec,
+		[Parameter(Mandatory=$false, Position=1)][AllowEmptyString()][String] $args
 	)
 
 	$defaultFilePath = "pwsh"
@@ -31,40 +45,74 @@ function ElevateCommandAsAdmin {
 		Start-Process $defaultFilePath -ArgumentList $args -Verb RunAs
 	}
 	else {
-		Write-Error -Message "This command does not accept empty arguments (of both 'exec' and 'args'). Please try again." -Category InvalidArgument
-	}
+    $Global:LASTEXITCODE = 1; return Write-Error -Message "This command does not accept empty arguments (of both 'exec' and 'args'). Please try again." -Category InvalidArgument -ErrorAction Stop }
+
+	return
 }
 
-# Aliases
-Set-Alias ccp CopyCurrentPath
-Set-Alias elev ElevateCommandAsAdmin
-Set-Alias ex explorer
-Set-Alias g git
-Set-Alias ld lazydocker
-Set-Alias lg lazygit
-Set-Alias mk mkdir
-Set-Alias n nvim
-Set-Alias p ping
-Set-Alias py python
-Set-Alias ipy ipython
+# # Beyond Custom Aliases to Function Call
+# Solution Reference: https://stackoverflow.com/questions/26290052/create-an-alias-to-a-command-that-has-spaces-in-it
+# Enum Reference: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_enum?view=powershell-7.2
+function GithubAliasProcessor {
+	Param(
+		[Parameter(Mandatory=$true, Position=0)][String] $gAliasAction,
+		[Parameter(Mandatory=$false, Position=1)][AllowEmptyString()][String] $gAliasArgs
+	)
+	# Enum-Like String Decl.
+	# Array Variable Reference: https://docs.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-arrays?view=powershell-7.2
+	$GIT_ADD = "a", "add"
+	$GIT_CLONE = "cl", "clone"
+	$GIT_CHECKOUT = "ch", "checkout"
+	$GIT_COMMIT = "co", "commit"
+	$GIT_PUSH = "pu", "push"
+	$GIT_RESTORE = "re", "restore"
+	$GIT_STATUS = "st", "status"
 
-# Import PSReadLine and its Side Components
-Import-Module PSReadLine
-Import-Module PSFzf
+	# Override by processing the value to match from the enum-like string commands.
+	$gAliasAction = $gAliasAction.ToLower()
+	#
+	# ! Using loops here will make writing more expensive.
+	if ($gAliasAction -eq $GIT_ADD[0]) 					{ $gResolveCommand = $GIT_ADD[1] 			}
+	elseif ($gAliasAction -eq $GIT_CLONE[0]) 		{ $gResolveCommand = $GIT_CLONE[1] 		}
+	elseif ($gAliasAction -eq $GIT_CHECKOUT[0]) { $gResolveCommand = $GIT_CHECKOUT[1] }
+	elseif ($gAliasAction -eq $GIT_COMMIT[0]) 	{ $gResolveCommand = $GIT_COMMIT[1] 	}
+	elseif ($gAliasAction -eq $GIT_PUSH[0])   	{ $gResolveCommand = $GIT_PUSH[1] 		}
+	elseif ($gAliasAction -eq $GIT_RESTORE[0]) 	{ $gResolveCommand = $GIT_RESTORE[1] 	}
+	elseif ($gAliasAction -eq $GIT_STATUS[0]) 	{ $gResolveCommand = $GIT_STATUS[1] 	}
+	else { $Global:LASTEXITCODE = 1; return Write-Error -Message "Specified alias action were either 'NotYetImplemented' or is not available. Please try again." -Category InvalidArgument -ErrorAction Stop }
 
-# Set PSReadLine Properties
-Set-PSReadLineOption -PredictionSource History
-Set-PSReadLineOption -PredictionViewStyle ListView
+	Start-Process -FilePath git.exe -ArgumentList $gResolveCommand, $gAliasArgs -NoNewWindow; return;
+}  
+# Reference for supressing warnings on Import-Module: https://stackoverflow.com/questions/30709884/how-to-ignore-warning-errors
+Import-Module PSReadLine -WarningAction:SilentlyContinue
 
+# # Set PSReadLine Properties
+# Docs: https://docs.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.2
+# Multiple Options to Single Object Invocation to Single Command Reference: https://docs.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.2#example-3-set-multiple-options
+$PSReadLineOptions = @{
+	BellStyle = "Audible"
+	ContinuationPrompt = "❯"
+	HistoryNoDuplicates = $true
+	HistorySearchCursorMovesToEnd = $true
+	PredictionSource = "HistoryAndPlugin"
+	PredictionViewStyle = "ListView"
+	ShowToolTips = $true
+	ViModeIndicator = "Cursor"
+}  
+Set-PSReadLineOption @PSReadLineOptions
+
+# # PSFzf
 # Has to lowercase the letter for some reason as it doesn't work on capital letters.
-# ! Maybe it was used by the 'Windows Terminal'.
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+Alt+f' -PSReadlineChordReverseHistory 'Ctrl+Alt+r'
+Import-Module PSFzf
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+Alt+f' -PSReadlineChordReverseHistory 'Ctrl+Alt+r' -TabExpansion
 
-# Other Module Imports
-Import-Module z 							# Directory Jump based on History
+# # Other Module Imports
+Import-Module z 							# Directory-Jump based on History
 Import-Module posh-git				# Git Support on OHM Interface
-Import-Module Terminal-Icons	# Add Icons to Terminal. This is dependent to the font you have.
+Import-Module PowerColorLS	  # Better LS Equivalent
 
-# Entrypoint
+# # Entrypoint
 # ! This requires the hunk theme. Please check OMP repository and their theme section.
-oh-my-posh --init --shell pwsh --config ~/hunk.omp.json | Invoke-Expression
+`oh-my-posh --config ~/codex.omp.json --init --shell pwsh | Invoke-Expression
+Enable-PoshTransientPrompt
+
