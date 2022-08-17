@@ -3,9 +3,9 @@
 
 # # Aliases
 Set-Alias ccp CopyCurrentPath
-Set-Alias elev ElevateCommandAsAdmin
+Set-Alias elev Elevate-Command
 Set-Alias ex explorer
-Set-Alias g GithubAliasProcessor
+Set-Alias g GithubAlias-Processor
 Set-Alias ld lazydocker
 Set-Alias lg lazygit
 Set-Alias ls PowerColorLS
@@ -14,18 +14,24 @@ Set-Alias n nvim
 Set-Alias p ping
 Set-Alias py python
 Set-Alias ipy ipython
+Set-Alias wtc OpenWTConfig
 
 # # Env Variables
 # - For Python
-$env:VIRTUAL_ENV_DISABLE_PROMPT = 1 # Hide Duplicated Virtual Env on Prompt.
-$env:PYTHONIOENCODING = "utf-8"			# Force Encoding to "UTF-8"
+$Env:PYTHONIOENCODING = "utf-8"			# Force Encoding to "UTF-8"
+$Env:VIRTUAL_ENV_DISABLE_PROMPT = 1 # Hide Duplicated Virtual Env on Prompt.
+$Env:WAKATIME_API_KEY = "38d0c4b9-5ec4-481c-b61d-be48c3cd2bda"
+
+# # Script Variables
+# ! Please ignore this and its implemented functionality if you don't use powershell.
+$Global:WinTermConfigFilePath = "$env:UserProfile\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
 # # Functions
 function CopyCurrentPath {
 	return (pwd).Path | Set-Clipboard
 }
 # ! Some parts of this function were not yet tested.
-function ElevateCommandAsAdmin {
+function Elevate-Command {
 	Param(
 		[Parameter(Mandatory=$true, Position=0)][String] $exec,
 		[Parameter(Mandatory=$false, Position=1)][AllowEmptyString()][String] $args
@@ -49,11 +55,12 @@ function ElevateCommandAsAdmin {
 
 	return
 }
-
-# # Beyond Custom Aliases to Function Call
+# # Functions
+#
+# - Beyond Custom Aliases to Function Call
 # Solution Reference: https://stackoverflow.com/questions/26290052/create-an-alias-to-a-command-that-has-spaces-in-it
 # Enum Reference: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_enum?view=powershell-7.2
-function GithubAliasProcessor {
+function GithubAlias-Processor {
 	Param(
 		[Parameter(Mandatory=$true, Position=0)][String] $gAliasAction,
 		[Parameter(Mandatory=$false, Position=1)][AllowEmptyString()][String] $gAliasArgs
@@ -70,8 +77,7 @@ function GithubAliasProcessor {
 
 	# Override by processing the value to match from the enum-like string commands.
 	$gAliasAction = $gAliasAction.ToLower()
-	#
-	# ! Using loops here will make writing more expensive.
+
 	if ($gAliasAction -eq $GIT_ADD[0]) 					{ $gResolveCommand = $GIT_ADD[1] 			}
 	elseif ($gAliasAction -eq $GIT_CLONE[0]) 		{ $gResolveCommand = $GIT_CLONE[1] 		}
 	elseif ($gAliasAction -eq $GIT_CHECKOUT[0]) { $gResolveCommand = $GIT_CHECKOUT[1] }
@@ -81,12 +87,14 @@ function GithubAliasProcessor {
 	elseif ($gAliasAction -eq $GIT_STATUS[0]) 	{ $gResolveCommand = $GIT_STATUS[1] 	}
 	else { $Global:LASTEXITCODE = 1; return Write-Error -Message "Specified alias action were either 'NotYetImplemented' or is not available. Please try again." -Category InvalidArgument -ErrorAction Stop }
 
-	Start-Process -FilePath git.exe -ArgumentList $gResolveCommand, $gAliasArgs -NoNewWindow; return;
-}  
+	Start-Process -FilePath git.exe -ArgumentList $gResolveCommand, $gAliasArgs -NoNewWindow -Wait; return;
+}
+
+# # Imports
 # Reference for supressing warnings on Import-Module: https://stackoverflow.com/questions/30709884/how-to-ignore-warning-errors
 Import-Module PSReadLine -WarningAction:SilentlyContinue
 
-# # Set PSReadLine Properties
+# - Set PSReadLine Properties
 # Docs: https://docs.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.2
 # Multiple Options to Single Object Invocation to Single Command Reference: https://docs.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.2#example-3-set-multiple-options
 $PSReadLineOptions = @{
@@ -101,18 +109,20 @@ $PSReadLineOptions = @{
 }  
 Set-PSReadLineOption @PSReadLineOptions
 
-# # PSFzf
+function OpenWTConfig {
+	Start-Process nvim -ArgumentList $Global:WinTermConfigFilePath -NoNewWindow -Wait; return
+}
+# - PSFzf
 # Has to lowercase the letter for some reason as it doesn't work on capital letters.
 Import-Module PSFzf
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+Alt+f' -PSReadlineChordReverseHistory 'Ctrl+Alt+r' -TabExpansion
 
-# # Other Module Imports
+# - Other Module Imports
 Import-Module z 							# Directory-Jump based on History
-Import-Module posh-git				# Git Support on OHM Interface
 Import-Module PowerColorLS	  # Better LS Equivalent
 
 # # Entrypoint
 # ! This requires the hunk theme. Please check OMP repository and their theme section.
-`oh-my-posh --config ~/codex.omp.json --init --shell pwsh | Invoke-Expression
+oh-my-posh --config ~/chips.omp.json --init --shell pwsh | Invoke-Expression
 Enable-PoshTransientPrompt
 
