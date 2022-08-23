@@ -1,11 +1,15 @@
 # pwsh (Powershell) Config for Win32 with Oh-My-Posh as Prompt.
-# Updated as of 08/12/2022
+# Updated as of 08/24/2022, Version 0.6.3
 
 # # Aliases
+Set-Alias cbf CreateBlankFile
 Set-Alias ccp CopyCurrentPath
+Set-Alias cfc ContentFileToClipboard
+Set-Alias cfh CompareFileHash
 Set-Alias elev Elevate-Command
 Set-Alias ex explorer
 Set-Alias g GithubAlias-Processor
+Set-Alias ipy ipython
 Set-Alias ld lazydocker
 Set-Alias lg lazygit
 Set-Alias ls PowerColorLS
@@ -13,23 +17,68 @@ Set-Alias mk mkdir
 Set-Alias n nvim
 Set-Alias p ping
 Set-Alias py python
-Set-Alias ipy ipython
 Set-Alias wtc OpenWTConfig
 
 # # Env Variables
+
 # - For Python
 $Env:PYTHONIOENCODING = "utf-8"			# Force Encoding to "UTF-8"
-$Env:VIRTUAL_ENV_DISABLE_PROMPT = 1 # Hide Duplicated Virtual Env on Prompt.
+
+# Prefixes with 'SEGMENT_' were explicitly stated for example usages.
+$Env:SEGMENT_DISABLE_DTIME = $false
+$Env:SEGMENT_DISABLE_PROJECT_PL = $false
+$Env:SEGMENT_PROJECT_PL_DISABLE_VENV = $false
+$Env:SEGMENT_PROJECT_PL_VENV_STR = ""
+$Env:SEGMENT_DISABLE_TRANSIENT_RECENT_EXEC_TIME = $false
+$Env:SEGMENT_DISABLE_WAKATIME = $true		# Practice uncommenting Env Vars as they don't disappear when you commented them. Use this switch instead.
+
 $Env:WAKATIME_API_KEY = "38d0c4b9-5ec4-481c-b61d-be48c3cd2bda"
 
 # # Script Variables
 # ! Please ignore this and its implemented functionality if you don't use powershell.
-$Global:WinTermConfigFilePath = "$env:UserProfile\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+$Global:WinTermConfigFilePath = "$env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
 # # Functions
-function CopyCurrentPath {
-	return (pwd).Path | Set-Clipboard
+function ContentFileToClipboard {
+	Param(
+		[Parameter(Mandatory=$true, Position=0)][String] $file
+	)
+	return Get-Content $file | Set-Clipboard
 }
+
+function CreateBlankFile {
+	Param(
+		[Parameter(Mandatory=$true, Position=0)][String] $newFile
+	)
+	return New-Item $newFile -Type File
+}
+
+function CompareFileHash {
+	Param(
+		[Parameter(Mandatory=$true, Position=0)][String] $fileToCompare,
+		[Parameter(Mandatory=$true, Position=1)][String] $fileToAgainst
+	)
+	$_compareFileIsValid = Test-Path -Path $fileToCompare -PathType Leaf
+	$_againstFileIsValid = Test-Path -Path $fileToAgainst -PathType Leaf
+
+	if (-not ($_compareFileIsValid -and $_againstFileIsValid)) {
+		$Global:LASTEXITCODE = 1; return Write-Error -Message "Supplied reference/s to the file was either invalid or was not a file. Please check your arguments and try again. | Is Valid, Compare: $_compareFileIsValid, Against: $_againstFileIsValid" -CategoryReason InvalidType;
+	}
+
+	$_DEFAULT_ALGORITHM = "SHA256"
+	$_hashCompareFile = (Get-FileHash -Path $fileToCompare -Algorithm $_DEFAULT_ALGORITHM).Hash
+	$_hashAgainstFile = (Get-FileHash -Path $fileToAgainst -Algorithm $_DEFAULT_ALGORITHM).Hash
+
+	return ($_hashCompareFile -and $_hashAgainstFile) ? (Write-Host -Message "Both files '$fileToCompare' (Compare) and '$fileToAgainst' (Against) were both HASH-ACCURATE, which means, they are the same.`nCompare File: $_hashCompareFile`nAgainst File: $_hashAgainstFile" -ForegroundColor Green) : (Write-Error -Message "Both files '$fileToCompare' (Compare) and '$fileToAgainst' (Against) were both NOT HASH-ACCURATE.`nCompare File: $_hashCompareFile`nAgainst File: $_hashAgainstFile")
+}
+
+function CopyCurrentPath {
+	Param(
+		[Parameter(Mandatory=$false, Position=0)][String] $toFile
+	)
+	return ($toFile ? "$pwd" + ("\$toFile" -Replace ".\\") : (pwd).Path) | Set-Clipboard
+}
+
 # ! Some parts of this function were not yet tested.
 function Elevate-Command {
 	Param(
@@ -63,7 +112,7 @@ function Elevate-Command {
 function GithubAlias-Processor {
 	Param(
 		[Parameter(Mandatory=$true, Position=0)][String] $gAliasAction,
-		[Parameter(Mandatory=$false, Position=1)][AllowEmptyString()][String] $gAliasArgs
+		[Parameter(Mandatory=$false, Position=1)][AllowEmptyString()][String] $args
 	)
 	# Enum-Like String Decl.
 	# Array Variable Reference: https://docs.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-arrays?view=powershell-7.2
@@ -85,9 +134,11 @@ function GithubAlias-Processor {
 	elseif ($gAliasAction -eq $GIT_PUSH[0])   	{ $gResolveCommand = $GIT_PUSH[1] 		}
 	elseif ($gAliasAction -eq $GIT_RESTORE[0]) 	{ $gResolveCommand = $GIT_RESTORE[1] 	}
 	elseif ($gAliasAction -eq $GIT_STATUS[0]) 	{ $gResolveCommand = $GIT_STATUS[1] 	}
-	else { $Global:LASTEXITCODE = 1; return Write-Error -Message "Specified alias action were either 'NotYetImplemented' or is not available. Please try again." -Category InvalidArgument -ErrorAction Stop }
+	else { 
+		Write-Warning -Message "Specified alias action $gAliasAction does not exists from the shortcut implementation or is not available. Proceeding either way ..."
+	}
 
-	Start-Process -FilePath git.exe -ArgumentList $gResolveCommand, $gAliasArgs -NoNewWindow -Wait; return;
+	Start-Process -FilePath git.exe -ArgumentList $gResolveCommand, $args -NoNewWindow -Wait; return;
 }
 
 # # Imports
@@ -99,7 +150,6 @@ Import-Module PSReadLine -WarningAction:SilentlyContinue
 # Multiple Options to Single Object Invocation to Single Command Reference: https://docs.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.2#example-3-set-multiple-options
 $PSReadLineOptions = @{
 	BellStyle = "Audible"
-	ContinuationPrompt = "❯"
 	HistoryNoDuplicates = $true
 	HistorySearchCursorMovesToEnd = $true
 	PredictionSource = "HistoryAndPlugin"
@@ -124,5 +174,3 @@ Import-Module PowerColorLS	  # Better LS Equivalent
 # # Entrypoint
 # ! This requires the hunk theme. Please check OMP repository and their theme section.
 oh-my-posh --config ~/chips.omp.json --init --shell pwsh | Invoke-Expression
-Enable-PoshTransientPrompt
-
