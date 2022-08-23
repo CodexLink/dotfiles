@@ -27,8 +27,17 @@ Just a collection of configurations varying from package managers, prompt, IDE a
 
 ## Font
 
-Iosevka + Pragmata Pro Variant (SS08) with Complete Icon Set from [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts).
-Discretionary Ligatures (dilg) + Cherry-Picked Symbol Characters + Terminal Spacing - No Italic or Oblique Set.
+Iosevka + Pragmata Pro Variant (SS08) with Cherry-Picked Symbol Characters from [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts).
+
+### Font Properties
+
+This font does not include the complete sets provided from Nerd Fonts. The following are the selected icon sets.
+
+With the [Iosevka](https://github.com/be5invis/Iosevka)'s option allowing us to choose Normal, Italics, and Oblique; please note that Normal and Italics are only included.
+
+Compiling them with [fontforge](https://github.com/fontforge/fontforge) with the script provided from the [nerd-fonts-patcher](https://github.com/ryanoasis/nerd-fonts) in addition to the PR request of supporting [TTC files](https://github.com/ryanoasis/nerd-fonts/tree/feature/process-ttc), the script silently fails.
+
+D]iscretionary Ligatures (dilg) + Cherry-Picked Symbol Characters + Terminal Spacing - No Italic or Oblique Set.
 
 <Picture Here>
 
