@@ -32,7 +32,7 @@ $Env:SEGMENT_PROJECT_PL_VENV_STR = ""
 $Env:SEGMENT_DISABLE_TRANSIENT_RECENT_EXEC_TIME = $false
 $Env:SEGMENT_DISABLE_WAKATIME = $true		# Practice uncommenting Env Vars as they don't disappear when you commented them. Use this switch instead.
 
-$Env:WAKATIME_API_KEY = "38d0c4b9-5ec4-481c-b61d-be48c3cd2bda"
+$Env:WAKATIME_API_KEY = "<masked>"
 
 # # Script Variables
 # ! Please ignore this and its implemented functionality if you don't use powershell.
