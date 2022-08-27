@@ -2,13 +2,14 @@
 # Updated as of 08/24/2022, Version 0.6.3
 
 # # Aliases
+Set-Alias c cat
 Set-Alias cbf CreateBlankFile
 Set-Alias ccp CopyCurrentPath
 Set-Alias cfc ContentFileToClipboard
 Set-Alias cfh CompareFileHash
 Set-Alias elev Elevate-Command
 Set-Alias ex explorer
-Set-Alias g GithubAlias-Processor
+Set-Alias g git
 Set-Alias ipy ipython
 Set-Alias ld lazydocker
 Set-Alias lg lazygit
@@ -24,18 +25,18 @@ Set-Alias wtc OpenWTConfig
 # - For Python
 $Env:PYTHONIOENCODING = "utf-8"			# Force Encoding to "UTF-8"
 
-# Prefixes with 'SEGMENT_' were explicitly stated for example usages.
+# - Oh-My-Posg chips.omp.json config.
+$Env:SEGMENT_DISABLE_BATTERY = $false
 $Env:SEGMENT_DISABLE_DTIME = $false
-$Env:SEGMENT_DISABLE_PROJECT_PL = $false
-$Env:SEGMENT_PROJECT_PL_DISABLE_VENV = $false
-$Env:SEGMENT_PROJECT_PL_VENV_STR = ""
+$Env:SEGMENT_DISABLE_PROJECT_PYTHON = $false
+$Env:SEGMENT_DISABLE_PROJECT_PYTHON_VENV = $false
+$Env:SEGMENT_DISABLE_TRANSIENT = $false
+$Env:SEGMENT_PROJECT_PYTHON_ACTIVE_VENV_STR = "Env. Active"
 $Env:SEGMENT_DISABLE_TRANSIENT_RECENT_EXEC_TIME = $false
-$Env:SEGMENT_DISABLE_WAKATIME = $true		# Practice uncommenting Env Vars as they don't disappear when you commented them. Use this switch instead.
-
+$Env:SEGMENT_DISABLE_WAKATIME = $false
 $Env:WAKATIME_API_KEY = "<masked>"
 
 # # Script Variables
-# ! Please ignore this and its implemented functionality if you don't use powershell.
 $Global:WinTermConfigFilePath = "$env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
 # # Functions
@@ -104,73 +105,57 @@ function Elevate-Command {
 
 	return
 }
-# # Functions
-#
-# - Beyond Custom Aliases to Function Call
-# Solution Reference: https://stackoverflow.com/questions/26290052/create-an-alias-to-a-command-that-has-spaces-in-it
-# Enum Reference: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_enum?view=powershell-7.2
-function GithubAlias-Processor {
-	Param(
-		[Parameter(Mandatory=$true, Position=0)][String] $gAliasAction,
-		[Parameter(Mandatory=$false, Position=1)][AllowEmptyString()][String] $args
-	)
-	# Enum-Like String Decl.
-	# Array Variable Reference: https://docs.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-arrays?view=powershell-7.2
-	$GIT_ADD = "a", "add"
-	$GIT_CLONE = "cl", "clone"
-	$GIT_CHECKOUT = "ch", "checkout"
-	$GIT_COMMIT = "co", "commit"
-	$GIT_PUSH = "pu", "push"
-	$GIT_RESTORE = "re", "restore"
-	$GIT_STATUS = "st", "status"
-
-	# Override by processing the value to match from the enum-like string commands.
-	$gAliasAction = $gAliasAction.ToLower()
-
-	if ($gAliasAction -eq $GIT_ADD[0]) 					{ $gResolveCommand = $GIT_ADD[1] 			}
-	elseif ($gAliasAction -eq $GIT_CLONE[0]) 		{ $gResolveCommand = $GIT_CLONE[1] 		}
-	elseif ($gAliasAction -eq $GIT_CHECKOUT[0]) { $gResolveCommand = $GIT_CHECKOUT[1] }
-	elseif ($gAliasAction -eq $GIT_COMMIT[0]) 	{ $gResolveCommand = $GIT_COMMIT[1] 	}
-	elseif ($gAliasAction -eq $GIT_PUSH[0])   	{ $gResolveCommand = $GIT_PUSH[1] 		}
-	elseif ($gAliasAction -eq $GIT_RESTORE[0]) 	{ $gResolveCommand = $GIT_RESTORE[1] 	}
-	elseif ($gAliasAction -eq $GIT_STATUS[0]) 	{ $gResolveCommand = $GIT_STATUS[1] 	}
-	else { 
-		Write-Warning -Message "Specified alias action $gAliasAction does not exists from the shortcut implementation or is not available. Proceeding either way ..."
-	}
-
-	Start-Process -FilePath git.exe -ArgumentList $gResolveCommand, $args -NoNewWindow -Wait; return;
-}
 
 # # Imports
-# Reference for supressing warnings on Import-Module: https://stackoverflow.com/questions/30709884/how-to-ignore-warning-errors
 Import-Module PSReadLine -WarningAction:SilentlyContinue
 
-# - Set PSReadLine Properties
-# Docs: https://docs.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.2
-# Multiple Options to Single Object Invocation to Single Command Reference: https://docs.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.2#example-3-set-multiple-options
 $PSReadLineOptions = @{
-	BellStyle = "Audible"
-	HistoryNoDuplicates = $true
+	BellStyle 										= "Audible"
+	Colors = @{
+		Command            					= '#FFD600'
+		Comment											= '#9FFFE0'
+		ContinuationPrompt 					= '#80D8FF'
+		Default            					= '#FFFFBF'
+		Error												= '#FF8A80'
+		Emphasis										= '#B9F6CA'
+		InlinePrediction						= '#BFCC50'
+		Keyword 										= '#B6E3FF'
+		ListPrediction							= '#FFD600'
+		ListPredictionSelected			= "`e[48;2;142;36;170m"
+		Member             					= '#FFDD71'
+		Number             					= '#FF8A80'
+		Operator           					= '#FFFF8D'
+		Parameter          					= '#84FFFF'
+		Type               					= '#FFB2FF'
+		Selection 									= '#80D8FF'
+		String 											= '#B9F6CA'
+		Variable           					= '#E7FF8C'
+	}
+	EditMode											= "Vi"
+	HistoryNoDuplicates 					= $true
 	HistorySearchCursorMovesToEnd = $true
-	PredictionSource = "HistoryAndPlugin"
-	PredictionViewStyle = "ListView"
-	ShowToolTips = $true
-	ViModeIndicator = "Cursor"
+	PredictionSource 							= "HistoryAndPlugin"
+	PredictionViewStyle 					= "ListView"
+	ShowToolTips 									= $true
+	ViModeIndicator 							= "Script"
 }  
 Set-PSReadLineOption @PSReadLineOptions
+Set-PSReadLineKeyHandler -Chord "Alt+s" -Function SwitchPredictionView
+Set-PSReadLineKeyHandler -Chord "Alt+a" -Function PreviousHistory
+Set-PSReadLineKeyHandler -Chord "Alt+d" -Function NextHistory
 
 function OpenWTConfig {
 	Start-Process nvim -ArgumentList $Global:WinTermConfigFilePath -NoNewWindow -Wait; return
 }
 # - PSFzf
-# Has to lowercase the letter for some reason as it doesn't work on capital letters.
 Import-Module PSFzf
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+Alt+f' -PSReadlineChordReverseHistory 'Ctrl+Alt+r' -TabExpansion
 
 # - Other Module Imports
-Import-Module z 							# Directory-Jump based on History
-Import-Module PowerColorLS	  # Better LS Equivalent
+
+Import-Module CompletionPredictor		# Extension for PSReadLine.
+Import-Module PowerColorLS	  			# Better LS Equivalent.
+Import-Module z 										# Directory-Jump based on History.
 
 # # Entrypoint
-# ! This requires the hunk theme. Please check OMP repository and their theme section.
 oh-my-posh --config ~/chips.omp.json --init --shell pwsh | Invoke-Expression
