@@ -143,7 +143,9 @@ Set-PSReadLineOption @PSReadLineOptions
 Set-PSReadLineKeyHandler -Chord "Alt+s" -Function SwitchPredictionView
 Set-PSReadLineKeyHandler -Chord "Alt+a" -Function PreviousHistory
 Set-PSReadLineKeyHandler -Chord "Alt+d" -Function NextHistory
-Set-PSReadlineKeyHandler -Key Tab -Function AcceptSuggestion
+Set-PSReadlineKeyHandler -Key "Tab" -Function AcceptSuggestion
+Set-PSReadlineKeyHandler -Key "Alt+f" -Function ForwardWord
+Set-PSReadlineKeyHandler -Key "Alt+d" -Function BackwardKillWord
 
 
 function OpenWTConfig {
