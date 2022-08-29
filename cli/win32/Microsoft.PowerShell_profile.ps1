@@ -140,12 +140,12 @@ $PSReadLineOptions = @{
 	ViModeIndicator 							= "Script"
 }  
 Set-PSReadLineOption @PSReadLineOptions
-Set-PSReadLineKeyHandler -Chord "Alt+s" -Function SwitchPredictionView
-Set-PSReadLineKeyHandler -Chord "Alt+a" -Function PreviousHistory
-Set-PSReadLineKeyHandler -Chord "Alt+d" -Function NextHistory
+Set-PSReadLineKeyHandler -Chord "Alt+w" -Function SwitchPredictionView
+Set-PSReadLineKeyHandler -Chord "Alt+q" -Function PreviousHistory
+Set-PSReadLineKeyHandler -Chord "Alt+e" -Function NextHistory
 Set-PSReadlineKeyHandler -Key "Tab" -Function AcceptSuggestion
-Set-PSReadlineKeyHandler -Key "Alt+f" -Function ForwardWord
-Set-PSReadlineKeyHandler -Key "Alt+d" -Function BackwardKillWord
+Set-PSReadlineKeyHandler -Key "Alt+d" -Function ForwardWord
+Set-PSReadlineKeyHandler -Key "Alt+s" -Function BackwardKillWord
 
 
 function OpenWTConfig {
