@@ -63,6 +63,22 @@ Please fetch the `font-patcher.py` from the [feature/process-tcc] branch and rep
 .\fontforge -script font-patcher.py --glyphdir ./glyphs/ --mono --windows --complete --careful --progressbars E:\Developments\Forks\iosevka-docker\dist/.super-ttc/iosevka-codex-link.ttc -out E:\Developments\Forks\iosevka-docker\dist\patched-nerd-fonts
 ```
 
+We should consider this cherry-picked version.
+
+```
+.\ffpython font-patcher.py --glyphdir ./glyphs/ --adjust-line-height --careful --codicons --fontawesome --fontawesomeextension --material --mono --octicons --powerline --powerlineextra --progressbars --weather --windows E:\Developments\Forks\iosevka-docker\dist/.super-ttc/iosevka-codex-link.ttc -out E:\Developments\Forks\iosevka-docker\dist\patched-nerd-fonts
+```
+
 ## Credits
 
-—
+- Base Configuration for OMP (Oh-My-Posh) [Inspiration] | https://www.youtube.com/watch?v=5-aK2_WwrmMa
+- Command to Clipboard | https://stackoverflow.com/questions/43633273/copy-current-location-to-clipboard
+- PowerShell Command Function Creation | https://docs.microsoft.com/en-us/powershell/scripting/learn/ps101/09-functions?view=powershell-7.2
+- ??? | https://stackoverflow.com/questions/61824177/visual-block-mode-not-working-in-vim-with-c-v-on-wslwindows-10
+- (VIM) Multiple Lines at Ones | https://riptutorial.com/vim/example/7301/insert-text-into-multiple-lines-at-once
+- ??? | For allowing to let us build in docker environment. https://github.com/avivace/iosevka-docker
+- https://jdhitsolutions.com/blog/powershell/8969/powershell-predicting-with-style/
+- https://devblogs.microsoft.com/powershell/announcing-psreadline-2-1-with-predictive-intellisense/
+- https://stackoverflow.com/questions/63079605/powershell-6-0-command-line-background-color-with-ansi-sequences-psreadline
+- https://docs.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.2
+- https://stackoverflow.com/questions/71283083/accept-part-of-the-autocompletion
