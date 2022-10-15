@@ -26,16 +26,18 @@ Set-Alias wtc OpenWTConfig
 $Env:PYTHONIOENCODING = "utf-8"			# Force Encoding to "UTF-8"
 
 # - Oh-My-Posg chips.omp.json config.
-$Env:SEGMENT_DISABLE_BATTERY = $false
-$Env:SEGMENT_DISABLE_DTIME = $false
-$Env:SEGMENT_DISABLE_PROJECT_PYTHON = $false
-$Env:SEGMENT_DISABLE_PROJECT_PYTHON_VENV = $false
-$Env:SEGMENT_DISABLE_TRANSIENT = $false
-$Env:SEGMENT_PROJECT_PYTHON_ACTIVE_VENV_STR = "Env. Active"
-$Env:SEGMENT_DISABLE_TRANSIENT_RECENT_EXEC_TIME = $false
-$Env:SEGMENT_DISABLE_WAKATIME = $false
+$Env:DISABLE_SEGMENT_BATTERY = $false
+$Env:DISABLE_SEGMENT_DTIME = $false
+$Env:DISABLE_SEGMENT_PROJECT_NODE = $false
+$Env:DISABLE_SEGMENT_PROJECT_PYTHON = $false
+$Env:DISABLE_SEGMENT_PROJECT_PYTHON_VENV = $false
+$Env:DISABLE_SEGMENT_PRIMARY_EXEC_TIME = $false
+$Env:DISABLE_SEGMENT_TRANSIENT = $false
+$Env:DISABLE_SEGMENT_TRANSIENT_EXEC_TIME = $false
+$Env:DISABLE_SEGMENT_WAKATIME = $false
+# $Env:SEGMENT_PROJECT_PYTHON_ACTIVE_VENV_STR = "Env. Active"
+$Env:SEGMENT_PROJECT_PYTHON_ACTIVE_VENV_STR = ""
 $Env:WAKATIME_API_KEY = "<masked>"
-
 # # Script Variables
 $Global:WinTermConfigFilePath = "$env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
@@ -147,13 +149,12 @@ Set-PSReadlineKeyHandler -Key "Tab" -Function AcceptSuggestion
 Set-PSReadlineKeyHandler -Key "Alt+d" -Function ForwardWord
 Set-PSReadlineKeyHandler -Key "Alt+s" -Function BackwardKillWord
 
-
 function OpenWTConfig {
 	Start-Process nvim -ArgumentList $Global:WinTermConfigFilePath -NoNewWindow -Wait; return
 }
 # - PSFzf
 Import-Module PSFzf
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+Alt+f' -PSReadlineChordReverseHistory 'Ctrl+Alt+r' -TabExpansion
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+Shift+z' -PSReadlineChordReverseHistory 'Ctrl+Shift+x' -TabExpansion
 
 # - Other Module Imports
 
