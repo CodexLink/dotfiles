@@ -1,29 +1,35 @@
 # dotfiles-configs-archive
 
-Just a collection of configurations varying from package managers, prompt, IDE and much more.
+Just a collection of configurations that I commonly use.
 
 ## Notice
 
-**It's under construction. I'm aware some of my keys are exposed, will replace them later on.**
+**It's under construction.**
 
-> I'm having hard time doing simple task with `nvim` but I'm up for the challenge.
-> Meanwhile, I'm configuring some things.
+## Prompt
 
-## Prompt Demo
+I use Powershell ([pwsh](https://github.com/PowerShell/PowerShell)) along with [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) that uses a custom theme made by me ([chips.omp.json](https://github.com/CodexLink/chips.omp.json)). Wrapped through [Windows Terminal](https://github.com/microsoft/terminal).
 
-—
+- TODO
 
-## CLI Demo
+### Demo
 
-—
+TODO
 
-### CLI Utility Demo
+## `nvim`
 
-—
+TODO
 
-## NVIM Demo
+### Bases
 
-—
+The following are the base configuration that I followed or looked through:
+
+- [craftzdog's dotfiles](https://github.com/craftzdog/dotfiles-public/blob/master/.config/nvim/lua/craftzdog/plugins.lua)
+- [wbthomason's dotfiles](https://github.com/wbthomason/dotfiles/blob/linux/neovim/.config/nvim/lua/plugins.lua)
+
+### Demo
+
+TODO
 
 ## Font
 
@@ -70,6 +76,8 @@ We should consider this cherry-picked version.
 ```
 
 ## Credits
+
+> Currently on construction.
 
 - Base Configuration for OMP (Oh-My-Posh) [Inspiration] | https://www.youtube.com/watch?v=5-aK2_WwrmMa
 - Command to Clipboard | https://stackoverflow.com/questions/43633273/copy-current-location-to-clipboard
