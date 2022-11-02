@@ -4,7 +4,7 @@
 
 local instantiated, ts_configurator = pcall(require, "nvim-treesitter.configs")
 if not instantiated then
-	error("Plugin configuration for `nvim-treesitter/nvim-treesitter` has failed to load. The module itself may not be installed properly.")
+	print("Plugin configuration for `nvim-treesitter/nvim-treesitter` has failed to load. The module itself may not be installed properly.")
 end
 
 ts_configurator.setup {

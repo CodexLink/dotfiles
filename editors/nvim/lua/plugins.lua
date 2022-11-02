@@ -20,7 +20,7 @@ local _construct_packer_path = function (overriden_path)
 	if not overriden_path then
 		-- Otherwise, check if is a string.
 		if type(overriden_path) != "string" then
-			error("Provided parameter `overriden_path` is not a valid string as path.")
+			print("Provided parameter `overriden_path` is not a valid string as path.")
 			return false
 		end
 		-- If provided, assign given path to `_packer_path`.
@@ -82,14 +82,18 @@ end
 
 packer.startup(
 	function(use)
-		-- Packer itself
+		-- Important, Packer Manager and Module Cacher (Order Matters)
 		use 'wbthomason/packer.nvim'
+		use {
+			'lewis6991/impatient.nvim'
+			config = function() require("impatient") end
+		}
 
 		-- Extras
 		use 'andweeb/presence.nvim' -- TODO
 		-- Extras: Tracking
-		use { -- NOTE: This plugin requires `CODESTATS_API_KEY` from your Environment Variable!
-			'YannickFricke/codestats.nvim',
+		use { -- NOTE: This plugin requires `CODESTATS_API_KEY` from your Environment Variables!
+			'YannickFricke/codestats.nvim'
 			rocks = "lunajson",
 			config = function() require('codestats-nvim').setup() end,
 			requires = {{'nvim-lua/plenary.nvim'}}
@@ -99,29 +103,57 @@ packer.startup(
 		-- Language Support and Highlighting
 		use {
 			'nvim-treesitter/nvim-treesitter', -- Note: Used to undertand the file, not an alternative to LSP.
-
-				-- This was based on `https://github.com/rafamadriz/dotfiles/commit/c1268c73bdc7da52af0d57dcbca196ca3cb5ed79`
+			-- This was based on `https://github.com/rafamadriz/dotfiles/commit/c1268c73bdc7da52af0d57dcbca196ca3cb5ed79`
       run = function() require("nvim-treesitter.install").update({ with_sync = true }) end,
       config = function() require("configs.treesitter") end
 		}
 
 		-- Typing
-	use {
-		"windwp/nvim-autopairs",
-    config = function() require("configs.autopairs") end
-	}
+		use {
+			"windwp/nvim-autopairs",
+			config = function() require("configs.autopairs") end
+		}
+		use {
+    'numToStr/Comment.nvim',
+		-- No need to modify the keybinds, therefore instantiated the module here instead.
+    config = function() require('Comment').setup {} end
+		}
 		
-		-- UI (Helpers Included)
-		use 'norcalli/nvim-colorizer.lua',
+		-- UI (Display, Helpers, Wrappers)
+		use { -- TODO May need further customization.
+			'akinsho/bufferline.nvim',
+			tag = "v3.*",
+			config = function() require("bufferline").setup {} end
+		}
 		use {
 			'lukas-reineke/indent-blankline.nvim',
 			config = function() require("configs.indent-blankline") end
-		},
+		}
+		use {
+		'nvim-lualine/lualine.nvim',
+		config = function() require("configs.lualine") end
+		}
+		use 'norcalli/nvim-colorizer.lua'
 		use {
 			'nvim-tree/nvim-web-devicons',
 			config = function() require("configs.web-devicons") end
 		}
-		
+		use {
+			'sidebar-nvim/sidebar.nvim',
+			config = function() require("configs.sidebar") end
+			requires = {
+				{'sidebar-nvim/sections-dap.nvim', opt = false}
+			}
+		}
+		use {
+		'nvim-telescope/telescope.nvim', branch = '0.1.x',
+		requires = {
+			{'nvim-lua/plenary.nvim', opt = false},
+			{'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+			{'nvim-telescope/telescope-ui-select.nvim' }
+		} 
+		config = function() require("configs.telescope") end 
+	}
 		-- Utilities
 		use { -- TODO: Ensure that we can install the node.js app from this module.
 			"iamcco/markdown-preview.nvim"
@@ -129,10 +161,15 @@ packer.startup(
 			setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
 			ft = { "markdown" }
 		}
+		use {
+			"tversteeg/registers.nvim",
+			config = function() require("registers") end
+		}
 
-		-- When cloned for the first time, ensure to sync all plugins added.
-		 if packer_cloned then
-			packer.sync()
+		-- When cloned for the first time, ensure to sync and compile all plugins added.
+		if packer_cloned then
+			packer.sync() -- Install modules.
+			packer.compile() -- Then compile so that it is cached.
 		 end
 	end,
 	config = {

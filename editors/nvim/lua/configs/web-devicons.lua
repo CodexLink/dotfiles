@@ -4,7 +4,7 @@
 
 local instantiated, wdi_configurator = pcall(require, "nvim-web-devicons")
 if not instantiated then
-	error("Plugin configuration for `nvim-tree/nvim-web-devicons` has failed to load. The module itself may not be installed properly.")
+	print("Plugin configuration for `nvim-tree/nvim-web-devicons` has failed to load. The module itself may not be installed properly.")
 end
 
 wdi_configurator.setup {

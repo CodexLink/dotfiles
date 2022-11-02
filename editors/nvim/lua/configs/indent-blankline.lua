@@ -4,7 +4,7 @@
 
 local instantiated, ib_configurator = pcall(require, "indent_blankline")
 if not instantiated then
-	error("Plugin configuration for `lukas-reineke/indent-blankline.nvim` has failed to load. The module itself may not be installed properly.")
+	print("Plugin configuration for `lukas-reineke/indent-blankline.nvim` has failed to load. The module itself may not be installed properly.")
 end
 
 ib_configurator.setup {

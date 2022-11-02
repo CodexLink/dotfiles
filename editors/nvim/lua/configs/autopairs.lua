@@ -4,7 +4,7 @@
 
 local instantiated, ap_configurator = pcall(require, "nvim-autopairs")
 if not instantiated then
-	error("Plugin configuration for `windwp/nvim-autopairs` has failed to load. The module itself may not be installed properly.")
+	print("Plugin configuration for `windwp/nvim-autopairs` has failed to load. The module itself may not be installed properly.")
 end
 
 ap_configuration.setup {
