@@ -10,6 +10,5 @@ end
 ll_configurator.setup {
 	options = {
 		icons_enabled = true,
-
 	}
 }

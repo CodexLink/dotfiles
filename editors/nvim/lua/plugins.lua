@@ -1,180 +1,191 @@
--- plugins.lua   | Plugins with packer.nvim as Plugin Initializer
--- Version 0.1.0 | Since 11/01/2022
+-- plugins.lua   | Plugins with "lazy.nvim" as a package manager
+-- Version 0.1.1 | Since 01/04/2023
 -- @CodexLink    | https://github.com/CodexLink
--- Description: This lua file contains initializer of plugins (as well as its declaration) with `packer.nvim`.
+-- Description: This lua file contains initializer of plugins (as well as its declaration) with `lazy.nvim`.
 
 -- User-customizable
--- When your `packer` is installed elsewhere, add the path here.
+-- When your `lazy` is installed elsewhere, add the path here.
 -- Please note that shell-specific environment variable identifier may not be parsed (as for what I know).
 local customPath = nil;
 
 -- Script variables
-local _packer_path = nil;
-local packer_cloned = false;
+local _lazy_path = nil;
 local v = vim
 local vfn = v.fn
 
 -- Modified version of "https://github.com/wbthomason/packer.nvim#bootstrapping"
-local _construct_packer_path = function (overriden_path)
+local _construct_lazy_path = function (overriden_path)
 	-- Check if `overriden_path` is given.
-	if not overriden_path then
+	if (not overriden_path) then
 		-- Otherwise, check if is a string.
-		if type(overriden_path) != "string" then
+		if (type(overriden_path) != "string") then
 			print("Provided parameter `overriden_path` is not a valid string as path.")
-			return false
+			os.exit(1)
 		end
-		-- If provided, assign given path to `_packer_path`.
-		_packer_path = overriden_path
+		-- If provided, assign given path to `_lazy_path`.
+		_lazy_path = overriden_path
 	end
 
-	-- Setup the default path by `nvim` itself if `_packer_path` is not already influenced by `overidden_path`.
-	if not _packer_path then
-		_packer_path = vfn.stdpath('data') .. '/site/pack/loader/start/packer.nvim/plugin/packer.lua'
+	-- Setup the default path by `nvim` itself if `_lazy_path` is not already influenced by `overidden_path`.
+	if (not _lazy_path) then
+		_lazy_path = vfn.stdpath("data") .. "/lazy/lazy.nvim"
 	end
 
 	return true
 end
 
--- `_upstream_packer` is a function that allows for an existing `packer.nvim` to update itself as possible.
-local _upstream_packer = function()
-		vfn.chdir(_packer_path)
-		vfn.system({
-			'git',
-			'pull',
-		})
-end
+-- "check_or_install_lazy" is a function that either clones or upstreams the locally-saved `packer.nvim`.
+local check_or_install_lazy = function(customPath)
+	_construct_lazy_path(customPath)
 
--- 'check_packer' is a function that either clones or upstreams the locally-saved `packer.nvim`.
-local check_packer = function()
-	if (not _construct_packer_path) then
-		return nil
-		--
 	-- Check if the directory and its contents exist.
-	if vfn.empty(vfn.glob(install_path)) > 0 then
-    fn.system({
-			'git',
-			'clone',
-			'--depth',
-			'1',
-			'https://github.com/wbthomason/packer.nvim',
-			_packer_path
+	if (not v.loop.fs_stats(_construct_lazy_path)) then
+		vfn.system({
+			"git",
+			"clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+			_lazy_path
 		})
-
-		packer_cloned = true
-	else
-		-- This assumes that the directory has contents, with that, just update the repository.
-		_upstream_packer()
 	end
 
-	v.cmd [[packadd packer.nvim]]
+	-- Add lazy path to the runtime path in prepend, instead of append.
+	v.opt.rtp:prepend(lazypath)
 	return nil
 end
 
 -- Run this function to self-clone or update the packer.
-check_packer(customPath)
+check_or_install_lazy(customPath)
 
 -- We have no way to check whether packer is installed, with that, run require with checks.
-local instantiated, packer = pcall(require, "packer")
+local instantiated, lazy = pcall(require, "lazy")
 
 if not instantiated then
-	error("Packer was not installed! Please check the folder location and try again.")
+	print("Packer was not installed! Please check the folder location and try again.")
+	os.exit(1)
 end
 
-packer.startup(
-	function(use)
-		-- Important, Packer Manager and Module Cacher (Order Matters)
-		use 'wbthomason/packer.nvim'
-		use {
-			'lewis6991/impatient.nvim'
+-- Package manager configuration
+lazy.setup(
+	opts = {
+		checker = {
+			concurrency = 10,
+			enabled = true,
+			frequency = 86400, -- Check every 24 hours instead.
+		},
+		concurrency = 5,
+		defaults = {
+			lazy = true,
+			version = "*"
+		},
+		diff = {
+			cmd = "diffview.nvim"
+		},
+		install = {
+			colorscheme = { "" },
+			missing = true
+		},
+		performance = {
+			cache = {
+				enabled = true,
+			}
+		},
+		ui = {
+			browser = nil, -- To be fixed later.
+			custom_keys = {
+			},
+			throttle = 30,
+		},
+	},
+	plugins = {
+		-- Important, 2nd-Level Module Cacher
+		{
+			"lewis6991/impatient.nvim",
 			config = function() require("impatient") end
-		}
+		},
 
-		-- Extras
-		use 'andweeb/presence.nvim' -- TODO
+		-- Semi-Important, Colorscheme
+		{},
+
 		-- Extras: Tracking
-		use { -- NOTE: This plugin requires `CODESTATS_API_KEY` from your Environment Variables!
-			'YannickFricke/codestats.nvim'
-			rocks = "lunajson",
-			config = function() require('codestats-nvim').setup() end,
-			requires = {{'nvim-lua/plenary.nvim'}}
-		}
-		use 'wakatime/vim-wakatime'
+		{
+			-- This uses the forked version which fixes the languages.lua missing comma.
+			-- NOTE: This plugin requires `CODESTATS_API_KEY` from your Environment Variables!
+			"NTBBloodbath/codestats.nvim",
+			pin = true,
+		},
+		{ "wakatime/vim-wakatime" },
+		-- Extras
+		{
+			"andweeb/presence.nvim",
+			event = "VeryLazy"
+		}, -- TODO
 
 		-- Language Support and Highlighting
-		use {
-			'nvim-treesitter/nvim-treesitter', -- Note: Used to undertand the file, not an alternative to LSP.
-			-- This was based on `https://github.com/rafamadriz/dotfiles/commit/c1268c73bdc7da52af0d57dcbca196ca3cb5ed79`
-      run = function() require("nvim-treesitter.install").update({ with_sync = true }) end,
-      config = function() require("configs.treesitter") end
-		}
+		{
+			-- !!! Note: Used to undertand the file, not an alternative to LSP.
+ 			-- * This was based on `https://github.com/rafamadriz/dotfiles/commit/c1268c73bdc7da52af0d57dcbca196ca3cb5ed79`
+			"nvim-treesitter/nvim-treesitter",
+			build = function() require("nvim-treesitter.install").update({ with_sync = true }) end,
+			config = function() require("configs.treesitter") end
+		},
 
 		-- Typing
-		use {
+		{
 			"windwp/nvim-autopairs",
 			config = function() require("configs.autopairs") end
-		}
-		use {
-    'numToStr/Comment.nvim',
-		-- No need to modify the keybinds, therefore instantiated the module here instead.
-    config = function() require('Comment').setup {} end
-		}
-		
+		},
+		{
+		"numToStr/Comment.nvim",
+		-- ! No need to modify the keybinds, therefore instantiate the module without further configurations.
+		config = function() require("Comment").setup {} end
+		},
+
 		-- UI (Display, Helpers, Wrappers)
-		use { -- TODO May need further customization.
-			'akinsho/bufferline.nvim',
+		{ -- TODO May need further customization.
+			"akinsho/bufferline.nvim",
 			tag = "v3.*",
 			config = function() require("bufferline").setup {} end
-		}
-		use {
-			'lukas-reineke/indent-blankline.nvim',
+		},
+		{
+			"lukas-reineke/indent-blankline.nvim",
 			config = function() require("configs.indent-blankline") end
-		}
-		use {
-		'nvim-lualine/lualine.nvim',
-		config = function() require("configs.lualine") end
-		}
-		use 'norcalli/nvim-colorizer.lua'
-		use {
-			'nvim-tree/nvim-web-devicons',
-			config = function() require("configs.web-devicons") end
-		}
-		use {
-			'sidebar-nvim/sidebar.nvim',
-			config = function() require("configs.sidebar") end
+		},
+		{
+			"nvim-lualine/lualine.nvim",
+			config = function() require("configs.lualine") end
+		},
+		{
+			"norcalli/nvim-colorizer.lua",
+			config = function() require("colorizer").config {} end,
+		},
+		{
+			"nvim-telescope/telescope.nvim",
+			branch = "0.1.x",
+			config = function() require("configs.telescope") end,
 			requires = {
-				{'sidebar-nvim/sections-dap.nvim', opt = false}
+				{ "nvim-lua/plenary.nvim", lazy = false },
+				{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+				{ "nvim-telescope/telescope-ui-select.nvim" }
 			}
-		}
-		use {
-		'nvim-telescope/telescope.nvim', branch = '0.1.x',
-		requires = {
-			{'nvim-lua/plenary.nvim', opt = false},
-			{'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-			{'nvim-telescope/telescope-ui-select.nvim' }
-		} 
-		config = function() require("configs.telescope") end 
-	}
-		-- Utilities
-		use { -- TODO: Ensure that we can install the node.js app from this module.
-			"iamcco/markdown-preview.nvim"
-			run = "cd app && npm install",
-			setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
-			ft = { "markdown" }
-		}
-		use {
-			"tversteeg/registers.nvim",
-			config = function() require("registers") end
-		}
-
-		-- When cloned for the first time, ensure to sync and compile all plugins added.
-		if packer_cloned then
-			packer.sync() -- Install modules.
-			packer.compile() -- Then compile so that it is cached.
-		 end
-	end,
-	config = {
-		display = {
-			open_fn = require('packer.util').float({ border = 'single' }),
+		},
+		{
+			"nvim-tree/nvim-web-devicons",
+			config = function() require("configs.web-devicons") end
+		},
+		{
+			"sidebar-nvim/sidebar.nvim",
+			config = function() require("configs.sidebar") end
+			dependencies = {
+				{ "sidebar-nvim/sections-dap.nvim", lazy = false }
+			}
+		},
+		{
+			"sindrets/diffview.nvim",
+			dependencies = {
+				"nvim-lua/plenary.nvim"
+			}
 		}
 	}
 )
