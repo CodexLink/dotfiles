@@ -7,7 +7,7 @@
 -- Notes: We do not add "packer" here, let "base-configs/plugins" do the work since it contains
 -- functions that upstreams the cloned repo or clones the repo, if it does not exists.
 local required_modules = {
-	"package-manager",
+	"plugins",
 	"keybinds",
 	"vim-config"
 }

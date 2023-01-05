@@ -4,7 +4,7 @@
 
 return {
 	"nvim-lualine/lualine.nvim",
-	lazy = true,
+	lazy = false,
 	config = {
 		icons_enabled = true,
 	}

@@ -4,6 +4,7 @@
 
 return {
         "windwp/nvim-autopairs",
+	lazy = false,
         config = {
 		check_ts = true,
 		disable_filetype = { "TelescopePrompt" , "vim" },

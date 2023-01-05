@@ -4,7 +4,7 @@
 
 return {
         "nvim-tree/nvim-web-devicons",
-	lazy = true,
+	lazy = false,
 	config = {
 		color_icons = true,
 		default = true

@@ -6,7 +6,7 @@
 -- [1] This plugin needs furhter customization.
 return {
 	"akinsho/bufferline.nvim",
-	tag = "v3.*",
-	lazy = true,
-	config = true
+	lazy = false,
+	config = true,
+	dependencies = "nvim-tree/nvim-web-devicons"
 }
