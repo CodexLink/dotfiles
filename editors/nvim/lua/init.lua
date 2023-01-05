@@ -7,7 +7,7 @@
 -- Notes: We do not add "packer" here, let "base-configs/plugins" do the work since it contains
 -- functions that upstreams the cloned repo or clones the repo, if it does not exists.
 local required_modules = {
-	"plugins",
+	"lazy",
 	"keybinds",
 	"vim-config"
 }
@@ -17,7 +17,7 @@ for _, module_name in ipairs(required_modules) do
 	success, module_instance = pcall(require, module_name)
 	
 	if (not success) then
-		print("Importing module" .. index .. " (" .. module_instance .. ") has occured an error, it was either not installed or the location of these plugins were not correct.")
+		error("Importing module" .. _ .. " (" .. module_instance .. ") has occured an error, it was either not installed or the location of these plugins were not correct.")
 		return
 	end 
 end
