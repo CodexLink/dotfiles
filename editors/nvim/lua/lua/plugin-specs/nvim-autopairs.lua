@@ -4,11 +4,11 @@
 
 return {
         "windwp/nvim-autopairs",
-        config = function()
+        config = {
 		check_ts = true,
 		disable_filetype = { "TelescopePrompt" , "vim" },
 		disable_in_macro = false,
 		map_c_h = true,
 		fast_wrap = {}
-        end
+	}
 }

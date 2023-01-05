@@ -5,7 +5,12 @@
 return {
 	 "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
-	lazy = true,
+	lazy = false,
+	init = function()
+		local telescope = require("telescope")
+		telescope.load_extension("fzf")       -- nvim-telescope/telescope-ui-select.nvim
+		telescope.load_extension("ui-select") -- nvim-telescope/telescope-ui-select.nvim
+	end,
 	config = {
 	  defaults = {
 	    layout_config = {
@@ -21,20 +26,17 @@ return {
 	    }
 	  }
 	},
-	dependencies = {{
-            "nvim-lua/plenary.nvim",
-            lazy = false
-        }, {
-            "nvim-telescope/telescope-fzf-native.nvim",
-            build = "make"
-        }, {"nvim-telescope/telescope-ui-select.nvim"}}
+	dependencies = {
+		{
+		    "nvim-lua/plenary.nvim",
+		    lazy = false
+        	},
+		{
+			"nvim-telescope/telescope-fzf-native.nvim",
+			build = "make"
+		},
+		{
+			"nvim-telescope/telescope-ui-select.nvim"
+		}
+	}
 }
-
--- Load extensions.
-local instantiated, tls_configurator = pcall(require, "telescope")
-if not instantiated then
-	print("Plugin configuration for `telescope` has failed to load. The module itself may not be installed properly.")
-end
-
-tfzf_configurator.load_extension("fzf")       -- nvim-telescope/telescope-ui-select.nvim
-tfzf_configurator.load_extension("ui-select") -- nvim-telescope/telescope-ui-select.nvim

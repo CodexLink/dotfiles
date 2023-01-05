@@ -6,6 +6,7 @@
 -- [1] Higher priority is required for the colorschemes, as stated by the author of the package manager.
 
 return {
+	
 	enabled = false,
 	priority = 1000,
 }

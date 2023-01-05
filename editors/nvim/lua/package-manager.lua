@@ -9,25 +9,25 @@ local v = vim
 local vfn = v.fn
 
 -- Modified version of "https://github.com/wbthomason/packer.nvim#bootstrapping"
-local _construct_lazy_path = function(overriden_path)
-    -- Check if `overriden_path` is given.
-    if (overriden_path ~= nil) then
+local _construct_lazy_path = function()
+    -- Check if `_lazy_path` is given.
+    if (_lazy_path ~= nil) then
         -- Otherwise, check if is a string.
-        if (type(overriden_path) ~= "string") then
-            error("Provided parameter `overriden_path` is not a valid string as path.")
+        if (type(_lazy_path) ~= "string") then
+            error("Provided parameter `_lazy_path` is not a valid string as path.")
             os.exit(1)
         end
-        _lazy_path = overriden_path
     else
-		-- Setup the default path by `nvim` itself if `_lazy_path` is not already influenced by `overidden_path`.
+	-- Setup the default path by `nvim` itself if `_lazy_path` is not already influenced by `overidden_path`.
         _lazy_path = vfn.stdpath("data") .. "/lazy/lazy.nvim"
     end
     return true
 end
 
--- "check_or_install_lazy" is a function that either clones or upstreams the locally-saved `packer.nvim`.
-local check_or_install_lazy = function(_lazy_path)
-    _construct_lazy_path(customPath)
+-- "update_or_prep_lazy" is a function that either clones or upstreams the locally-saved `packer.nvim`.
+local update_or_prep_lazy = function()
+    -- Evaluate the lazy path first before operation.
+    _construct_lazy_path()
 
     -- Check if the directory and its contents exist.
     if (not v.loop.fs_stat(_lazy_path)) then
@@ -41,9 +41,9 @@ local check_or_install_lazy = function(_lazy_path)
 end
 
 -- Run this function to self-clone or update the packer.
-check_or_install_lazy(customPath)
+update_or_prep_lazy()
 
--- We have no way to check whether packer is installed, with that, run require with checks.
+-- Load the packager and check whether it was really installed or not.
 local instantiated, lazy = pcall(require, "lazy")
 
 if not instantiated then
@@ -51,9 +51,10 @@ if not instantiated then
     os.exit(1)
 end
 
+
 -- Package manager configuration
--- Signature: plugin(string, table)
-lazy.setup("plugin-configs", {
+-- Signature arguments: (string, table)
+lazy.setup("plugin-specs", {
     checker = {
         concurrency = 10,
         enabled = true,
