@@ -5,7 +5,7 @@
 
 -- Step 1: Create a set of modules for us to import.
 local required_modules = {
-	"keybinds",
+	"mappings",
 	"options",
 	"plugins"
 }
