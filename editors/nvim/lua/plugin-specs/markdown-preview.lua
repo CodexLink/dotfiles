@@ -1,9 +1,10 @@
 -- markdown-preview.lua | Plugin spec for the 'markdown-preview', used for the package manager lazy.nvim"
--- Version 0.1.1  | Since 01/08/2023
+-- Version 0.1.2  | Since 01/08/2023
 -- @CodexLink     | https://github.com/CodexLink
 -- References: https://github.com/nvim-telescope/telescope.nvim#usage
 
 local vg = vim.g
+local vc = vim.cmd
 
 return {
 	"iamcco/markdown-preview.nvim",
@@ -19,9 +20,9 @@ return {
 		vg.mkdp_filetypes = { "markdown", "text" }
 	end,
 	keys = {
-		{ "<leader>ca", "<cmd>MarkdownPreview<cr>", desc = "Activate 'markdown-preview'." },
-		{ "<leader>C", "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle 'markdown-preview'." },
-		{ "<leader>cd", "<cmd>MarkdownPreviewStop<cr>", desc = "Deactivate 'markdown-preview'." }
+		{ "<leader>ca", function () vc("MarkdownPreview") print("Markdown Preview activated!") end, desc = "Activate 'markdown-preview'." },
+		{ "<leader>C", function () vc("MarkdownPreviewToggle") print("Markdown Preview toggled.") end, desc = "Toggle 'markdown-preview'." },
+		{ "<leader>cd", function () vc("MarkdownPreviewStop") print("Markdown Preview deactivated!") end, desc = "Deactivate 'markdown-preview'." }
 	},
 	ft = {
 		"markdown",
