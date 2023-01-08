@@ -4,12 +4,10 @@
 -- Description: This lua file only checks for the existence of the modules, as well as import them via `require`.
 
 -- Step 1: Create a set of modules for us to import.
--- Notes: We do not add "packer" here, let "base-configs/plugins" do the work since it contains
--- functions that upstreams the cloned repo or clones the repo, if it does not exists.
 local required_modules = {
-	"plugins",
 	"keybinds",
-	"vim-config"
+	"options",
+	"plugins"
 }
 
 -- Step 2, Final: Check them via for loop via require.

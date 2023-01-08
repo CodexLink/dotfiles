@@ -1,5 +1,5 @@
 -- nvim-treesitter.nvim	 | Plugin spec for the 'nvim-treesitter', used for the package manager lazy.nvim"
--- Version 0.1.0 | Since 01/05/2023
+-- Version 0.1.1 | Since 01/08/2023
 -- @CodexLink    | https://github.com/CodexLink
 
 -- Info
@@ -8,11 +8,7 @@
 
 return {
 	"nvim-treesitter/nvim-treesitter",
-        build = function()
-            require("nvim-treesitter.install").update({
-                with_sync = true
-            })
-        end,
+        build = ":TSUpdate",
         config = function()
 			require("nvim-treesitter").setup({
 			-- Explicitly stated to ensure that vim native syntax checks aren't added while treesitter does it.

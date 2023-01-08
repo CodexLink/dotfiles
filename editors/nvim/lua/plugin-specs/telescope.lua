@@ -1,9 +1,9 @@
 -- telescope.lua | Plugin spec for the 'telescope' and its friends, used for the package manager lazy.nvim"
--- Version 0.1.0  | Since 01/05/2023
+-- Version 0.1.1  | Since 01/08/2023
 -- @CodexLink     | https://github.com/CodexLink
 -- References: https://github.com/nvim-telescope/telescope.nvim#usage
 return {
-	 "nvim-telescope/telescope.nvim",
+	"nvim-telescope/telescope.nvim",
         branch = "0.1.x",
 	lazy = false,
 	init = function()
