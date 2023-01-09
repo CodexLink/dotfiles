@@ -1,31 +1,31 @@
 # dotfiles-configs-archive
 
-Just a collection of configurations that I commonly use.
-
-## Notice
-
-**It's under construction.**
+Just a collection of configurations of mine.
 
 ## Prompt
 
-I use Powershell ([pwsh](https://github.com/PowerShell/PowerShell)) along with [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) that uses a custom theme made by me ([chips.omp.json](https://github.com/CodexLink/chips.omp.json)). Wrapped through [Windows Terminal](https://github.com/microsoft/terminal).
+<div align="center">
+
+[![chips.omp.json git states showcase #1](https://github.com/CodexLink/chips.omp.json/blob/latest/assets/highlight_git_states_1.gif)](https://ohmyposh.dev/docs/themes#chips)
+
+[![chips.omp.json on-the-spot env. change](https://github.com/CodexLink/chips.omp.json/blob/latest/assets/highlight_on_the_spot_env_change.gif)](https://ohmyposh.dev/docs/themes#chips)
+
+</div>
+
+I use Powershell ([pwsh](https://github.com/PowerShell/PowerShell)) with [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) that uses a custom theme made by me ([chips.omp.json](https://github.com/CodexLink/chips.omp.json)). Wrapped through [Windows Terminal](https://github.com/microsoft/terminal).
 
 - TODO
-
-### Demo
-
-TODO
 
 ## `nvim`
 
 TODO
 
-### Bases
+### Basis
 
-The following are the base configuration that I followed or looked through:
+The following are the configurations that inspired my current configuration:
 
 - [craftzdog's dotfiles](https://github.com/craftzdog/dotfiles-public/blob/master/.config/nvim/lua/craftzdog/plugins.lua)
-- [wbthomason's dotfiles](https://github.com/wbthomason/dotfiles/blob/linux/neovim/.config/nvim/lua/plugins.lua)
+- [folke's dotfiles](https://github.com/folke/dot/tree/master/config/nvim)
 
 ### Demo
 
@@ -43,7 +43,7 @@ With the [Iosevka](https://github.com/be5invis/Iosevka)'s option allowing us to 
 
 Compiling them with [fontforge](https://github.com/fontforge/fontforge) with the script provided from the [nerd-fonts-patcher](https://github.com/ryanoasis/nerd-fonts) in addition to the PR request of supporting [TTC files](https://github.com/ryanoasis/nerd-fonts/tree/feature/process-ttc), the script silently fails.
 
-D]iscretionary Ligatures (dilg) + Cherry-Picked Symbol Characters + Terminal Spacing - No Italic or Oblique Set.
+Discretionary Ligatures (dilg) + Cherry-Picked Symbol Characters + Terminal Spacing - No Italic or Oblique Set.
 
 <Picture Here>
 
