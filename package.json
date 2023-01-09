@@ -1,0 +1,14 @@
+{
+  "name": "dotfiles-configs-archive",
+  "version": "0.0.1",
+  "author": "Janrey \"CodexLink\" Licas",
+  "description": "A set of configurations I made for my machine.",
+  "license": "MIT",
+  "homepage": "https://github.com/CodexLink/dotfiles-configs-archive#readme",
+	"scripts": {
+		"nvim-to-local": "",
+		"nvim-to-upstream": "",
+		"-local": "pwsh -NoProfile -Command Copy-Item -Destination \"./\" -Path \"~/chips.omp.json\" -Confirm",
+    "-git": "pwsh -NoProfile -Command Copy-Item -Destination \"~/\" -Path \"chips.omp.json\"  -Confirm",
+	}
+}
