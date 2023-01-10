@@ -7,7 +7,7 @@
 -- [2] NOTE: This plugin requires `CODESTATS_API_KEY` from your Environment Variables!
 
 return {
-        "NTBBloodbath/codestats.nvim",
+	"NTBBloodbath/codestats.nvim",
 	lazy = true,
-        pin = true
+	pin = true
 }

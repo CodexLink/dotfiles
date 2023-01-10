@@ -3,6 +3,7 @@
 -- @CodexLink    | https://github.com/CodexLink
 
 return {
-        "norcalli/nvim-colorizer.lua",
+	"NvChad/nvim-colorizer.lua",
+	config = true,
 	lazy = false
 }

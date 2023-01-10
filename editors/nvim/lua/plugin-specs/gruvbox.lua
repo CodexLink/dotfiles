@@ -3,6 +3,7 @@
 -- @CodexLink    | https://github.com/CodexLink
 -- Info
 -- [1] Higher priority is required for the colorscheme, as stated by the author of the package manager.
+
 return {
     "ellisonleao/gruvbox.nvim",
     lazy = false,
@@ -13,9 +14,11 @@ return {
         -- Theme Setup
 	-- !!! Signature copied from SeniorMar's nvim dotfiles (https://github.com/SeniorMars/dotfiles/tree/master/.config/nvim)
         _gruvbox_setup.setup({
+						dim_inactive = true,
+
             overrides = {
                 Normal = {
-                    bg = "#0E1018"
+                    bg = "#161616"
                 },
                 VertSplit = {
                     bg = '#0E1018'
@@ -42,7 +45,7 @@ return {
                     fg = "#878787"
                 },
                 Comment = {
-                    fg = "#fe8019",
+                    fg = "#fffaf3",
                     italic = true
                 },
                 Folded = {

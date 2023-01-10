@@ -68,10 +68,6 @@ lazy.setup("plugin-specs", {
     diff = {
         cmd = "diffview.nvim"
     },
-    install = {
-        colorscheme = {""},
-        missing = true
-    },
     performance = {
         cache = {
             enabled = true

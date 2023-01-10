@@ -1,5 +1,5 @@
 -- telescope.lua | Plugin spec for the 'telescope' and its friends, used for the package manager lazy.nvim"
--- Version 0.1.1  | Since 01/08/2023
+-- Version 0.1.2  | Since 01/11/2023
 -- @CodexLink     | https://github.com/CodexLink
 -- References: https://github.com/nvim-telescope/telescope.nvim#usage
 return {
@@ -28,9 +28,9 @@ return {
 	},
 	dependencies = {
 		{
-		    "nvim-lua/plenary.nvim",
-		    lazy = false
-        	},
+			"nvim-lua/plenary.nvim",
+			lazy = false
+		},
 		{
 			"nvim-telescope/telescope-fzf-native.nvim",
 			build = "make"

@@ -7,3 +7,4 @@ local vkm = vim.keymap
 
 vg.mapleader = "\\"
 
+vkm.set("n", "<Home>", "<cmd>Lazy<cr>", { desc = "Open Lazy Window" })

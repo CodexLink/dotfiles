@@ -8,6 +8,7 @@
 	"scripts": {
 		"nvim-to-local": "",
 		"nvim-to-upstream": "",
+		"copy-lazy-lock": "",
 		"-local": "pwsh -NoProfile -Command Copy-Item -Destination \"./\" -Path \"~/chips.omp.json\" -Confirm",
     "-git": "pwsh -NoProfile -Command Copy-Item -Destination \"~/\" -Path \"chips.omp.json\"  -Confirm",
 	}
