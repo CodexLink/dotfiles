@@ -3,7 +3,7 @@
 -- @CodexLink     | https://github.com/CodexLink
 
 return {
-	"folke/persistence",
+	"folke/persistence.nvim",
 	config = true,
 	keys = {
 		{"<LEADER>plc", [[<CMD>lua require("persistence").load()<CR>]], desc = "Persistence: Load session from the current directory."},

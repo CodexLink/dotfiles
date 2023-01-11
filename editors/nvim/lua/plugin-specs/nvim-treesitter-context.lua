@@ -7,8 +7,8 @@ return {
 	config = true,
 	dependencies = { "nvim-treesitter/nvim-treesitter" },
 	keys = {
-		{"<LEADER>Tce", "<CMD>TSContextEnable<CR>", desc = "Enable `treesitter-context`."}
-		{"<LEADER>Tcd", "<CMD>TSContextDisable<CR>", desc = "Disable `treesitter-context`."}
+		{"<LEADER>Tce", "<CMD>TSContextEnable<CR>", desc = "Enable `treesitter-context`."},
+		{"<LEADER>Tcd", "<CMD>TSContextDisable<CR>", desc = "Disable `treesitter-context`."},
 		{"<LEADER>Tct", "<CMD>TSContextToggle<CR>", desc = "Toggle `treesitter-context`."}
 	},
 	lazy = true

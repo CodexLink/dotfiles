@@ -84,50 +84,50 @@ return {
 		local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 		local html_json_capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities.textDocument.completion.completionItem.snippetSupport = true
+		html_json_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 		lspconfig["cssmodules_ls"].setup({
-			capabilities = lsp_capabilities
+			capabilities = lsp_capabilities,
 			on_attach = on_attach
 		})
 
 		lspconfig["dockerls"].setup({
-			capabilities = lsp_capabilities
+			capabilities = lsp_capabilities,
 			on_attach = on_attach
 		})
 
 		lspconfig["eslint"].setup({
-			capabilities = lsp_capabilities
+			capabilities = lsp_capabilities,
 			on_attach = on_attach
 		})
 
 		lspconfig["graphql"].setup({
-			capabilities = lsp_capabilities
+			capabilities = lsp_capabilities,
 			on_attach = on_attach
 		})
 		
 		lspconfig["html"].setup({
-			capabilities = html_json_capabilities
+			capabilities = html_json_capabilities,
 			on_attach = on_attach
 		})
 
 		lspconfig["jsonls"].setup({
-			capabilities = html_json_capabilities
+			capabilities = html_json_capabilities,
 			on_attach = on_attach
 		})
 
 		lspconfig["luau_lsp"].setup({
-			capabilities = lsp_capabilities
+			capabilities = lsp_capabilities,
 			on_attach = on_attach
 		})
 
 		lspconfig["pyright"].setup({
-			capabilities = lsp_capabilities
+			capabilities = lsp_capabilities,
 			on_attach = on_attach
 		})
 
 		lspconfig["tsserver"].setup({
-			capabilities = lsp_capabilities
+			capabilities = lsp_capabilities,
 			on_attach = on_attach
 		})
 
@@ -137,9 +137,9 @@ return {
 		{ "hrsh7th/cmp-buffer" },
 		{ "hrsh7th/cmp-nvim-lsp" },
 		{ "hrsh7th/cmp-path" },
-		{ "L3MON4D3/LuaSnip", tag = "v1.*" },
+		{ "L3MON4D3/LuaSnip" },
 		{ "rafamadriz/friendly-snippets" },
 		{ "saadparwaiz1/cmp_luasnip" },
-	}
+	},
 	lazy = false,
 }
