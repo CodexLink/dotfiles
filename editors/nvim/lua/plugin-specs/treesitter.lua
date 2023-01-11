@@ -1,16 +1,17 @@
--- nvim-treesitter.nvim	 | Plugin spec for the 'nvim-treesitter', used for the package manager lazy.nvim"
--- Version 0.1.4 | Since 01/11/2023
--- @CodexLink    | https://github.com/CodexLink
+-- treesitter.nvim	| Plugin spec for the 'nvim-treesitter' and its `friends`, used for the package manager lazy.nvim".
+-- Version 0.1.0		| Since 01/11/2023
+-- @CodexLink    		| https://github.com/CodexLink
 
 -- Info
--- [1] This plugin is used to understand the file, not as an alternative to LSP.
+-- [1] The plugin[1] is used to understand the file, not as an alternative to LSP.
 -- [2] Configuration reference: https://github.com/rafamadriz/dotfiles/commit/c1268c73bdc7da52af0d57dcbca196ca3cb5ed79
 
 return {
+	{
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
 	config = function()
-	require("nvim-treesitter").setup({
+		require("nvim-treesitter").setup({
 		-- Explicitly stated to ensure that vim native syntax checks aren't added while treesitter does it.
 		additional_vim_regex_highlighting = false,
 		auto_install = true,
@@ -67,4 +68,16 @@ return {
 		textobjects = { enable = true },
 		})
 	end
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		config = true,
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		event = "BufEventPre",
+		keys = {
+			{"<Leader>Tce", "<CMD>TSContextEnable<CR>", desc = "Enable `treesitter-context`."},
+			{"<Leader>Tcd", "<CMD>TSContextDisable<CR>", desc = "Disable `treesitter-context`."},
+			{"<Leader>Tct", "<CMD>TSContextToggle<CR>", desc = "Toggle `treesitter-context`."}
+		}
+	}
 }

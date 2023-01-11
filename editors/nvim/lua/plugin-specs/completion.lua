@@ -1,4 +1,4 @@
--- nvim-cmp.lua | Plugin spec for the 'nvim-cmp' and it's friends (that provides snippets, autocompletion, advertisement of suggestion from the server, etc), used for the package manager lazy.nvim"
+-- completion.lua | Plugin declaration for `nvim-cmp.lua` and it's friends (that provides snippets, autocompletion, advertisement of suggestion from the server, etc), used for the package manager lazy.nvim"
 -- Version 0.1.0  | Since 01/11/2023
 -- @CodexLink     | https://github.com/CodexLink
 
