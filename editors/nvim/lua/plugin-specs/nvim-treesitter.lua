@@ -1,5 +1,5 @@
 -- nvim-treesitter.nvim	 | Plugin spec for the 'nvim-treesitter', used for the package manager lazy.nvim"
--- Version 0.1.3 | Since 01/11/2023
+-- Version 0.1.4 | Since 01/11/2023
 -- @CodexLink    | https://github.com/CodexLink
 
 -- Info
@@ -47,7 +47,10 @@ return {
 			"vue",
 			"yaml"
 		},
-		highlight = { enable = true },
+		highlight = {
+			enable = true
+			additional_vim_regex_highlighting = false,
+		},
 		incremental_selection = { enable = true },
 		indent = { enable = true },
 		keymaps = { -- Experimental, I'm currently figuring this one out.
