@@ -24,10 +24,7 @@ return {
 							highlight = { underline = true, sp = "#FFD740" },
 							matcher = function(buf)
 								return buf.filename:match('%.py') or buf.filename:match('%.json') or buf.filename:match('%.js') or buf.filename:match('%.ts') or buf.filename:match('%.cpp') or buf.filename:match('%.c') or buf.filename:match('%.pinescript') -- !!! TODO: To add more.
-							end,
-							separator = {
-								style = require('bufferline.groups').separator.tab
-							},
+							end
 						},
 						{
 							name = "Docs",
@@ -35,10 +32,7 @@ return {
 							highlight = { underline = true, sp = "#64FFDA" },
 							matcher = function(buf)
 								return buf.filename:match('%.md') or buf.filename:match('%.txt')
-							end,
-							separator = {
-								style = require('bufferline.groups').separator.tab
-							},
+							end
 						},
 						{
 							name = "Test",
@@ -46,10 +40,7 @@ return {
 							highlight = { underline = true, sp = "#FF4081" },
 							matcher = function(buf)
 								return buf.filename:match('%_test') or buf.filename:match('%_spec')
-							end,
-							separator = {
-								style = require('bufferline.groups').separator.tab
-							},
+							end
 						}
 					}
 				},
@@ -118,7 +109,7 @@ return {
 		-- ! Displays icons, more like from the `Nerd Fonts`, note that lots of plugins depend on this plugin!
 		"nvim-tree/nvim-web-devicons",
 		lazy = true,
-		config = {
+		opts = {
 			color_icons = true,
 			default = true
 		}

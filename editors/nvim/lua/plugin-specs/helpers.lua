@@ -63,8 +63,8 @@ return {
 		-- ! Jump the cursor from a certain region with two letters only.
 		"ggandor/leap.nvim",
 		config = function() require("leap").add_default_mappings() end,
-		event = "EventBufPre"
-	}
+		event = "BufFilePre"
+	},
 	{
 		-- ! External helper tool that helps visualizes the markdown or text file to the browser.
 		"iamcco/markdown-preview.nvim",
@@ -186,7 +186,7 @@ return {
 		"andymass/vim-matchup",
 		config = true,
 		event = "VeryLazy"
-	}
+	},
 	{
 		-- ! Keybind guide for the editor.
 		-- !!! I don't like this since I already have keybinds declared from the other plugin spec, will take consideration of this one.

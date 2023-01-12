@@ -10,8 +10,7 @@ return {
 	{
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
-	config = function()
-		require("nvim-treesitter").setup({
+	opts = {
 		-- Explicitly stated to ensure that vim native syntax checks aren't added while treesitter does it.
 		additional_vim_regex_highlighting = false,
 		auto_install = true,
@@ -66,14 +65,13 @@ return {
 		},
 		sync_install = false,
 		textobjects = { enable = true },
-		})
-	end
+		}
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",
 		config = true,
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		event = "BufEventPre",
+		event = "BufFilePre",
 		keys = {
 			{"<Leader>Tce", "<CMD>TSContextEnable<CR>", desc = "Enable `treesitter-context`."},
 			{"<Leader>Tcd", "<CMD>TSContextDisable<CR>", desc = "Disable `treesitter-context`."},

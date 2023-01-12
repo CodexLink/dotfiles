@@ -13,10 +13,9 @@ return {
 					conf.col = -1
 					conf.row = 0
 					return conf
-				end,
+				end
 			}
-		}
-		end,
+		},
 		lazy = true
 	},
 	{
@@ -25,7 +24,7 @@ return {
 		config = function()
 			require("scrollbar.handlers.gitsigns").setup()
 		end,
-		dependency = {
+		dependencies = {
 			{"petertriho/nvim-scrollbar" } -- !!! Despite this plugin is declared in `ui.lua`, if `ui-helpers.lua` was the first plugin spec file to initialize, then install this plugin as possible, if missing, then re-configure on `ui.lua` later.
 		},
 		keys = {
@@ -64,7 +63,7 @@ return {
 			telescope.load_extension("fzf")       -- nvim-telescope/telescope-ui-select.nvim
 			telescope.load_extension("ui-select") -- nvim-telescope/telescope-ui-select.nvim
 		end,
-		config = {
+		opts = {
 			defaults = {
 				layout_config = {
 					vertical = { width = 0.5 }
@@ -122,7 +121,7 @@ return {
 		"RRethy/vim-illuminate",
 		config = function() require("illuminate").configure({}) end,
 		event = "BufReadPost"
-}
+	},
 	{
 		-- ! Window sizing management with animation.
 		"anuvyklack/windows.nvim",
@@ -143,5 +142,5 @@ return {
 			{ "<C-W>-", "<CMD>WindowsMaximizeHorizontally<CR>", desc = "Maximize horizontal side of the focused window." },
 			{ "<C-W>=", "<CMD>WindowsEqualize<CR>", desc = "Equalize all windows." }
 		}
-}
+	}
 }
