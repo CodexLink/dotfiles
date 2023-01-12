@@ -1,0 +1,4 @@
+# .gitginore, literally for my dotfiles
+
+# Log files
+*.log

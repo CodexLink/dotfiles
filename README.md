@@ -24,7 +24,6 @@ TODO
 
 The following are the configurations that inspired my current configuration:
 
-- [craftzdog's dotfiles](https://github.com/craftzdog/dotfiles-public/blob/master/.config/nvim/lua/craftzdog/plugins.lua)
 - [folke's dotfiles](https://github.com/folke/dot/tree/master/config/nvim)
 
 ### Demo
