@@ -1,5 +1,4 @@
 -- init.lua 			| Plugin Initializer for `nvim`
--- Version 0.1.0  | Since 11/01/2022
 -- @CodexLink 		| https://github.com/CodexLink
 -- Description: This lua file only checks for the existence of the modules, as well as import them via `require`.
 
