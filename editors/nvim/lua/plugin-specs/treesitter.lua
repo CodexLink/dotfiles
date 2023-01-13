@@ -1,5 +1,5 @@
 -- treesitter.nvim	| Plugin spec for the 'nvim-treesitter' and its `friends`, used for the package manager lazy.nvim".
--- Version 0.1.0		| Since 01/11/2023
+-- Version 0.1.1		| Since 01/13/2023
 -- @CodexLink    		| https://github.com/CodexLink
 
 -- Info
@@ -71,7 +71,7 @@ return {
 		"nvim-treesitter/nvim-treesitter-context",
 		config = true,
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		event = "BufFilePre",
+		event = "BufReadPre",
 		keys = {
 			{"<Leader>Tce", "<CMD>TSContextEnable<CR>", desc = "Enable `treesitter-context`."},
 			{"<Leader>Tcd", "<CMD>TSContextDisable<CR>", desc = "Disable `treesitter-context`."},

@@ -1,5 +1,5 @@
 -- helpers.lua			| Plugins that eases the operation from the editor, more likely a `shortcut` to the process; external-helpers or utilities were also included in this plugin spec file; used for the package manager lazy.nvim"
--- Version 0.1.0		| Since 01/12/2023
+-- Version 0.1.1		| Since 01/13/2023
 -- @CodexLink				| https://github.com/CodexLink
 
 local vg = vim.g
@@ -63,7 +63,7 @@ return {
 		-- ! Jump the cursor from a certain region with two letters only.
 		"ggandor/leap.nvim",
 		config = function() require("leap").add_default_mappings() end,
-		event = "BufFilePre"
+		event = "BufReadPre"
 	},
 	{
 		-- ! External helper tool that helps visualizes the markdown or text file to the browser.
