@@ -25,24 +25,25 @@ return {
 			local hop = require("hop")
 			local directions = require("hop.hint").HintDirection
 
+			vk.set("", "h", function()
+				hop.hint_char1()
+			end, { remap = true })
+
+			vk.set("", "H", function()
+				hop.hint_char2()
+			end, { remap = true })
+
 			vk.set("", "f", function()
-				hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+				hop.hint_anywhere({ direction = directions.AFTER_CURSOR })
 			end, { remap = true })
 
 			vk.set("", "F", function()
-				hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+				hop.hint_anywhere({ direction = directions.BEFORE_CURSOR })
 			end, { remap = true })
 
-			vk.set("", "t", function()
-				hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
-			end, { remap = true })
+			-- Do the conventional setup.
+			hop.setup({})
 
-			vk.set("", "T", function()
-				hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
-			end, { remap = true })
-
-		-- Do the conventional setup.
-		hop.setup({})
 		end,
 		event = "BufReadPost"
 	},
@@ -95,7 +96,7 @@ return {
 			require("neogen").setup({ snippet_engine = "luasnip" })
 		end,
 		keys = {
-			{ "<Leader>ag", [[ <CMD>require("neogen").generate()<CR> ]],  { noremap = true, silent = true } }
+			{ "<Leader>ag", [[ <CMD>lua require("neogen").generate()<CR> ]],  desc= "neogen: Annotate code context.", { noremap = true, silent = true } }
 		}
 	},
 	{

@@ -22,22 +22,31 @@ return {
 		"lewis6991/gitsigns.nvim",
 		config = function()
 			require("scrollbar.handlers.gitsigns").setup()
+			-- ! Since we overriden the config field of this plugin spec, we have to re-establish this plugin's setup.
+			-- !! We cannot use `opts` field anymore because of the potential conflict configuration with the `config` field.
+			require("gitsigns").setup({
+				current_line_blame = true,
+				numhl = true,
+				signs = {
+					add = { text = '+' },
+					change = { text = '~' },
+					delete = { text = '-' },
+					topdelete = { text = '--' },
+					changedelete = { text = '=' },
+					untracked = { text = '?' },
+				}
+			})
 		end,
 		dependencies = {
 			{"petertriho/nvim-scrollbar" } -- !!! Despite this plugin is declared in `ui.lua`, if `ui-helpers.lua` was the first plugin spec file to initialize, then install this plugin as possible, if missing, then re-configure on `ui.lua` later.
 		},
 		keys = {
-			{ "<C-G>h", "<CMD>Gitsigns preview_hunk<CR>", desc = "Preview hunk (changes on certain code line)." },
-			{ "<C-G>b", "<CMD>Gitsigns toggle_current_line_blame<CR>", desc = "Toggle line blame." },
-			{ "<C-G>d", "<CMD>Gitsigns diffthis<CR>", desc = "Activate 'diffthis' on current line." },
-			{ "<C-G>D", function() require("gitsigns").diffthis("~") end, desc = "Activate `diffthis` on whole file." },
+			{ "<C-G>h", [[ <CMD>Gitsigns preview_hunk<CR> ]], desc = "gitsigns.nvim: Preview hunk (changes on certain code line)." },
+			{ "<C-G>b", [[ <CMD>Gitsigns toggle_current_line_blame<CR> ]], desc = "gitsigns.nvim: Toggle line blame." },
+			{ "<C-G>d", [[ <CMD>Gitsigns diffthis<CR> ]], desc = "gitsigns.nvim: Activate 'diffthis' on current line." },
+			{ "<C-G>D", function() require("gitsigns").diffthis("~") end, desc = "gitsigns.nvim: Activate `diffthis` on whole file." }
 		},
-		event = "BufReadPost",
-		opts = {
-			current_line_blame = true,
-			numhl = true,
-			word_diff = true
-		}
+		event = "BufReadPost"
 	},
 	{
 		-- ! Colorizes any string that states a color.
@@ -86,6 +95,10 @@ return {
 	{
 		"folke/trouble.nvim",
 		event = "BufReadPost",
+		keys = {
+			{ "<M-2>", [[ <CMD>TroubleToggle<CR> ]], desc = "trouble.nvim (Diagnostics): Toggle." },
+			{ "<M-~>", [[ <CMD>TroubleRefresh<CR> ]], desc = "trouble.nvim (Diagnostics): Refresh the list." }
+		},
 		opts = {
 			action_keys = {
 				close = "q",
@@ -105,8 +118,7 @@ return {
 				toggle_fold = {"zA", "za"},
 				previous = "k",
 				next = "j"
-			},
-			mode = "lsp_references"
+			}
 		}
 	},
 	{
@@ -136,10 +148,10 @@ return {
 		},
 		event = "VeryLazy",
 		keys = {
-			{ "<C-W>M", "<CMD>WindowsMaximize<CR>", desc = "Maximize the focused window." },
-			{ "<C-W>|", "<CMD>WindowsMaximizeVertically<CR>", desc = "Maximize vertical side of the focused window." },
-			{ "<C-W>-", "<CMD>WindowsMaximizeHorizontally<CR>", desc = "Maximize horizontal side of the focused window." },
-			{ "<C-W>=", "<CMD>WindowsEqualize<CR>", desc = "Equalize all windows." }
+			{ "<C-W>m", [[ <CMD>WindowsMaximize ]], desc = "windows.nvim: Maximize the focused window." },
+			{ "<C-W>|", [[ <CMD>WindowsMaximizeVertically<CR> ]], desc = "windows.nvim: Maximize vertical side of the focused window." },
+			{ "<C-W>-", [[ <CMD>WindowsMaximizeHorizontally<CR> ]], desc = "windows.nvim: Maximize horizontal side of the focused window." },
+			{ "<C-W>=", [[ <CMD>WindowsEqualize<CR> ]], desc = "windows.nvim: Equalize all windows." }
 		}
 	}
 }

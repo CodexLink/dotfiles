@@ -1,5 +1,6 @@
 -- ui.lua 					| Plugins that renders every part of the UI of my editor, these plugins are `first-order` classified, used for the package manager lazy.nvim"
 -- @CodexLink				| https://github.com/CodexLink
+
 return {
 	{
 		-- ! Buffer file displayed as a tab.
@@ -10,6 +11,7 @@ return {
 		lazy = false,
 		opts = {
 			options = {
+				always_show_bufferline = false,
 				color_icons = true,
 				diagnostics = "nvim_lsp",
 				 groups = {
@@ -20,15 +22,15 @@ return {
 						{
 							name = "Code",
 							auto_close = false,
-							highlight = { underline = true, sp = "#FFD740" },
+							highlight = { sp = "#FFD740" },
 							matcher = function(buf)
-								return buf.filename:match('%.py') or buf.filename:match('%.json') or buf.filename:match('%.js') or buf.filename:match('%.ts') or buf.filename:match('%.cpp') or buf.filename:match('%.c') or buf.filename:match('%.pinescript') -- !!! TODO: To add more.
+								return buf.filename:match("%.c") or buf.filename:match("%.cpp") or buf.filename:match("%.lua") or buf.filename:match("%.js") or buf.filename:match("%.json") or buf.filename:match("%.py") or buf.filename:match("%.ts")
 							end
 						},
 						{
 							name = "Docs",
 							auto_close = false,
-							highlight = { underline = true, sp = "#64FFDA" },
+							highlight = { sp = "#64FFDA" },
 							matcher = function(buf)
 								return buf.filename:match('%.md') or buf.filename:match('%.txt')
 							end
@@ -36,32 +38,22 @@ return {
 						{
 							name = "Test",
 							auto_close = false,
-							highlight = { underline = true, sp = "#FF4081" },
+							highlight = { sp = "#FF4081" },
 							matcher = function(buf)
 								return buf.filename:match('%_test') or buf.filename:match('%_spec')
 							end
 						}
-					}
+					},
 				},
 				hover = {
 					enabled = true,
 					delay = 200,
 					reveal = { "close" }
 				},
-				indicator = {
-					style = "underline"
-				},
-				offsets = {
-					{
-							filetype = "NvimTree",
-							text = "Files",
-							highlight = "Directory",
-							separator = true
-					}
-				},
 				separator_style = { "", "" },
 				show_close_icon = false,
 				show_buffer_close_icons = false,
+				show_tab_indicators = true,
 				sort_by = "id"
 			}
 		}
@@ -95,7 +87,7 @@ return {
     },
 		event = "VeryLazy",
 		keys = {
-			{"<M-s>", [[ <CMD>NeoTree position=right<CR> ]], desc = "Toggle NeoTree", { noremap = true, silent = true }}
+			{"<M-1>", [[ <CMD>Neotree action=show position=left reveal=true toggle=true<CR> ]], desc = "neotree.nvim: Toggle.", { noremap = true, silent = true }}
 		},
 	},
 	{
