@@ -1,5 +1,4 @@
 -- options.lua   | Contains all 'set' commands which was called via 'vim.o'.
--- Version 0.1.1 | Since 01/12/2023
 -- @CodexLink    | https://github.com/CodexLink
 
 -- Info

@@ -1,5 +1,4 @@
 -- helpers.lua			| Plugins that eases the operation from the editor, more likely a `shortcut` to the process; external-helpers or utilities were also included in this plugin spec file; used for the package manager lazy.nvim"
--- Version 0.1.1		| Since 01/13/2023
 -- @CodexLink				| https://github.com/CodexLink
 
 local vg = vim.g
@@ -142,17 +141,6 @@ return {
 		},
 	},
 	{
-		-- ! Session loader from each time `nvim` was opened.
-		"folke/persistence.nvim",
-		config = true,
-		event = "VeryLazy",
-		keys = {
-			{"<LEADER>plc", [[ <CMD>lua require("persistence").load()<CR> ]], desc = "Persistence: Load session from the current directory."},
-			{"<LEADER>pls", [[ <CMD>lua require("persistence").load({ last = true})<CR> ]], desc = "Persistence: Load session from the last session."},
-			{"<LEADER>pq", [[ <CMD>lua require("persistence").stop()<CR> ]], desc = "Persistence: Stop saving current session on exit."},
-		}
-	},
-	{
 	-- ! Structural search then replace; far more advanced than the conventional find and replace system.
 	"cshuaimin/ssr.nvim",
 	keys = {
@@ -185,7 +173,7 @@ return {
 		-- ! Extends the nvim's % motion by allowing code context to jump through other than brackets, parenthesis and any other identifiers that is made of symbols.
 		"andymass/vim-matchup",
 		config = true,
-		event = "VeryLazy"
+		event = "BufReadPre"
 	},
 	{
 		-- ! Keybind guide for the editor.

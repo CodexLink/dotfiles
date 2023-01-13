@@ -1,5 +1,4 @@
 -- ui-helpers.lua 	| Plugins that naturally makes the UI even more better, these plugins were add-ons from the `first-order plugins`, therefore plugins declared from this file were classified as `second-order plugins`; used for the package manager lazy.nvim"
--- Version 0.1.0		| Since 01/05/2023
 -- @CodexLink				| https://github.com/CodexLink
 
 return {

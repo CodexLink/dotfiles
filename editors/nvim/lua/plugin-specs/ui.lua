@@ -1,14 +1,13 @@
 -- ui.lua 					| Plugins that renders every part of the UI of my editor, these plugins are `first-order` classified, used for the package manager lazy.nvim"
--- Version 0.1.0		| Since 01/05/2023
 -- @CodexLink				| https://github.com/CodexLink
 return {
 	{
 		-- ! Buffer file displayed as a tab.
 		"akinsho/bufferline.nvim",
-		event = "VeryLazy",
 		dependencies = {
 			{ "nvim-tree/nvim-web-devicons" }
 		},
+		lazy = false,
 		opts = {
 			options = {
 				color_icons = true,
@@ -81,7 +80,7 @@ return {
 		-- ! Status bar for the editor.
 		-- TODO: Requires further customization!
 		"nvim-lualine/lualine.nvim",
-		event = "VeryLazy",
+		lazy = false,
 		opts = { icons_enabled = true }
 	},
 	{

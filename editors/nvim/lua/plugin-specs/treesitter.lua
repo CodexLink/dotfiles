@@ -1,9 +1,8 @@
 -- treesitter.nvim	| Plugin spec for the 'nvim-treesitter' and its `friends`, used for the package manager lazy.nvim".
--- Version 0.1.1		| Since 01/13/2023
 -- @CodexLink    		| https://github.com/CodexLink
 
 -- Info
--- [1] The plugin[1] is used to understand the file, not as an alternative to LSP.
+-- [1] The plugin at index [1] is used to understand the file, not as an alternative to LSP.
 -- [2] Configuration reference: https://github.com/rafamadriz/dotfiles/commit/c1268c73bdc7da52af0d57dcbca196ca3cb5ed79
 
 return {

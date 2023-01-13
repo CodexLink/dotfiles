@@ -1,5 +1,4 @@
 -- tracker.lua	 | Plugin Spec for all plugins that track my movements and progression with the editor, used for the package manager lazy.nvim"
--- Version 0.1.0 | Since 01/11/2023
 -- @CodexLink    | https://github.com/CodexLink
 
 -- Notes

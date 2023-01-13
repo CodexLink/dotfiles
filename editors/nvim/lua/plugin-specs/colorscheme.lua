@@ -1,5 +1,4 @@
 -- colorsheme.lua	 | Plugin spec for the 'gruvbox' (ellisonleao/gruvbox.nvim), used for the package manager lazy.nvim"
--- Version 0.2.0 | Since 01/12/2023
 -- @CodexLink    | https://github.com/CodexLink
 -- Info
 -- [1] Higher priority is required for the colorscheme, as stated by the author of the package manager.

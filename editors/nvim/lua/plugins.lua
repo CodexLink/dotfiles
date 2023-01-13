@@ -1,5 +1,4 @@
 -- plugins.lua   | Plugins with "lazy.nvim" as a package manager
--- Version 0.1.1 | Since 01/04/2023
 -- @CodexLink    | https://github.com/CodexLink
 -- Description: This lua file necessary configuration for the package manager "lazy.nvim".
 
