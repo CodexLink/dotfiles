@@ -55,8 +55,8 @@ return {
 		},
 		event = "BufReadPost",
 		keys = {
-			{ "<S-F2>", ":IncRename ", desc = "Incremental renaming by typing the name." },
-			{ "<F2>", function() return ":IncRename " .. vim.fn.expand("<CWORD>") end, desc = "Incremental renaming by typing the name.", { expr = true }},
+			{ "<S-F2>", ":IncRename ", desc = "inc-rename.nvim: Incremental renaming by typing the name." },
+			{ "<F2>", function() return ":IncRename " .. vim.fn.expand("<CWORD>") end, desc = "inc-rename.nvim: Incremental renaming by typing the name.", { expr = true }},
 		},
 	},
 	{
@@ -79,9 +79,9 @@ return {
 			vg.mkdp_filetypes = { "markdown", "text" }
 		end,
 		keys = {
-			{ "<leader>mp", [[ <CMD>MarkdownPreview<CR> ]], desc = "Activate 'markdown-preview'." },
-			{ "<leader>mP", [[ <CMD>MarkdownPreviewToggle<CR> ]], desc = "Toggle 'markdown-preview'." },
-			{ "<leader>mS", [[ <CMD>MarkdownPreviewStop<CR> ]], desc = "Deactivate 'markdown-preview'." }
+			{ "<leader>mp", [[ <CMD>MarkdownPreview<CR> ]], desc = "markdown-preview.nvim: Activate." },
+			{ "<leader>mP", [[ <CMD>MarkdownPreviewToggle<CR> ]], desc = "markdown-preview.nvim: Toogle." },
+			{ "<leader>mS", [[ <CMD>MarkdownPreviewStop<CR> ]], desc = "markdown-preview.nvim: Deactivate." }
 		},
 		ft = {
 			"markdown",
@@ -138,14 +138,14 @@ return {
 		},
 		event = "BufReadPost",
 		keys = {
-			{ "<Leader>th", function() require("tsht").nodes() end, desc = "Toggle nodes to region highlight." },
+			{ "<Leader>th", function() require("tsht").nodes() end, desc = "nvim-treehopper: Toggle context to hoppable." },
 		},
 	},
 	{
 	-- ! Structural search then replace; far more advanced than the conventional find and replace system.
 	"cshuaimin/ssr.nvim",
 	keys = {
-		{ "<leader>SR", function () require("ssr").open() end, mode={ "n", "x" }, desc = "Do 'Structural Search and Replace'." },
+		{ "<leader>SR", function () require("ssr").open() end, mode={ "n", "x" }, desc = "ssr.nvim: Do 'Structural Search and Replace'." },
 	},
 	lazy = false,
 	opts = {
@@ -164,7 +164,7 @@ return {
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		event = "BufReadPost",
 		keys = {
-			{ "<M->t", [[ <CMD>TSJToggle<CR> ]], desc = "Toggle 'One-Liner or Splitted Context' Code." },
+			{ "<M->t", [[ <CMD>TSJToggle<CR> ]], desc = "treesj: Toggle 'One-Liner or Splitted Context' Code." },
 		},
 		opts = {
 			max_join_length = 512
