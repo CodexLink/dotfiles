@@ -18,13 +18,11 @@ I use Powershell ([pwsh](https://github.com/PowerShell/PowerShell)) with [oh-my-
 
 ## `nvim`
 
-TODO
-
-### Basis
-
-The following are the configurations that inspired my current configuration:
+### References for Configuration
+> The following are references that I used for basis for my configuration. This can be dotfiles, guide, or whatever that helps me build this configuration.
 
 - [folke's dotfiles](https://github.com/folke/dot/tree/master/config/nvim)
+- [LSP Guide (lspconfig, null-ls, mason.nvim, etc.)](https://levelup.gitconnected.com/a-step-by-step-guide-to-configuring-lsp-in-neovim-for-coding-in-next-js-a052f500da2#429b)
 
 ### Demo
 
