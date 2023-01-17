@@ -40,12 +40,6 @@ return {
 		dependencies = {
 			{"petertriho/nvim-scrollbar" } -- !!! Despite this plugin is declared in `ui.lua`, if `ui-helpers.lua` was the first plugin spec file to initialize, then install this plugin as possible, if missing, then re-configure on `ui.lua` later.
 		},
-		keys = {
-			{ "<C-G>h", [[ <CMD>Gitsigns preview_hunk<CR> ]], desc = "gitsigns.nvim: Preview hunk (changes on certain code line)." },
-			{ "<C-G>b", [[ <CMD>Gitsigns toggle_current_line_blame<CR> ]], desc = "gitsigns.nvim: Toggle line blame." },
-			{ "<C-G>d", [[ <CMD>Gitsigns diffthis<CR> ]], desc = "gitsigns.nvim: Activate 'diffthis' on current line." },
-			{ "<C-G>D", function() require("gitsigns").diffthis("~") end, desc = "gitsigns.nvim: Activate `diffthis` on whole file." }
-		},
 		event = "BufReadPost"
 	},
 	{
@@ -95,10 +89,6 @@ return {
 	{
 		"folke/trouble.nvim",
 		event = "BufReadPost",
-		keys = {
-			{ "<M-2>", [[ <CMD>TroubleToggle<CR> ]], desc = "trouble.nvim (Diagnostics): Toggle." },
-			{ "<M-~>", [[ <CMD>TroubleRefresh<CR> ]], desc = "trouble.nvim (Diagnostics): Refresh the list." }
-		},
 		opts = {
 			action_keys = {
 				close = "q",
@@ -146,12 +136,6 @@ return {
 			{ "anuvyklack/middleclass" },
 			{ "anuvyklack/animation.nvim" }
 		},
-		event = "VeryLazy",
-		keys = {
-			{ "<C-W>m", [[ <CMD>WindowsMaximize ]], desc = "windows.nvim: Maximize the focused window." },
-			{ "<C-W>|", [[ <CMD>WindowsMaximizeVertically<CR> ]], desc = "windows.nvim: Maximize vertical side of the focused window." },
-			{ "<C-W>-", [[ <CMD>WindowsMaximizeHorizontally<CR> ]], desc = "windows.nvim: Maximize horizontal side of the focused window." },
-			{ "<C-W>=", [[ <CMD>WindowsEqualize<CR> ]], desc = "windows.nvim: Equalize all windows." }
-		}
+		event = "VeryLazy"
 	}
 }

@@ -85,10 +85,7 @@ return {
       { "nvim-tree/nvim-web-devicons" },
       { "MunifTanjim/nui.nvim" }
     },
-		event = "VeryLazy",
-		keys = {
-			{"<M-1>", [[ <CMD>Neotree action=show position=left reveal=true toggle=true<CR> ]], desc = "neotree.nvim: Toggle.", { noremap = true, silent = true }}
-		},
+		event = "VeryLazy"
 	},
 	{
 		-- ! Literally a scrollbar, but in nvim.

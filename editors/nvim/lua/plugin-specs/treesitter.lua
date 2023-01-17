@@ -70,11 +70,6 @@ return {
 		"nvim-treesitter/nvim-treesitter-context",
 		config = true,
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		event = "BufReadPre",
-		keys = {
-			{"<Leader>Tce", "<CMD>TSContextEnable<CR>", desc = "Enable `treesitter-context`."},
-			{"<Leader>Tcd", "<CMD>TSContextDisable<CR>", desc = "Disable `treesitter-context`."},
-			{"<Leader>Tct", "<CMD>TSContextToggle<CR>", desc = "Toggle `treesitter-context`."}
-		}
+		event = "BufReadPre"
 	}
 }
