@@ -2,19 +2,23 @@
 -- @CodexLink    		| https://github.com/CodexLink
 
 -- Info
--- [1] The plugin at index [1] is used to understand the file, not as an alternative to LSP.
--- [2] Configuration reference: https://github.com/rafamadriz/dotfiles/commit/c1268c73bdc7da52af0d57dcbca196ca3cb5ed79
+-- [1] According to the issue (https://github.com/LazyVim/LazyVim/issues/2) from LazyVim, there were build failures and repeating compilation done by `nvim-treesitter`.
+-- Since then, latest upstream should be used by setting version to `false`.
 
 return {
 	{
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
+	config = function (_, opts)
+		require("nvim-treesitter.configs").setup(opts)
+	end,
+	dependencies = {
+		{ "andymass/vim-matchup", config = function() vim.g.matchup_matchparen_offscreen = { method = "popup" } end, event = "BufReadPost", version = false },
+		{ "nvim-treesitter/nvim-treesitter-context", config = true, event = "BufReadPost" }
+	},
 	opts = {
-		-- Explicitly stated to ensure that vim native syntax checks aren't added while treesitter does it.
 		additional_vim_regex_highlighting = false,
-		auto_install = true,
-
-		-- This table contains of all possible plugins that I may use, currently and in the future.
+		autopairs = { enable = true },
 		ensure_installed = {
 			"c",
 			"comment",
@@ -58,18 +62,10 @@ return {
 			scope_incremental = "grc",
 			node_decremental = "grm",
 		},
-		matchup = {
-			disable_virtual_text = true,
-			enable = true
-		},
-		sync_install = false,
-		textobjects = { enable = true },
-		}
+		-- matchup = { enable = true },
+		textobjects = { enable = true }
 	},
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		config = true,
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		event = "BufReadPre"
+	event = "BufReadPost",
+	version = false
 	}
 }

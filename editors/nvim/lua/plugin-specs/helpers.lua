@@ -50,7 +50,7 @@ return {
 	{
 		-- ! Incremental renaming context, similar to vscode's F2 rename system but incremental in this case.
 		"smjonas/inc-rename.nvim",
-		opts = { 
+		opts = {
 			input_buffer_type = "dressing"
 		},
 		event = "BufReadPost"
@@ -68,7 +68,7 @@ return {
 		config = function()
 			-- After installation, run other global variable configs.
 			-- !!! The plugin runs in this way and not in the conventional 'config' function.
-			
+
 			-- Since this plugin is only loaded based on file extensiosn from 'ft' table, do not limit on markdown.
 			vg.mkdp_command_for_global = 1
 			vg.mkdp_page_title = "${name} | mkdp (live)"
@@ -148,12 +148,6 @@ return {
 		opts = {
 			max_join_length = 512
 		}
-	},
-	{
-		-- ! Extends the nvim's % motion by allowing code context to jump through other than brackets, parenthesis and any other identifiers that is made of symbols.
-		"andymass/vim-matchup",
-		config = true,
-		event = "BufReadPre"
 	},
 	{
 		-- ! Keybind guide for the editor.

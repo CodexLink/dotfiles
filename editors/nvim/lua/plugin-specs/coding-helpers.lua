@@ -11,11 +11,65 @@ return {
 		config = function()
 			-- Instantiations
 			local cmp = require("cmp")
+			local cmp_types = require("cmp.types")
 			local lspconfig = require("lspconfig")
+			local luasnip = require("luasnip")
 			local null_ls = require("null-ls")
+
+			-- ! This function is provided from the advanced configuration of `nvim-cmp`.
+			local has_words_before = function()
+				unpack = unpack or table.unpack
+				local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+				return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+			end
 
 			-- * Setup for the completion.
 			cmp.setup({
+			  formatting = {
+					fields = { "kind", "abbr", "menu" },
+					format = function(entry, vim_item)
+						local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+						local strings = vim.split(kind.kind, "%s", { trimempty = true })
+						kind.kind = " " .. (strings[1] or "") .. " "
+						kind.menu = "    (" .. (strings[2] or "") .. ")"
+
+						return kind
+					end,
+				},
+				mapping = {
+					["<Down>"] = {
+						i = cmp.mapping.select_next_item({ behavior = cmp_types.cmp.SelectBehavior.Select }),
+					},
+					["<Up>"] = {
+						i = cmp.mapping.select_prev_item({ behavior = cmp_types.cmp.SelectBehavior.Select }),
+					},
+					["<C-q>"] = cmp.mapping.scroll_docs(-4),
+					["<C-e>"] = cmp.mapping.scroll_docs(4),
+					["<C-w>"] = cmp.mapping.complete(),
+					["<ESC>"] = cmp.mapping.abort(),
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_next_item()
+						elseif luasnip.expand_or_locally_jumpable() then
+							luasnip.expand_or_jump()
+						elseif has_words_before() then
+							cmp.complete()
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+
+					["<S-Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_prev_item()
+						elseif luasnip.jumpable(-1) then
+							luasnip.jump(-1)
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+				},
 				sources = {
 					{
 						name = "buffer",
@@ -40,7 +94,14 @@ return {
 					expand = function(args)
 						cmp.lsp_expand(args.body)
 					end
-				}
+				},
+			  window = {
+					completion = {
+						winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+						col_offset = -3,
+						side_padding = 0,
+					},
+				},
 			})
 
 			-- * Setup for the external tool pakage manager.
@@ -114,7 +175,7 @@ return {
 
 			-- Use an on_attach function to only map the following keys
 			-- after the language server attaches to the current buffer
-			local on_attach = function(client, bufnr)
+			local on_attach = function(_, bufnr)
 				-- Enable completion triggered by <c-x><c-o>
 				vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -234,12 +295,13 @@ return {
 			{ "williamboman/mason-lspconfig.nvim" },
 			-- ! Primary plugins that is naturally dependant by these extension plugins.
 			{ "neovim/nvim-lspconfig" }, -- For the LSP.
-			{ "jose-elias-alvarez/null-ls.nvim", dependency = { "nvim-lua/plenary.nvim" } }, -- For the Code Actions, Formatters and Linters.
+			{ "jose-elias-alvarez/null-ls.nvim", dependencies = { "nvim-lua/plenary.nvim" } }, -- For the Code Actions, Formatters and Linters.
 			{ "jay-babu/mason-null-ls.nvim" }, -- Declared before the dependant.
 			-- * Completion plugins
 			{ "hrsh7th/cmp-buffer" },
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "hrsh7th/cmp-path" },
+			{ "onsails/lspkind.nvim" },
 			{ "L3MON4D3/LuaSnip" },
 			{ "rafamadriz/friendly-snippets" },
 			{ "saadparwaiz1/cmp_luasnip" },

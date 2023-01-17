@@ -12,22 +12,22 @@ return {
         -- Load the theme.
         vim.cmd([[colorscheme kanagawa]])
     end,
-			opts = {
-				undercurl = true,
-				commentStyle = { italic = true },
-				functionStyle = { bold = true },
-				keywordStyle = { italic = true },
-				statementStyle = { bold = true },
-				typeStyle = {},
-				variablebuiltinStyle = { italic = true },
-				specialReturn = true,
-				specialException = true,
-				transparent = false,
-				dimInactive = true,
-				globalStatus = true,
-				terminalColors = true,
-				colors = {},
-				overrides = {},
-				theme = "default"
-		}
+	opts = {
+		undercurl = true,
+		commentStyle = { italic = true },
+		functionStyle = { bold = true },
+		keywordStyle = { italic = true },
+		statementStyle = { bold = true },
+		typeStyle = {},
+		variablebuiltinStyle = { italic = true },
+		specialReturn = true,
+		specialException = true,
+		transparent = false,
+		dimInactive = true,
+		globalStatus = true,
+		terminalColors = true,
+		colors = {},
+		overrides = {},
+		theme = "default"
+	}
 }

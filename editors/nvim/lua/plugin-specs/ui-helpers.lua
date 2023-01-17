@@ -59,6 +59,7 @@ return {
 		-- File explorer, but in dialogue, this is very similar to `dressing.nvim`.
 		"nvim-telescope/telescope.nvim",
 		branch = "0.1.x",
+		enabled = false,
 		lazy = false,
 		init = function()
 			local telescope = require("telescope")
@@ -81,6 +82,7 @@ return {
 			}
 		},
 		dependencies = {
+			{ "nvim-treesitter/nvim-treesitter" },
 			{ "nvim-lua/plenary.nvim", lazy = false },
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 			{ "nvim-telescope/telescope-ui-select.nvim" }
