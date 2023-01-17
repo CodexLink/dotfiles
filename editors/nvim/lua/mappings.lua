@@ -37,11 +37,11 @@ wk.register({
 				["_"] = { [[ <CMD>WindowsMaximizeHorizontally<CR> ]], "Maximize horizontally" },
 			}
 		},
-		["M->"] = { [[ <CMD>BufferLineCyclePrev<CR> ]], "bufferline: Move to Previous Buffer." },
-		["M-<"] = { [[ <CMD>BufferLineCycleNext<CR> ]], "bufferline: Move to Next Buffer." },
-		["M-W"] = { "<CMD>BufferLinePickClose<CR>", "bufferline: Pick a buffer to close." }, 	-- [1]
-		["M-Q"] = { "<CMD>BufferLinePick<CR>", "bufferline: Pick a buffer to display." },			-- [1]
-		["M-z"] = { [[ <CMD>TSJToggle<CR> ]], "treesj: Toggle 'One-Liner/Splitted' Style." },
+		["<M->>"] = { [[ <CMD>BufferLineCyclePrev<CR> ]], "bufferline: Move to Previous Buffer." },
+		["<M-<>"] = { [[ <CMD>BufferLineCycleNext<CR> ]], "bufferline: Move to Next Buffer." },
+		["<M-q>"] = { "<CMD>BufferLinePickClose<CR>", "bufferline: Pick a buffer to close." }, 	-- [1]
+		["<M-w>"] = { "<CMD>BufferLinePick<CR>", "bufferline: Pick a buffer to display." },			-- [1]
+		["<M-z"] = { [[ <CMD>TSJToggle<CR> ]], "treesj: Toggle 'One-Liner/Splitted' Style." },
 		["<S-Left>"] = { [[ <CMD>BufferLineMovePrev<CR> ]], "bufferline: Move Buffer to the Left." },
 		["<S-Right>"] = { [[ <CMD>BufferLineMoveNext<CR> ]], "bufferline: Move Buffer to the Right." }
 	})
