@@ -92,12 +92,12 @@ return {
 		opts = {
 			action_keys = {
 				close = "q",
-				cancel = "<esc>",
+				cancel = "<ESC>",
 				refresh = "r",
-				jump = {"<cr>", "<tab>"},
-				open_split = { "<c-x>" },
-				open_vsplit = { "<c-v>" },
-				open_tab = { "<c-t>" },
+				jump = {"<CR>", "<TAB>"},
+				open_split = { "<C-x>" },
+				open_vsplit = { "<C-v>" },
+				open_tab = { "<C-t>" },
 				jump_close = {"o"},
 				toggle_mode = "m",
 				toggle_preview = "P",
