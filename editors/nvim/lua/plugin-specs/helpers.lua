@@ -159,13 +159,21 @@ return {
 		-- ! Keybind guide for the editor.
 		-- !!! I don't like this since I already have keybinds declared from the other plugin spec, will take consideration of this one.
     "folke/which-key.nvim",
-    config = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-      require("which-key").setup({
-				-- !!! TODO
-			})
-    end,
-		lazy = false,
+		lazy = true, -- Lazy-loaded as `mapping.lua` will call it either way.
+		opts = {
+			layout = {
+				spacing = 5,
+				align = "center"
+			},
+			operators = { gc = "Comments" },
+			popup_mappings = {
+				scroll_down = "<PageDown>",
+				scrool_up = "<PageUp>"
+			},
+		spelling = {
+      enabled = true,
+      suggestions = 15
+    },
+		}
   }
 }
