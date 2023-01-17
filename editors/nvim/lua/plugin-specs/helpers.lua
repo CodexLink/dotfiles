@@ -168,7 +168,7 @@ return {
 			operators = { gc = "Comments" },
 			popup_mappings = {
 				scroll_down = "<PageDown>",
-				scrool_up = "<PageUp>"
+				scroll_up = "<PageUp>"
 			},
 		spelling = {
       enabled = true,
