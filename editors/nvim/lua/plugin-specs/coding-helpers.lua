@@ -25,7 +25,14 @@ return {
 
 			-- * Setup for the completion.
 			cmp.setup({
+				completion = {
+					keyword_length = 1
+				},
+				experimental = {
+					ghost_text = true
+				},
 			  formatting = {
+					expandable_indicator = true,
 					fields = { "kind", "abbr", "menu" },
 					format = function(entry, vim_item)
 						local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
@@ -43,11 +50,10 @@ return {
 					["<Up>"] = {
 						i = cmp.mapping.select_prev_item({ behavior = cmp_types.cmp.SelectBehavior.Select }),
 					},
-					["<C-q>"] = cmp.mapping.scroll_docs(-4),
-					["<C-e>"] = cmp.mapping.scroll_docs(4),
-					["<C-w>"] = cmp.mapping.complete(),
+					["<C-Space>"] = cmp.mapping.complete(),
 					["<ESC>"] = cmp.mapping.abort(),
-					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<M-q>"] = cmp.mapping.scroll_docs(-3),
+					["<M-e>"] = cmp.mapping.scroll_docs(3),
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
@@ -59,7 +65,7 @@ return {
 							fallback()
 						end
 					end, { "i", "s" }),
-
+					["<S-Space>"] = cmp.mapping.confirm({ select = true }),
 					["<S-Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_prev_item()
@@ -98,9 +104,9 @@ return {
 			  window = {
 					completion = {
 						winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-						col_offset = -3,
-						side_padding = 0,
+						bordered = true
 					},
+					documentation = cmp.config.window.bordered()
 				},
 			})
 

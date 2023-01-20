@@ -69,6 +69,15 @@ return {
 		}
 	},
 	{
+		-- ! Lazygit but in neovim window, added in the UI as its not an enhancement plugin but rather an extender which is a UI component at this point.
+		"kdheepak/lazygit.nvim",
+		lazy = false,
+		config = function()
+			vim.g.lazygit_floating_window_use_plenary = 1
+			vim.g.lazygit_use_neovim_remote = 0
+		end
+	},
+	{
 		-- ! Status bar for the editor.
 		-- TODO: Requires further customization!
 		"nvim-lualine/lualine.nvim",
@@ -76,22 +85,47 @@ return {
 		opts = { icons_enabled = true }
 	},
 	{
-		-- ! Side bar equivalent of `vscode` or any other modernized text editors.
-	  "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
-		config = true,
-    dependencies = { 
-			{ "nvim-lua/plenary.nvim" },
-      { "nvim-tree/nvim-web-devicons" },
-      { "MunifTanjim/nui.nvim" }
-    },
-		event = "VeryLazy"
-	},
-	{
 		-- ! Literally a scrollbar, but in nvim.
 		"petertriho/nvim-scrollbar",
 		config = true,
 		event = "BufReadPost"
+	},
+	{
+		-- ! File explorer, but in dialogue, this is very similar to `dressing.nvim`, but has all-in-one capabilities.
+		"nvim-telescope/telescope.nvim",
+		branch = "0.1.x",
+		dependencies = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "kdheepak/lazygit.nvim" },
+			{ "nvim-telescope/telescope-file-browser.nvim" },
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		},
+		init = function()
+			local telescope = require("telescope")
+
+			telescope.load_extension("fzf")
+			telescope.load_extension("file_browser")
+			telescope.load_extension("lazygit")
+		end,
+		lazy = false,
+		opts = {
+			defaults = {
+				layout_config = {
+					vertical = { width = 0.5 }
+				}
+			},
+			extensions = {
+				file_browser = {
+					hijack_netrw = true
+				},
+				fzf = {
+					fuzzy = true,
+					override_generic_sorter = true,
+					override_file_sorter = true,
+					case_mode = "smart_case"
+				}
+			}
+		}
 	},
 	{
 		-- ! Displays icons, more like from the `Nerd Fonts`, note that lots of plugins depend on this plugin!
@@ -108,5 +142,31 @@ return {
 		"simrat39/symbols-outline.nvim",
 		config = true,
 		event = "BufReadPre",
-	}
+	},
+	{
+		-- ! Bottom panel that contains diagnostics.
+		"folke/trouble.nvim",
+		event = "BufReadPost",
+		opts = {
+			action_keys = {
+				close = "q",
+				cancel = "<ESC>",
+				refresh = "r",
+				jump = {"<CR>", "<TAB>"},
+				open_split = "<C-s>",
+				open_vsplit = "<C-S>",
+				open_tab = "<C-t>",
+				jump_close = "o",
+				toggle_mode = "m",
+				toggle_preview = "P",
+				hover = "K",
+				preview = "p",
+				close_folds = "zc",
+				open_folds = "zx",
+				toggle_fold = "zz",
+				previous = "k",
+				next = "j"
+			}
+		}
+	},
 }

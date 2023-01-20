@@ -8,8 +8,10 @@
 local wk = require("which-key")
 
 wk.register({
-		["<F1>"] = { [[ <CMD>Neotree action=focus position=left reveal=true toggle=true<CR> ]], "neotree.nvim: Toggle" },
+		["<F1>"] = { [[ <CMD>Telescope builtin<CR> ]], "telesocpe.nvim: Toggle 'builtin'" },
+		["<m-f1>"] = { [[ <CMD>Telescope file_browser<CR> ]], "telescope.nvim: Toggle 'file browser'" },
 		["<F2>"] = { [[ <CMD>TroubleToggle<CR> ]], "trouble.nvim (Diagnostics): Toggle" },
+		["<F2>"] = { [[ <CMD>Telescope diagnostics<CR> ]], "telescope.nvim: Toggle 'diagnostics'" },
 		["<F3>"] = "TODO: DAP",
 		["<F4>"] = { [[ <CMD>WhichKey<CR> ]], "which-key.nvim: Opens UI window for hinting keybinds" },
 		["<F5>"] = { [[ <CMD>Lazy<CR> ]], "lazy.nvim: Opens UI window" },
@@ -26,6 +28,7 @@ wk.register({
 			},
 			i = { ":IncRename ", "inc-rename.nvim: Rename on cursor" },
 			I = { function() return ":IncRename " .. vim.fn.expand("<CWORD>") end, "inc-rename.nvim: Rename by type", expr = true },
+			L = { [[ <CMD>LazyGit<CR> ]], "lazygit.nvim: Toggle window", silent = true },
 			m = { [[ <CMD>MarkdownPreviewToggle<CR> ]], "markdown-preview.nvim: Toogle" },
 			s = { function () require("ssr").open() end, mode={ "n", "x" }, "ssr.nvim: Do 'Structural Search and Replace'" },
 			t = { function() require("tsht").nodes() end, "nvim-treehopper: Toggle context to hoppable" },
