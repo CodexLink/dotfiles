@@ -82,7 +82,51 @@ return {
 		-- TODO: Requires further customization!
 		"nvim-lualine/lualine.nvim",
 		lazy = false,
-		opts = { icons_enabled = true }
+		opts = {
+			options = {
+				icons_enabled = true,
+				component_separators = "|",
+				section_separators = { left = "", right = "" },
+			},
+			sections = {
+				lualine_a = {
+					{
+            "mode",
+            left_padding = 2,
+            right_padding = 2,
+            separator = { left = "" },
+          },
+				},
+				lualine_b = { "filename", "filetype" },
+				lualine_c = { "branch" },
+				lualine_x = {
+					{
+						"diagnostics",
+						sources = {
+							"nvim_diagnostic",
+							"nvim_workspace_diagnostic",
+							"nvim_lsp",
+						}
+					}
+        },
+				lualine_y = { "progress" },
+				lualine_z = {
+					{
+            "location",
+            separator = { right = "" },
+            left_padding = 2,
+          },
+				},
+			},
+			inactive_sections = {
+				lualine_a = { "filename" },
+				lualine_b = { "diagnostics" },
+				lualine_c = {},
+				lualine_x = {},
+				lualine_y = { "branch" },
+				lualine_z = { "location" },
+			}
+    }
 	},
 	{
 		-- ! Literally a scrollbar, but in nvim.
