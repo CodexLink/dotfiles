@@ -50,9 +50,9 @@ return {
 					["<Up>"] = {
 						i = cmp.mapping.select_prev_item({ behavior = cmp_types.cmp.SelectBehavior.Select }),
 					},
-					["<C-c>"] = cmp.mapping.complete(),
-					["<C-C>"] = cmp.mapping.confirm({ select = true }),
-					["<C-a>"] = cmp.mapping.abort(),
+					["<M-c>"] = cmp.mapping.complete(),
+					["<M-C>"] = cmp.mapping.confirm({ select = true }),
+					["<M-a>"] = cmp.mapping.abort(),
 					["<M-q>"] = cmp.mapping.scroll_docs(-3),
 					["<M-e>"] = cmp.mapping.scroll_docs(3),
 					["<Tab>"] = cmp.mapping(function(fallback)

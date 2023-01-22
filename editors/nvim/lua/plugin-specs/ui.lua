@@ -3,6 +3,21 @@
 
 return {
 	{
+		-- ! DAP-Equivalent for displaying code context in one sidebar.
+		"stevearc/aerial.nvim",
+		config = true,
+		dependencies = {
+			{ "nvim-tree/nvim-web-devicons" }
+		},
+		opts = {
+			backends = { "lsp" },
+			filter_kind = false,
+			highlight_on_hover = true,
+			show_guides = true
+		},
+		event = "BufReadPre",
+	},
+	{
 		-- ! Buffer file displayed as a tab.
 		"akinsho/bufferline.nvim",
 		dependencies = {
@@ -113,13 +128,14 @@ return {
 					{
             "location",
             separator = { right = "" },
+            right_padding = 2
           },
 				},
 			},
 			inactive_sections = {
 				lualine_a = { "filename", "location" },
-				lualine_b = { "diagnostics" },
-				lualine_c = {"branch", "location" },
+				lualine_b = { "diagnostics", "branch" },
+				lualine_c = {},
 				lualine_x = {},
 				lualine_y = {},
 				lualine_z = {},
@@ -178,6 +194,7 @@ return {
 			})
 
 			-- Then load the extensions now.
+			telescope.load_extension("aerial")
 			telescope.load_extension("fzf")
 			telescope.load_extension("file_browser")
 			telescope.load_extension("lazygit")
@@ -198,13 +215,6 @@ return {
 			color_icons = true,
 			default = true
 		}
-	},
-	{
-		-- ! DAP-Equivalent for displaying code context in one sidebar.
-		-- !!! This plugin displays its sidebar on the position=right.
-		"simrat39/symbols-outline.nvim",
-		config = true,
-		event = "BufReadPre",
 	},
 	{
 		-- ! Bottom panel that contains diagnostics.
