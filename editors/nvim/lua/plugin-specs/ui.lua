@@ -137,40 +137,32 @@ return {
 		"nvim-telescope/telescope.nvim",
 		branch = "0.1.x",
 		config = function()
-			-- !!! Since `opts` cannot recognize other plugins, I have to not lazy-load them but rather load them on init.
+			-- !!! Since `opts` cannot recognize other plugins and there are other configs that needed to be done after initializing the plugins through `function` scope, I have to not lazy-load them and NOT load them on init.
 			local telescope = require("telescope")
-
-			telescope.load_extension("fzf")
-			telescope.load_extension("file_browser")
-			telescope.load_extension("lazygit")
-		end,
-		dependencies = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "kdheepak/lazygit.nvim" },
-			{ "nvim-telescope/telescope-file-browser.nvim" },
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-		},
-		lazy = false,
-		opts = function(_, __)
 			local actions = require("telescope.actions")
 
-			return {
+			-- Load the plugin itself first before the extension.
+			telescope.setup({
 				defaults = {
 					layout_config = {
 						vertical = { width = 0.5 },
 					},
-					i = {
-						["<M-Up>"] = actions.preview_scrolling_up,
-						["<M-Down>"] = actions.preview_scrolling_down,
-						["<S-Up>"] = actions.results_scrolling_up,
-						["<S-Down>"] = actions.results_scrolling_down,
-					},
-					n = {
-						["<M-Up>"] = actions.preview_scrolling_up,
-						["<M-Down>"] = actions.preview_scrolling_down,
-						["<S-Up>"] = actions.results_scrolling_up,
-						["<S-Down>"] = actions.results_scrolling_down,
-					},
+					mappings = {
+						i = {
+							["<C-q>"] = actions.close,
+							["<M-Up>"] = actions.preview_scrolling_up,
+							["<M-Down>"] = actions.preview_scrolling_down,
+							["<S-Up>"] = actions.results_scrolling_up,
+							["<S-Down>"] = actions.results_scrolling_down,
+						},
+						n = {
+							["q"] = actions.close,
+							["<M-Up>"] = actions.preview_scrolling_up,
+							["<M-Down>"] = actions.preview_scrolling_down,
+							["<S-Up>"] = actions.results_scrolling_up,
+							["<S-Down>"] = actions.results_scrolling_down,
+						}
+					}
 				},
 				extensions = {
 					file_browser = {
@@ -183,8 +175,20 @@ return {
 						case_mode = "smart_case"
 					}
 				}
-			}
-		end
+			})
+
+			-- Then load the extensions now.
+			telescope.load_extension("fzf")
+			telescope.load_extension("file_browser")
+			telescope.load_extension("lazygit")
+		end,
+		dependencies = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "kdheepak/lazygit.nvim" },
+			{ "nvim-telescope/telescope-file-browser.nvim" },
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		},
+		lazy = false
 	},
 	{
 		-- ! Displays icons, more like from the `Nerd Fonts`, note that lots of plugins depend on this plugin!
