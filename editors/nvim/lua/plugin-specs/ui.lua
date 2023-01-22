@@ -92,7 +92,6 @@ return {
 				lualine_a = {
 					{
             "mode",
-            left_padding = 2,
             right_padding = 2,
             separator = { left = "" },
           },
@@ -114,17 +113,16 @@ return {
 					{
             "location",
             separator = { right = "" },
-            left_padding = 2,
           },
 				},
 			},
 			inactive_sections = {
-				lualine_a = { "filename" },
+				lualine_a = { "filename", "location" },
 				lualine_b = { "diagnostics" },
-				lualine_c = {},
+				lualine_c = {"branch", "location" },
 				lualine_x = {},
-				lualine_y = { "branch" },
-				lualine_z = { "location" },
+				lualine_y = {},
+				lualine_z = {},
 			}
     }
 	},
@@ -138,38 +136,55 @@ return {
 		-- ! File explorer, but in dialogue, this is very similar to `dressing.nvim`, but has all-in-one capabilities.
 		"nvim-telescope/telescope.nvim",
 		branch = "0.1.x",
-		dependencies = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "kdheepak/lazygit.nvim" },
-			{ "nvim-telescope/telescope-file-browser.nvim" },
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-		},
-		init = function()
+		config = function()
+			-- !!! Since `opts` cannot recognize other plugins, I have to not lazy-load them but rather load them on init.
 			local telescope = require("telescope")
 
 			telescope.load_extension("fzf")
 			telescope.load_extension("file_browser")
 			telescope.load_extension("lazygit")
 		end,
+		dependencies = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "kdheepak/lazygit.nvim" },
+			{ "nvim-telescope/telescope-file-browser.nvim" },
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		},
 		lazy = false,
-		opts = {
-			defaults = {
-				layout_config = {
-					vertical = { width = 0.5 }
-				}
-			},
-			extensions = {
-				file_browser = {
-					hijack_netrw = true
+		opts = function(_, __)
+			local actions = require("telescope.actions")
+
+			return {
+				defaults = {
+					layout_config = {
+						vertical = { width = 0.5 },
+					},
+					i = {
+						["<M-Up>"] = actions.preview_scrolling_up,
+						["<M-Down>"] = actions.preview_scrolling_down,
+						["<S-Up>"] = actions.results_scrolling_up,
+						["<S-Down>"] = actions.results_scrolling_down,
+					},
+					n = {
+						["<M-Up>"] = actions.preview_scrolling_up,
+						["<M-Down>"] = actions.preview_scrolling_down,
+						["<S-Up>"] = actions.results_scrolling_up,
+						["<S-Down>"] = actions.results_scrolling_down,
+					},
 				},
-				fzf = {
-					fuzzy = true,
-					override_generic_sorter = true,
-					override_file_sorter = true,
-					case_mode = "smart_case"
+				extensions = {
+					file_browser = {
+						hijack_netrw = true
+					},
+					fzf = {
+						fuzzy = true,
+						override_generic_sorter = true,
+						override_file_sorter = true,
+						case_mode = "smart_case"
+					}
 				}
 			}
-		}
+		end
 	},
 	{
 		-- ! Displays icons, more like from the `Nerd Fonts`, note that lots of plugins depend on this plugin!

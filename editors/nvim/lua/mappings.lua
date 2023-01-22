@@ -11,7 +11,7 @@ wk.register({
 		["<F1>"] = { [[ <CMD>Telescope builtin<CR> ]], "telesocpe.nvim: Toggle 'builtin'" },
 		["<M-F1>"] = { [[ <CMD>Telescope file_browser<CR> ]], "telescope.nvim: Toggle 'file browser'" },
 		["<F2>"] = { [[ <CMD>TroubleToggle<CR> ]], "trouble.nvim (Diagnostics): Toggle" },
-		["<S-F2>"] = { [[ <CMD>Telescope diagnostics<CR> ]], "telescope.nvim: Toggle 'diagnostics'" },
+		["<M-F2>"] = { [[ <CMD>Telescope diagnostics<CR> ]], "telescope.nvim: Toggle 'diagnostics'" },
 		["<F3>"] = "TODO: DAP",
 		["<F4>"] = { [[ <CMD>WhichKey<CR> ]], "which-key.nvim: Opens UI window for hinting keybinds" },
 		["<F5>"] = { [[ <CMD>Lazy<CR> ]], "lazy.nvim: Opens UI window" },

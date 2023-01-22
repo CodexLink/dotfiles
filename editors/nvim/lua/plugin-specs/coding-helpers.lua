@@ -50,8 +50,9 @@ return {
 					["<Up>"] = {
 						i = cmp.mapping.select_prev_item({ behavior = cmp_types.cmp.SelectBehavior.Select }),
 					},
-					["<C-Space>"] = cmp.mapping.complete(),
-					["<ESC>"] = cmp.mapping.abort(),
+					["<C-c>"] = cmp.mapping.complete(),
+					["<C-C>"] = cmp.mapping.confirm({ select = true }),
+					["<C-a>"] = cmp.mapping.abort(),
 					["<M-q>"] = cmp.mapping.scroll_docs(-3),
 					["<M-e>"] = cmp.mapping.scroll_docs(3),
 					["<Tab>"] = cmp.mapping(function(fallback)
@@ -65,7 +66,6 @@ return {
 							fallback()
 						end
 					end, { "i", "s" }),
-					["<S-Space>"] = cmp.mapping.confirm({ select = true }),
 					["<S-Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_prev_item()
