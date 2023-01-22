@@ -9,9 +9,9 @@ local wk = require("which-key")
 
 wk.register({
 		["<F1>"] = { [[ <CMD>Telescope builtin<CR> ]], "telesocpe.nvim: Toggle 'builtin'" },
-		["<m-f1>"] = { [[ <CMD>Telescope file_browser<CR> ]], "telescope.nvim: Toggle 'file browser'" },
+		["<M-F1>"] = { [[ <CMD>Telescope file_browser<CR> ]], "telescope.nvim: Toggle 'file browser'" },
 		["<F2>"] = { [[ <CMD>TroubleToggle<CR> ]], "trouble.nvim (Diagnostics): Toggle" },
-		["<F2>"] = { [[ <CMD>Telescope diagnostics<CR> ]], "telescope.nvim: Toggle 'diagnostics'" },
+		["<S-F2>"] = { [[ <CMD>Telescope diagnostics<CR> ]], "telescope.nvim: Toggle 'diagnostics'" },
 		["<F3>"] = "TODO: DAP",
 		["<F4>"] = { [[ <CMD>WhichKey<CR> ]], "which-key.nvim: Opens UI window for hinting keybinds" },
 		["<F5>"] = { [[ <CMD>Lazy<CR> ]], "lazy.nvim: Opens UI window" },
@@ -44,7 +44,7 @@ wk.register({
 		["<M-<>"] = { [[ <CMD>BufferLineCycleNext<CR> ]], "bufferline: Move to Next Buffer." },
 		["<M-q>"] = { "<CMD>BufferLinePickClose<CR>", "bufferline: Pick a buffer to close." }, 	-- [1]
 		["<M-w>"] = { "<CMD>BufferLinePick<CR>", "bufferline: Pick a buffer to display." },			-- [1]
-		["<M-z"] = { [[ <CMD>TSJToggle<CR> ]], "treesj: Toggle 'One-Liner/Splitted' Style." },
+		["<M-e>"] = { [[ <CMD>TSJToggle<CR> ]], "treesj: Toggle 'One-Liner/Splitted' Style." },
 		["<S-Left>"] = { [[ <CMD>BufferLineMovePrev<CR> ]], "bufferline: Move Buffer to the Left." },
 		["<S-Right>"] = { [[ <CMD>BufferLineMoveNext<CR> ]], "bufferline: Move Buffer to the Right." }
 	})
