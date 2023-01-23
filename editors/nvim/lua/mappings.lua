@@ -15,7 +15,7 @@ wk.register({
 		["<F3>"] = { [[ <CMD>AerialToggle!<CR> ]], "symbols-outline.nvim: Toggle (Unfocused)" },
 		["<S-F3>"] = { [[ <CMD>AerialToggle<CR> ]], "symbols-outline.nvim: Toggle (Focused)" },
 		["<M-F3>"] = { [[ <CMD>Telescope aerial<CR> ]], "telescope.nvim: Toggle 'aerial'" },
-		["<F4>"] = { function() print end, "DAP"},
+		-- ["<F4>"] = { function() print end, "DAP"},
 		["<F5>"] = { [[ <CMD>Lazy<CR> ]], "lazy.nvim: Opens UI window" },
 		["<F6>"] = { [[ <CMD>WhichKey<CR> ]], "which-key.nvim: Opens UI window for hinting keybinds" },
 		["<F7>"] = { [[ <CMD>Mason<CR> ]], "mason.nvim: Opens UI window" },
@@ -35,6 +35,7 @@ wk.register({
 			m = { [[ <CMD>MarkdownPreviewToggle<CR> ]], "markdown-preview.nvim: Toogle" },
 			r = { function () require("ssr").open() end, mode={ "n", "x" }, "ssr.nvim: Do 'Structural Search and Replace'" },
 			t = { function() require("tsht").nodes() end, "nvim-treehopper: Toggle context to hoppable" },
+			T = { [[ <CMD>Twilight<CR> ]], "twilight.nvim: Toggle code dimming" },
 			w = {
 				name = "windows.nvim",
 				["="] = { [[ <CMD>WindowsEqualize<CR> ]], "Equalize" },
@@ -45,8 +46,8 @@ wk.register({
 		},
 		["<M->>"] = { [[ <CMD>BufferLineCyclePrev<CR> ]], "bufferline: Move to Previous Buffer." },
 		["<M-<>"] = { [[ <CMD>BufferLineCycleNext<CR> ]], "bufferline: Move to Next Buffer." },
-		["<M-q>"] = { "<CMD>BufferLinePickClose<CR>", "bufferline: Pick a buffer to close." }, 	-- [1]
-		["<M-w>"] = { "<CMD>BufferLinePick<CR>", "bufferline: Pick a buffer to display." },			-- [1]
+		["<M-c>"] = { "<CMD>BufferLinePickClose<CR>", "bufferline: Pick a buffer to close." }, 	-- [1]
+		["<M-d>"] = { "<CMD>BufferLinePick<CR>", "bufferline: Pick a buffer to display." },			-- [1]
 		["<M-e>"] = { [[ <CMD>TSJToggle<CR> ]], "treesj: Toggle 'One-Liner/Splitted' Style." },
 		["<S-Left>"] = { [[ <CMD>BufferLineMovePrev<CR> ]], "bufferline: Move Buffer to the Left." },
 		["<S-Right>"] = { [[ <CMD>BufferLineMoveNext<CR> ]], "bufferline: Move Buffer to the Right." }

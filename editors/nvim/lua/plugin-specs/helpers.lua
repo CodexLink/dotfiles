@@ -93,30 +93,24 @@ return {
 		dependencies = {
 			{ "hrsh7th/nvim-cmp" }
 		},
-		config = function()
+		config = function(plugin, opts)
 			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 			local cmp = require("cmp")
+
 			cmp.event:on(
 				"confirm_done",
 				cmp_autopairs.on_confirm_done()
 			)
+
+			require(plugin.name).setup(opts)
 		end,
 		event = "BufReadPost",
 		opts = {
 			check_ts = true,
-			disable_filetype = { "TelescopePrompt" , "vim" },
-			disable_in_macro = false,
-			enable_check_bracket_line = true,
-			fast_wrap = {
-				map = "<M-w>",
-				chars = { '{', '[', '(', '"', "'" },
-				pattern = [=[[%'%"%)%>%]%)%}%,]]=],
-				end_key = '$',
-				keys = "qwertyuiopzxcvbnmasdfghjkl",
-				check_comma = true,
-				highlight = "Search",
-				highlight_grey="Comment"
-			}
+			fast_wrap = { map = "<M-w>" },
+			map_c_w = true,
+			map_c_h = true,
+			map_cr = true
 		}
 	},
 	{
@@ -164,10 +158,10 @@ return {
 				scroll_down = "<PageDown>",
 				scroll_up = "<PageUp>"
 			},
-		spelling = {
-      enabled = true,
-      suggestions = 15
-    },
+			spelling = {
+				enabled = true,
+				suggestions = 15
+			},
 		}
   }
 }

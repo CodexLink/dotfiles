@@ -58,8 +58,18 @@ return {
 	{
 		-- ! Code dimmer (by buffer, blocks) when the cursor is focused elsewhere.
 		"folke/twilight.nvim",
-		config = true,
-		event = "BufReadPost"
+		config = function(_, opts)
+			-- Setup the plugin first.
+			require("twilight").setup(opts)
+
+			-- Then run "TwilightEnable" immediately after load.
+			vim.cmd([[ TwilightEnable ]])
+		end,
+		event = "VeryLazy",
+		init = function()  end,
+		opts = {
+			dimming = { alpha = 0.40 }
+		}
 	},
 	{
 		-- ! Highlights similar case of a certain pattern from the code, similar to vscode's highlight behavior.
