@@ -66,7 +66,6 @@ return {
 			vim.cmd([[ TwilightEnable ]])
 		end,
 		event = "VeryLazy",
-		init = function()  end,
 		opts = {
 			dimming = { alpha = 0.40 }
 		}
@@ -74,7 +73,6 @@ return {
 	{
 		-- ! Highlights similar case of a certain pattern from the code, similar to vscode's highlight behavior.
 		"RRethy/vim-illuminate",
-		config = function() require("illuminate").configure({}) end,
 		event = "BufReadPost"
 	},
 	{

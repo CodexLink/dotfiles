@@ -33,7 +33,7 @@ wk.register({
 			I = { function() return ":IncRename " .. vim.fn.expand("<CWORD>") end, "inc-rename.nvim: Rename by type", expr = true },
 			L = { [[ <CMD>LazyGit<CR> ]], "lazygit.nvim: Toggle window", silent = true },
 			m = { [[ <CMD>MarkdownPreviewToggle<CR> ]], "markdown-preview.nvim: Toogle" },
-			r = { function () require("ssr").open() end, mode={ "n", "x" }, "ssr.nvim: Do 'Structural Search and Replace'" },
+			r = { function() require("ssr").open() end, mode={ "n", "x" }, "ssr.nvim: Do 'Structural Search and Replace'" },
 			t = { function() require("tsht").nodes() end, "nvim-treehopper: Toggle context to hoppable" },
 			T = { [[ <CMD>Twilight<CR> ]], "twilight.nvim: Toggle code dimming" },
 			w = {
@@ -46,9 +46,11 @@ wk.register({
 		},
 		["<M->>"] = { [[ <CMD>BufferLineCyclePrev<CR> ]], "bufferline: Move to Previous Buffer." },
 		["<M-<>"] = { [[ <CMD>BufferLineCycleNext<CR> ]], "bufferline: Move to Next Buffer." },
+		["<M-a>"] = { function() require("illuminate").goto_prev_reference() end, "vim-illuminate: Jump to previous reference" },
 		["<M-c>"] = { "<CMD>BufferLinePickClose<CR>", "bufferline: Pick a buffer to close." }, 	-- [1]
 		["<M-d>"] = { "<CMD>BufferLinePick<CR>", "bufferline: Pick a buffer to display." },			-- [1]
 		["<M-e>"] = { [[ <CMD>TSJToggle<CR> ]], "treesj: Toggle 'One-Liner/Splitted' Style." },
+		["<M-s>"] = { function() require("illuminate").goto_next_reference() end, "vim-illuminate: Jump to next reference" },
 		["<S-Left>"] = { [[ <CMD>BufferLineMovePrev<CR> ]], "bufferline: Move Buffer to the Left." },
 		["<S-Right>"] = { [[ <CMD>BufferLineMoveNext<CR> ]], "bufferline: Move Buffer to the Right." }
 	})
