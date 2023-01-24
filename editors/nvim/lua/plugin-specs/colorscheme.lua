@@ -8,9 +8,13 @@ return {
 	"rebelot/kanagawa.nvim",
 	lazy = false,
 	priority = 1000,
-	config = function()
-			-- Load the theme.
-			vim.cmd([[colorscheme kanagawa]])
+	config = function(_, opts)
+			vim.cmd([[ colorscheme kanagawa ]])
+
+			-- For some reason, applying the following in the colorscheme of the following doesn't work unless re-declared or re-instantiated with nvim-api.
+			vim.api.nvim_set_hl(0, "IlluminatedWordRead", opts.overrides.IlluminatedWordRead)
+			vim.api.nvim_set_hl(0, "IlluminatedWordText", opts.overrides.IlluminatedWordText)
+			vim.api.nvim_set_hl(0, "IlluminatedWordWrite", opts.overrides.IlluminatedWordWrite)
 	end,
 	opts = {
 		undercurl = true,
@@ -26,11 +30,7 @@ return {
 		dimInactive = true,
 		globalStatus = true,
 		terminalColors = true,
-		colors = {},
 		overrides = {
-			Pmenu = {bg = "#000000", fg = "#FFFFFF"},
-			PmenuSel = { bg = "#282C34", fg = "NONE" },
-
 			CmpItemAbbrDeprecated = { fg = "#7E8294", bg = "NONE", fmt = "strikethrough" },
 			CmpItemAbbrMatch = { fg = "#82AAFF", bg = "NONE", fmt = "bold" },
 			CmpItemAbbrMatchFuzzy = { fg = "#82AAFF", bg = "NONE", fmt = "bold" },
@@ -68,7 +68,13 @@ return {
 			CmpItemKindInterface = { fg = "#D8EEEB", bg = "#58B5A8" },
 			CmpItemKindColor = { fg = "#D8EEEB", bg = "#58B5A8" },
 			CmpItemKindTypeParameter = { fg = "#D8EEEB", bg = "#58B5A8" },
+
+			IlluminatedWordRead = { bg = "#FFD740", bold = true, fg = "#424242", underline = false },
+			IlluminatedWordText = { bg = "#FFFF8D", bold = true, fg = "#424242", underline = false },
+			IlluminatedWordWrite = { bg = "#FFB2FF", bold = true, fg = "#424242", underline = false },
+
+			Pmenu = { bg = "#000000", fg = "#FFFFFF" },
+			PmenuSel = { bg = "#282C34", fg = "NONE" },
 		},
-	},
-	theme = "default"
+	}
 }
