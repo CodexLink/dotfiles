@@ -26,50 +26,23 @@ return {
 		lazy = false,
 		opts = {
 			options = {
-				always_show_bufferline = false,
-				color_icons = true,
+				always_show_bufferline = true,
+				color_icons = false,
 				diagnostics = "nvim_lsp",
 				 groups = {
 					options = {
 						toggle_hidden_on_enter = true
-					},
-					items = {
-						{
-							name = "Code",
-							auto_close = false,
-							highlight = { sp = "#FFD740" },
-							matcher = function(buf)
-								return buf.filename:match("%.c") or buf.filename:match("%.cpp") or buf.filename:match("%.lua") or buf.filename:match("%.js") or buf.filename:match("%.json") or buf.filename:match("%.py") or buf.filename:match("%.ts")
-							end
-						},
-						{
-							name = "Docs",
-							auto_close = false,
-							highlight = { sp = "#64FFDA" },
-							matcher = function(buf)
-								return buf.filename:match('%.md') or buf.filename:match('%.txt')
-							end
-						},
-						{
-							name = "Test",
-							auto_close = false,
-							highlight = { sp = "#FF4081" },
-							matcher = function(buf)
-								return buf.filename:match('%_test') or buf.filename:match('%_spec')
-							end
-						}
-					},
+					}
 				},
 				hover = {
 					enabled = true,
 					delay = 200,
 					reveal = { "close" }
 				},
-				separator_style = { "", "" },
+				separator_style =  { "", "" },
 				show_close_icon = false,
 				show_buffer_close_icons = false,
-				show_tab_indicators = true,
-				sort_by = "id"
+				show_tab_indicators = true
 			}
 		}
 	},
@@ -242,4 +215,9 @@ return {
 			}
 		}
 	},
+	{
+		-- ! Similar to every other OS's window nanager where each `n` of scope window contains `k` of tabs.
+		"tiagovla/scope.nvim",
+		config = true
+	}
 }
