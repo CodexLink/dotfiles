@@ -44,15 +44,16 @@ return {
 					end,
 				},
 				mapping = {
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
 					["<Down>"] = {
 						i = cmp.mapping.select_next_item({ behavior = cmp_types.cmp.SelectBehavior.Select }),
 					},
 					["<Up>"] = {
 						i = cmp.mapping.select_prev_item({ behavior = cmp_types.cmp.SelectBehavior.Select }),
 					},
-					["<M-c>"] = cmp.mapping.complete(),
-					["<M-C>"] = cmp.mapping.confirm({ select = true }),
-					["<M-a>"] = cmp.mapping.abort(),
+					["<M-a>"] = {
+            i = { cmp.mapping.abort() },
+          },
 					["<M-q>"] = cmp.mapping.scroll_docs(-3),
 					["<M-e>"] = cmp.mapping.scroll_docs(3),
 					["<Tab>"] = cmp.mapping(function(fallback)
@@ -66,6 +67,7 @@ return {
 							fallback()
 						end
 					end, { "i", "s" }),
+					["<C-Tab>"] = cmp.mapping.complete(),
 					["<S-Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_prev_item()
@@ -79,37 +81,30 @@ return {
 				sources = {
 					{
 						name = "buffer",
-						option = {
-							keyword_length = 1,
-						}
+						option = { keyword_length = 1 }
 					},
-					{
-						name = "nvim_lsp"
-					},
+					{ name = "nvim_lsp" },
 					{
 						name = "luasnip",
-						option = {
-							show_autosnippets = true
-						}
+						option = { show_autosnippets = true }
 					},
-					{
-						name = "path"
-					}
+					{ name = "path" }
 				},
-				snippet = {
-					expand = function(args)
-						cmp.lsp_expand(args.body)
-					end
-				},
+				snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
 			  window = {
-					completion = {
-						winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-						bordered = true
-					},
-					documentation = cmp.config.window.bordered()
-				},
+					completion = cmp.config.window.bordered({
+							border = "rounded",
+							scrollbar = false,
+							winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None"
+						}),
+					documentation = cmp.config.window.bordered({ border = "rounded" })
+				}
 			})
 
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } })
+			})
 			-- * Setup for the external tool pakage manager.
 			require("mason").setup({ pip = { upgrade_pip = true }, max_concurrent_installers = 10 })
 
