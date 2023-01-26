@@ -9,12 +9,8 @@ return {
 	lazy = false,
 	priority = 1000,
 	config = function(_, opts)
-			vim.cmd([[ colorscheme kanagawa ]])
-
-			-- For some reason, applying the following in the colorscheme of the following doesn't work unless re-declared or re-instantiated with nvim-api.
-			vim.api.nvim_set_hl(0, "IlluminatedWordRead", opts.overrides.IlluminatedWordRead)
-			vim.api.nvim_set_hl(0, "IlluminatedWordText", opts.overrides.IlluminatedWordText)
-			vim.api.nvim_set_hl(0, "IlluminatedWordWrite", opts.overrides.IlluminatedWordWrite)
+		require("kanagawa").setup(opts)
+		vim.cmd([[ colorscheme kanagawa ]])
 	end,
 	opts = {
 		undercurl = true,
@@ -31,43 +27,48 @@ return {
 		globalStatus = true,
 		terminalColors = true,
 		overrides = {
-			CmpItemAbbrDeprecated = { fg = "#7E8294", bg = "NONE", fmt = "strikethrough" },
-			CmpItemAbbrMatch = { fg = "#82AAFF", bg = "NONE", fmt = "bold" },
-			CmpItemAbbrMatchFuzzy = { fg = "#82AAFF", bg = "NONE", fmt = "bold" },
-			CmpItemMenu = { fg = "#C792EA", bg = "NONE", fmt = "italic" },
+			BufferLineBufferSelected = { bg = "#DCA561", bold = true, fg = "#1F1F28" },
+			BufferLineIndicatorSelected = { bg = "#DCA561" },
+			BufferLineSeparatorSelected = { bg = "#DCA561" },
+			BufferLineSeparator = { fg = "#1F1F28" },
 
-			CmpItemKindField = { fg = "#EED8DA", bg = "#B5585F" },
-			CmpItemKindProperty = { fg = "#EED8DA", bg = "#B5585F" },
-			CmpItemKindEvent = { fg = "#EED8DA", bg = "#B5585F" },
+			CmpItemAbbrDeprecated = { bg = "NONE", fg = "#7E8294", strikethrough = true },
+			CmpItemAbbrMatch = { bg = "NONE", bold = true, fg = "#82AAFF" },
+			CmpItemAbbrMatchFuzzy = { bg = "NONE", bold = true, fg = "#82AAFF"},
+			CmpItemMenu = { bg = "NONE", fg = "#C792EA",  italic = true },
 
-			CmpItemKindText = { fg = "#C3E88D", bg = "#9FBD73" },
-			CmpItemKindEnum = { fg = "#C3E88D", bg = "#9FBD73" },
-			CmpItemKindKeyword = { fg = "#C3E88D", bg = "#9FBD73" },
+			CmpItemKindField = { bg = "#B5585F", fg = "#EED8DA" },
+			CmpItemKindProperty = { bg = "#B5585F", fg = "#EED8DA" },
+			CmpItemKindEvent = { bg = "#B5585F", fg = "#EED8DA" },
 
-			CmpItemKindConstant = { fg = "#FFE082", bg = "#D4BB6C" },
-			CmpItemKindConstructor = { fg = "#FFE082", bg = "#D4BB6C" },
-			CmpItemKindReference = { fg = "#FFE082", bg = "#D4BB6C" },
+			CmpItemKindText = { bg = "#9FBD73", fg = "#C3E88D" },
+			CmpItemKindEnum = { bg = "#9FBD73", fg = "#C3E88D" },
+			CmpItemKindKeyword = { bg = "#9FBD73", fg = "#C3E88D" },
 
-			CmpItemKindFunction = { fg = "#EADFF0", bg = "#A377BF" },
-			CmpItemKindStruct = { fg = "#EADFF0", bg = "#A377BF" },
-			CmpItemKindClass = { fg = "#EADFF0", bg = "#A377BF" },
-			CmpItemKindModule = { fg = "#EADFF0", bg = "#A377BF" },
-			CmpItemKindOperator = { fg = "#EADFF0", bg = "#A377BF" },
+			CmpItemKindConstant = { bg = "#D4BB6C", fg = "#FFE082" },
+			CmpItemKindConstructor = { bg = "#D4BB6C", fg = "#FFE082" },
+			CmpItemKindReference = { bg = "#D4BB6C", fg = "#FFE082" },
 
-			CmpItemKindVariable = { fg = "#C5CDD9", bg = "#7E8294" },
-			CmpItemKindFile = { fg = "#C5CDD9", bg = "#7E8294" },
+			CmpItemKindFunction = { bg = "#A377BF", fg = "#EADFF0" },
+			CmpItemKindStruct = { bg = "#A377BF", fg = "#EADFF0" },
+			CmpItemKindClass = { bg = "#A377BF", fg = "#EADFF0" },
+			CmpItemKindModule = { bg = "#A377BF", fg = "#EADFF0" },
+			CmpItemKindOperator = { bg = "#A377BF", fg = "#EADFF0" },
 
-			CmpItemKindUnit = { fg = "#F5EBD9", bg = "#D4A959" },
-			CmpItemKindSnippet = { fg = "#F5EBD9", bg = "#D4A959" },
-			CmpItemKindFolder = { fg = "#F5EBD9", bg = "#D4A959" },
+			CmpItemKindVariable = { bg = "#7E8294", fg = "#C5CDD9" },
+			CmpItemKindFile = { bg = "#7E8294", fg = "#C5CDD9" },
 
-			CmpItemKindMethod = { fg = "#DDE5F5", bg = "#6C8ED4" },
-			CmpItemKindValue = { fg = "#DDE5F5", bg = "#6C8ED4" },
-			CmpItemKindEnumMember = { fg = "#DDE5F5", bg = "#6C8ED4" },
+			CmpItemKindUnit = { bg = "#D4A959", fg = "#F5EBD9" },
+			CmpItemKindSnippet = { bg = "#D4A959", fg = "#F5EBD9" },
+			CmpItemKindFolder = { bg = "#D4A959", fg = "#F5EBD9" },
 
-			CmpItemKindInterface = { fg = "#D8EEEB", bg = "#58B5A8" },
-			CmpItemKindColor = { fg = "#D8EEEB", bg = "#58B5A8" },
-			CmpItemKindTypeParameter = { fg = "#D8EEEB", bg = "#58B5A8" },
+			CmpItemKindMethod = { bg = "#6C8ED4", fg = "#DDE5F5" },
+			CmpItemKindValue = { bg = "#6C8ED4", fg = "#DDE5F5" },
+			CmpItemKindEnumMember = { bg = "#6C8ED4", fg = "#DDE5F5" },
+
+			CmpItemKindInterface = { bg = "#58B5A8", fg = "#D8EEEB" },
+			CmpItemKindColor = { bg = "#58B5A8", fg = "#D8EEEB" },
+			CmpItemKindTypeParameter = { bg = "#58B5A8", fg = "#D8EEEB" },
 
 			IlluminatedWordRead = { bg = "#FFD740", bold = true, fg = "#424242", underline = false },
 			IlluminatedWordText = { bg = "#FFFF8D", bold = true, fg = "#424242", underline = false },
