@@ -6,7 +6,7 @@ local vk = vim.keymap
 
 return {
 	{
-		-- ! Literally a comment creator, this can be paired with a annotation plugin.
+		-- ! Literally a comment creator, this can be paired with annotation plugin.
 		"numToStr/Comment.nvim",
 		config = true,
 		event = "BufReadPost"
@@ -144,10 +144,9 @@ return {
 		}
 	},
 	{
-		-- ! Keybind guide for the editor.
-		-- !!! I don't like this since I already have keybinds declared from the other plugin spec, will take consideration of this one.
+		-- ! Outputs keybinds when pressed a key for the editor.
     "folke/which-key.nvim",
-		lazy = true, -- Lazy-loaded as `mapping.lua` will call it either way.
+		lazy = false,
 		opts = {
 			layout = {
 				spacing = 5,
