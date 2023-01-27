@@ -21,5 +21,5 @@ vo.syntax = "on"
 
 vg.mapleader = "\\" -- [1]
 
-vo.timeout = true		-- [2]
+vo.timeout = true -- [2]
 vo.timeoutlen = 300 -- [2]

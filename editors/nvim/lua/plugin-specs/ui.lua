@@ -1,4 +1,4 @@
--- ui.lua 					| Plugins that renders every part of the UI of my editor, these plugins are `first-order` classified, used for the package manager lazy.nvim"
+-- ui.lua 					| Plugins that renders every part of the UI of my editor, used for the package manager lazy.nvim"
 -- @CodexLink				| https://github.com/CodexLink
 
 return {
@@ -29,7 +29,7 @@ return {
 				always_show_bufferline = true,
 				color_icons = false,
 				diagnostics = "nvim_lsp",
-				 groups = {
+				groups = {
 					options = {
 						toggle_hidden_on_enter = true
 					}
@@ -78,10 +78,10 @@ return {
 			sections = {
 				lualine_a = {
 					{
-            "mode",
-            right_padding = 2,
-            separator = { left = "" },
-          },
+						"mode",
+						right_padding = 2,
+						separator = { left = "" },
+					},
 				},
 				lualine_b = { "filename", "filetype" },
 				lualine_c = { "branch" },
@@ -94,14 +94,14 @@ return {
 							"nvim_lsp",
 						}
 					}
-        },
+				},
 				lualine_y = { "progress" },
 				lualine_z = {
 					{
-            "location",
-            separator = { right = "" },
-            right_padding = 2
-          },
+						"location",
+						separator = { right = "" },
+						right_padding = 2
+					},
 				},
 			},
 			inactive_sections = {
@@ -112,7 +112,7 @@ return {
 				lualine_y = {},
 				lualine_z = {},
 			}
-    }
+		}
 	},
 	{
 		-- ! Literally a scrollbar, but in nvim.
@@ -197,7 +197,7 @@ return {
 				close = "q",
 				cancel = "<ESC>",
 				refresh = "r",
-				jump = {"<CR>", "<TAB>"},
+				jump = { "<CR>", "<TAB>" },
 				open_split = "<C-s>",
 				open_vsplit = "<C-S>",
 				open_tab = "<C-t>",
