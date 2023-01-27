@@ -81,7 +81,7 @@ return {
 				sources = {
 					{
 						name = "buffer",
-						option = { keyword_length = 1 }
+						option = { keyword_length = 2 }
 					},
 					{ name = "nvim_lsp" },
 					{
@@ -133,22 +133,23 @@ return {
 
 			null_ls.setup({
 				sources = {
+					-- * Diagnostics
+					null_ls.builtins.diagnostics.cppcheck,
+					null_ls.builtins.diagnostics.cpplint,
+					null_ls.builtins.diagnostics.mypy,
+					null_ls.builtins.diagnostics.selene,
 					-- * Formatters
 					null_ls.builtins.formatting.black,
 					null_ls.builtins.formatting.clang_format,
-					null_ls.builtins.diagnostics.cppcheck,
 					null_ls.builtins.formatting.fixjson,
+					null_ls.builtins.formatting.eslint_d,
 					null_ls.builtins.formatting.isort,
-					null_ls.builtins.formatting.lua_format,
+					null_ls.builtins.formatting.markdownlint,
 					null_ls.builtins.formatting.prettierd,
 					null_ls.builtins.formatting.remark,
 					null_ls.builtins.formatting.reorder_python_imports,
 					null_ls.builtins.formatting.sql_formatter,
-					-- * Linters
-					null_ls.builtins.diagnostics.cpplint,
-					null_ls.builtins.formatting.eslint_d,
-					null_ls.builtins.formatting.markdownlint,
-					null_ls.builtins.diagnostics.mypy
+					null_ls.builtins.formatting.stylua
 				}
 			})
 
