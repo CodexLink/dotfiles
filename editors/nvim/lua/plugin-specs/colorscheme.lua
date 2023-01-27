@@ -5,19 +5,19 @@
 -- [1] Higher priority is required for the colorscheme, as stated by the author of the package manager.
 
 return {
-		"rebelot/kanagawa.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function(_, opts)
-			require("kanagawa").setup(opts)
-			vim.cmd([[ colorscheme kanagawa ]])
-		end,
-		opts = {
-			undercurl = true,
-			commentStyle = { italic = true },
-			functionStyle = { bold = true },
-			keywordStyle = { italic = true },
-			statementStyle = { bold = true },
+	"rebelot/kanagawa.nvim",
+	lazy = false,
+	priority = 1000,
+	config = function(_, opts)
+		require("kanagawa").setup(opts)
+		vim.cmd([[ colorscheme kanagawa ]])
+	end,
+	opts = {
+		undercurl = true,
+		commentStyle = { italic = true },
+		functionStyle = { bold = true },
+		keywordStyle = { italic = true },
+		statementStyle = { bold = true },
 		typeStyle = {},
 		variablebuiltinStyle = { italic = true },
 		specialReturn = true,
@@ -30,22 +30,27 @@ return {
 			BufferLineBufferSelected = { bg = "#DCA561", bold = true, fg = "#1F1F28" },
 			BufferLineDevIconDefaultSelected = { bg = "#DCA561", fg = "#1F1F28" },
 			BufferLineDevIconGitCommitSelected = { bg = "#DCA561", fg = "#1F1F28" },
+			BufferLineDevIconLogSelected = { bg = "#DCA561", fg = "#1F1F28" },
 			BufferLineDevIconLuaSelected = { bg = "#DCA561", fg = "#1F1F28" },
 			BufferLineDevIconPythonSelected = { bg = "#DCA561", fg = "#1F1F28" },
 
 			BufferLineErrorVisible = { bold = true, fg = "#FF5252", italic = false },
 			BufferLineErrorSelected = { bg = "#DCA561", bold = true, fg = "#D50000", italic = false },
+			BufferLineHintVisible = { bold = true, fg = "#E7B9FF", italic = false },
+			BufferLineHintSelected = { bg = "#DCA561", bold = true, fg = "#6200EA", italic = false },
+			BufferLineInfoVisible = { bold = true, fg = "#00E5FF", italic = false },
+			BufferLineInfoSelected = { bg = "#DCA561", bold = true, fg = "#00B8D4", italic = false },
+			BufferLineWarningVisible = { bold = true, fg = "#FF6E40", italic = false },
+			BufferLineWarningSelected = { bg = "#DCA561", bold = true, fg = "#DD2C00", italic = false },
 
-			BufferLineWarningVisible = { bold = true, fg = "#FFD740", italic = false },
-			BufferLineWarningSelected = { bg = "#DCA561", bold = true, fg = "#64C1FF", italic = false },
-
- 			BufferLineIndicatorSelected = { bg = "#DCA561", fg = "#FFFFFF" },
+			BufferLineIndicatorSelected = { bg = "#DCA561", fg = "#FFFFFF" },
 			BufferLineModifiedSelected = { bg = "#DCA561", fg = "#1F1F28" },
+			BufferLinePickSelected = { bg = "#DCA561", fg = "#D50000" },
 
 			CmpItemAbbrDeprecated = { bg = "NONE", fg = "#7E8294", strikethrough = true },
 			CmpItemAbbrMatch = { bg = "NONE", bold = true, fg = "#82AAFF" },
-			CmpItemAbbrMatchFuzzy = { bg = "NONE", bold = true, fg = "#82AAFF"},
-			CmpItemMenu = { bg = "NONE", fg = "#C792EA",  italic = true },
+			CmpItemAbbrMatchFuzzy = { bg = "NONE", bold = true, fg = "#82AAFF" },
+			CmpItemMenu = { bg = "NONE", fg = "#C792EA", italic = true },
 
 			CmpItemKindField = { bg = "#B5585F", fg = "#EED8DA" },
 			CmpItemKindProperty = { bg = "#B5585F", fg = "#EED8DA" },
@@ -87,5 +92,5 @@ return {
 			Pmenu = { bg = "#000000", fg = "#FFFFFF" },
 			PmenuSel = { bg = "#282C34", fg = "#1F1F28" },
 		},
-	}
+	},
 }
