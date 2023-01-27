@@ -10,6 +10,6 @@ local lsp_formatting = function()
 	local notify_async = require("notify").async_provider
 
 	vim.lsp.buf.format({ async = true })
-	async_provider.run(function() vim.notify("Formatting done!") end)
+	async_provider.run(function() notify_async("Formatting done!") end)
 end
 vim.api.nvim_create_user_command("LSPCodeFormat", lsp_formatting, {})
