@@ -1,4 +1,4 @@
--- ui-helpers.lua 	| Plugins that naturally makes the UI even more better, these plugins were add-ons from the `first-order plugins`, therefore plugins declared from this file were classified as `second-order plugins`; used for the package manager lazy.nvim"
+-- ui-helpers.lua 	| Plugins that naturally makes the UI even more better, used for the package manager lazy.nvim"
 -- @CodexLink				| https://github.com/CodexLink
 
 return {
@@ -6,6 +6,8 @@ return {
 		-- ! Alternative dialogue, similar to `telescope.nvim`.
 		-- !!! This plugin is a dependency from other plugins!
 		"stevearc/dressing.nvim",
+		config = true,
+		lazy = false,
 		opts = {
 			input = {
 				override = function(conf)
@@ -13,9 +15,20 @@ return {
 					conf.row = 0
 					return conf
 				end
-			}
+			},
+			mappings = {
+				n = {
+					["<Esc>"] = "Close",
+					["<CR>"] = "Confirm",
+				},
+				i = {
+					["<C-c>"] = "Close",
+					["<C-w>"] = "Confirm",
+					["<C-q>"] = "HistoryPrev",
+					["<C-e>"] = "HistoryNext",
+				},
+			},
 		},
-		lazy = true
 	},
 	{
 		-- ! Displays git states from each line either by blame or by hunk (changes from that line).
@@ -38,7 +51,7 @@ return {
 			})
 		end,
 		dependencies = {
-			{"petertriho/nvim-scrollbar" } -- !!! Despite this plugin is declared in `ui.lua`, if `ui-helpers.lua` was the first plugin spec file to initialize, then install this plugin as possible, if missing, then re-configure on `ui.lua` later.
+			{ "petertriho/nvim-scrollbar" } -- !!! Despite this plugin is declared in `ui.lua`, if `ui-helpers.lua` was the first plugin spec file to initialize, then install this plugin as possible, if missing, then re-configure on `ui.lua` later.
 		},
 		event = "BufReadPost"
 	},
@@ -52,8 +65,15 @@ return {
 		-- ! Display notification from the right side, similar to modern game notification system.
 		-- !!! Lazy-loaded because only my own config will use this plugin.
 		"rcarriga/nvim-notify",
-		config = true,
-		lazy = true
+		config = function(_, opts)
+			require("notify").setup(opts)
+			vim.notify = require("notify")
+		end,
+		lazy = false,
+		opts = {
+			render = "compact",
+			stage = "slide",
+		}
 	},
 	{
 		-- ! Code dimmer (by buffer, blocks) when the cursor is focused elsewhere.
@@ -79,12 +99,12 @@ return {
 		-- ! Window sizing management with animation.
 		"anuvyklack/windows.nvim",
 		config = function()
-				vim.o.winwidth = 10
-				vim.o.winminwidth = 10
-				vim.o.equalalways = false
+			vim.o.winwidth = 10
+			vim.o.winminwidth = 10
+			vim.o.equalalways = false
 
-				require("windows").setup()
-			end,
+			require("windows").setup()
+		end,
 		dependencies = {
 			{ "anuvyklack/middleclass" },
 			{ "anuvyklack/animation.nvim" }
