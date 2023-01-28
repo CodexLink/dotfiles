@@ -32,7 +32,7 @@ return {
 			BufferLineDevIconGitCommitSelected = { bg = "#DCA561", fg = "#1F1F28" },
 			BufferLineDevIconLogSelected = { bg = "#DCA561", fg = "#1F1F28" },
 			BufferLineDevIconLuaSelected = { bg = "#DCA561", fg = "#1F1F28" },
-			BufferLineDevIconPythonSelected = { bg = "#DCA561", fg = "#1F1F28" },
+			BufferLineDevIconPySelected = { bg = "#DCA561", fg = "#1F1F28" },
 
 			BufferLineErrorVisible = { bold = true, fg = "#FF5252", italic = false },
 			BufferLineErrorSelected = { bg = "#DCA561", bold = true, fg = "#D50000", italic = false },
