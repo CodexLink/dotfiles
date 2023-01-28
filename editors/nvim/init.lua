@@ -5,8 +5,8 @@
 -- Step 1: Create a set of modules for us to import.
 local required_modules = {
 	"options",
-	"utils",
 	"plugins",
+	"utils",
 	"mappings" -- Contains `which-key.nvim`, which has to be declared after `plugins`.
 }
 
