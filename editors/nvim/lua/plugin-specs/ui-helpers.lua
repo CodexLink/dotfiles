@@ -4,7 +4,6 @@
 return {
 	{
 		-- ! Alternative dialogue, similar to `telescope.nvim`.
-		-- !!! This plugin is a dependency from other plugins!
 		"stevearc/dressing.nvim",
 		config = true,
 		lazy = false,
@@ -52,14 +51,13 @@ return {
 		end,
 		dependencies = {
 			{ "petertriho/nvim-scrollbar" } -- !!! Despite this plugin is declared in `ui.lua`, if `ui-helpers.lua` was the first plugin spec file to initialize, then install this plugin as possible, if missing, then re-configure on `ui.lua` later.
-		},
-		event = "BufReadPost"
+		}
 	},
 	{
 		-- ! Colorizes any string that states a color.
 		"NvChad/nvim-colorizer.lua",
 		config = true,
-		event = "BufReadPost"
+		event = { "BufAdd", "BufNewFile", "BufReadPost" }
 	},
 	{
 		-- ! Display notification from the right side, similar to modern game notification system.
@@ -102,7 +100,6 @@ return {
 		dependencies = {
 			{ "anuvyklack/middleclass" },
 			{ "anuvyklack/animation.nvim" }
-		},
-		event = "VeryLazy"
+		}
 	}
 }

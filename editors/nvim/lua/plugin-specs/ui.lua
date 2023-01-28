@@ -9,21 +9,22 @@ return {
 		dependencies = {
 			{ "nvim-tree/nvim-web-devicons" }
 		},
+		lazy = true,
 		opts = {
 			backends = { "lsp" },
 			filter_kind = false,
 			highlight_on_hover = true,
 			show_guides = true
-		},
-		event = "BufReadPre",
+		}
 	},
 	{
 		-- ! Buffer file displayed as a tab.
 		"akinsho/bufferline.nvim",
 		dependencies = {
-			{ "nvim-tree/nvim-web-devicons" }
+				{ "nvim-tree/nvim-web-devicons" }
 		},
-		lazy = false,
+		event = { "BufReadPost", "BufAdd", "BufNewFile" },
+		lazy = true,
 		opts = {
 			options = {
 				always_show_bufferline = true,
@@ -58,7 +59,7 @@ return {
 	{
 		-- ! Lazygit but in neovim window, added in the UI as its not an enhancement plugin but rather an extender which is a UI component at this point.
 		"kdheepak/lazygit.nvim",
-		lazy = false,
+		lazy = true,
 		config = function()
 			vim.g.lazygit_floating_window_use_plenary = 1
 			vim.g.lazygit_use_neovim_remote = 0
@@ -68,7 +69,8 @@ return {
 		-- ! Status bar for the editor.
 		-- TODO: Requires further customization!
 		"nvim-lualine/lualine.nvim",
-		lazy = false,
+		event = "VeryLazy",
+		lazy = true,
 		opts = {
 			options = {
 				icons_enabled = true,
@@ -112,7 +114,8 @@ return {
 				lualine_y = {},
 				lualine_z = {},
 			}
-		}
+		},
+		priority = 900 -- ! Load after `colorscheme`.
 	},
 	{
 		-- ! Literally a scrollbar, but in nvim.
@@ -166,18 +169,15 @@ return {
 			})
 
 			-- Then load the extensions now.
-			telescope.load_extension("aerial")
 			telescope.load_extension("fzf")
-			telescope.load_extension("file_browser")
-			telescope.load_extension("lazygit")
 		end,
 		dependencies = {
 			{ "nvim-lua/plenary.nvim" },
-			{ "kdheepak/lazygit.nvim" },
-			{ "nvim-telescope/telescope-file-browser.nvim" },
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+			{ "kdheepak/lazygit.nvim", lazy = true },
+			{ "nvim-telescope/telescope-file-browser.nvim", lazy = true },
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make", lazy = true },
 		},
-		lazy = false
+		lazy = true
 	},
 	{
 		-- ! Displays icons, more like from the `Nerd Fonts`, note that lots of plugins depend on this plugin!
@@ -191,7 +191,7 @@ return {
 	{
 		-- ! Bottom panel that contains diagnostics.
 		"folke/trouble.nvim",
-		event = "BufReadPost",
+		config = true,
 		opts = {
 			action_keys = {
 				close = "q",

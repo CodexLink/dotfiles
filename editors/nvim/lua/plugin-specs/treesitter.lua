@@ -19,6 +19,7 @@ return {
 			{ "nvim-treesitter/nvim-treesitter-context", config = function() require("treesitter-context").setup() end,
 				event = "BufReadPost" }
 		},
+		event = { "BufAdd", "BufReadPost", "BufNewFile" },
 		opts = {
 			additional_vim_regex_highlighting = false,
 			autopairs = { enable = true },
@@ -68,7 +69,6 @@ return {
 			matchup = { enable = true },
 			textobjects = { enable = true }
 		},
-		event = "BufReadPost",
 		version = false
 	}
 }

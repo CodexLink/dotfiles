@@ -296,7 +296,7 @@ return {
 			-- Package manager extension as an LSP provider for the "nvim-lspconfig".
 			{ "williamboman/mason-lspconfig.nvim" },
 			-- ! Primary plugins that is naturally dependant by these extension plugins.
-			{ "neovim/nvim-lspconfig" }, -- For the LSP.
+			{ "neovim/nvim-lspconfig", event = { "BufReadPost", "BufAdd", "BufNewFile" }, lazy = true }, -- For the LSP.
 			{ "jose-elias-alvarez/null-ls.nvim", dependencies = { "nvim-lua/plenary.nvim" } }, -- For the Code Actions, Formatters and Linters.
 			{ "jay-babu/mason-null-ls.nvim" }, -- Declared before the dependant.
 			-- * Completion plugins
@@ -304,10 +304,11 @@ return {
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "hrsh7th/cmp-path" },
 			{ "onsails/lspkind.nvim" },
-			{ "L3MON4D3/LuaSnip" },
-			{ "rafamadriz/friendly-snippets" },
+			{ "L3MON4D3/LuaSnip", lazy = true },
+			{ "rafamadriz/friendly-snippets", lazy = true },
 			{ "saadparwaiz1/cmp_luasnip" },
 		},
-		lazy = false,
+		event = "InsertEnter",
+		lazy = true
 	}
 }
