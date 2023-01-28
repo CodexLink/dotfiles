@@ -70,10 +70,7 @@ return {
 			vim.notify = require("notify")
 		end,
 		lazy = false,
-		opts = {
-			render = "compact",
-			stage = "slide",
-		}
+		opts = { render = "compact" }
 	},
 	{
 		-- ! Code dimmer (by buffer, blocks) when the cursor is focused elsewhere.
@@ -81,9 +78,6 @@ return {
 		config = function(_, opts)
 			-- Setup the plugin first.
 			require("twilight").setup(opts)
-
-			-- Then run "TwilightEnable" immediately after load.
-			vim.cmd([[ TwilightEnable ]])
 		end,
 		event = "VeryLazy",
 		opts = {
