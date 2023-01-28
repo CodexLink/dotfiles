@@ -1,15 +1,13 @@
 -- helpers.lua			| Plugins that eases the operation from the editor, more likely a `shortcut` to the process; external-helpers or utilities were also included in this plugin spec file; used for the package manager lazy.nvim"
 -- @CodexLink				| https://github.com/CodexLink
 
-local vg = vim.g
-local vk = vim.keymap
-
 return {
 	{
 		-- ! Literally a comment creator, this can be paired with annotation plugin.
 		"numToStr/Comment.nvim",
 		config = true,
-		event = "BufReadPost"
+		event = { "BufNewFile", "BufReadPost" },
+		lazy = true
 	},
 	{
 		-- ! Alternative `git diff` viewer, supported by `lazy.nvim` (package manager).
@@ -21,48 +19,21 @@ return {
 		-- ! Similar to Vimium C, jump to certain part of code, this is way similar to `leap.nvim` but it uses 2 letters to jump to certain part of code.
 		-- !!! This plugin is useful when we don't want a keyword-based jump.
 		"phaazon/hop.nvim",
-		config = function()
-			local hop = require("hop")
-			local directions = require("hop.hint").HintDirection
-
-			vk.set("", "h", function()
-				hop.hint_char1()
-			end, { remap = true })
-
-			vk.set("", "H", function()
-				hop.hint_char2()
-			end, { remap = true })
-
-			vk.set("", "f", function()
-				hop.hint_anywhere({ direction = directions.AFTER_CURSOR })
-			end, { remap = true })
-
-			vk.set("", "F", function()
-				hop.hint_anywhere({ direction = directions.BEFORE_CURSOR })
-			end, { remap = true })
-
-			-- Do the conventional setup.
-			hop.setup({})
-
-		end,
-		event = "BufReadPost"
+		config = true,
+		lazy = true
 	},
 	{
 		-- ! Incremental renaming context, similar to vscode's F2 rename system but incremental in this case.
 		"smjonas/inc-rename.nvim",
+		config = true,
+		event = "BufReadPost",
+		lazy = true,
 		opts = {
 			input_buffer_type = "dressing"
-		},
-		event = "BufReadPost"
+		}
 	},
 	{
-		-- ! Jump the cursor from a certain region with two letters only.
-		"ggandor/leap.nvim",
-		config = function() require("leap").add_default_mappings() end,
-		event = "BufReadPre"
-	},
-	{
-		-- ! External helper tool that helps visualizes the markdown or text file to the browser.
+		-- ! External helper tool that helps visualizesa the markdown or text file to the browser.
 		"iamcco/markdown-preview.nvim",
 		build = function() vim.fn["mkdp#util#install"]() end,
 		config = function()
@@ -70,6 +41,8 @@ return {
 			-- !!! The plugin runs in this way and not in the conventional 'config' function.
 
 			-- Since this plugin is only loaded based on file extensiosn from 'ft' table, do not limit on markdown.
+			local vg = vim.g
+
 			vg.mkdp_command_for_global = 1
 			vg.mkdp_page_title = "${name} | mkdp (live)"
 			vg.mkdp_filetypes = { "markdown", "text" }
@@ -82,17 +55,15 @@ return {
 	{
 		"danymat/neogen",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		event = "BufReadPost",
 		config = function()
 			require("neogen").setup({ snippet_engine = "luasnip" })
 		end,
+		lazy = true
 	},
 	{
 		-- ! Auto-adding or wrapping from both ends of a highlighted context.
 		"windwp/nvim-autopairs",
-		dependencies = {
-			{ "hrsh7th/nvim-cmp" }
-		},
+		dependencies = { { "hrsh7th/nvim-cmp" } },
 		config = function(plugin, opts)
 			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 			local cmp = require("cmp")
@@ -104,7 +75,7 @@ return {
 
 			require(plugin.name).setup(opts)
 		end,
-		event = "BufReadPost",
+		event = { "BufAdd", "BufReadPost", "BufNewFile" },
 		opts = {
 			check_ts = true,
 			fast_wrap = { map = "<M-w>" },
@@ -115,37 +86,35 @@ return {
 	},
 	{
 		"mfussenegger/nvim-treehopper",
-		dependencies = {
-			{ "phaazon/hop.nvim" }
-		},
-		event = "BufReadPost"
+		dependencies = { { "phaazon/hop.nvim" } },
+		lazy = true
 	},
 	{
-	-- ! Structural search then replace; far more advanced than the conventional find and replace system.
-	"cshuaimin/ssr.nvim",
-	lazy = false,
-	opts = {
-		keymaps = {
-        close = "q",
-        next_match = "n",
-        prev_match = "N",
-        replace_confirm = "<cr>",
-        replace_all = "<leader><cr>",
-      },
+		-- ! Structural search then replace; far more advanced than the conventional find and replace system.
+		"cshuaimin/ssr.nvim",
+		lazy = true,
+		opts = {
+			keymaps = {
+				close = "q",
+				next_match = "n",
+				prev_match = "N",
+				replace_confirm = "<cr>",
+				replace_all = "<leader><cr>",
+			},
 		}
 	},
 	{
 		-- ! Code Context to `One-Liner` or `Split-by-Blocks` Plugin.
 		"Wansmer/treesj",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		event = "BufReadPost",
+		lazy = true,
 		opts = {
 			max_join_length = 512
 		}
 	},
 	{
 		-- ! Outputs keybinds when pressed a key for the editor.
-    "folke/which-key.nvim",
+		"folke/which-key.nvim",
 		lazy = false,
 		opts = {
 			layout = {
@@ -162,5 +131,5 @@ return {
 				suggestions = 15
 			},
 		}
-  }
+	}
 }
