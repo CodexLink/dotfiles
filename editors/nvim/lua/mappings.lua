@@ -68,7 +68,7 @@ wk.register({
 	["<M-v>"] = { function() require("treesj").toggle() end, "treesj: Toggle 'One-Liner/Splitted' Style." },
 	["<M-x>"] = { function() require("illuminate").goto_next_reference() end, "vim-illuminate: Jump to next reference" },
 	["<M-z>"] = { function() require("illuminate").goto_prev_reference() end, "vim-illuminate: Jump to previous reference" },
-	["<M-F>"] = { function() require("utils").LSPCodeFileFormat() end, "utils: Code Format (Async)" },
+	["<M-F>"] = { function() require("utils").LSPCodeFormat() end, "utils: Code Format (Async)" },
 	["<S-Left>"] = {  function() require("bufferline").move(-1) end, "bufferline: Move Buffer to the Left." },
 	["<S-Right>"] = { function() require("bufferline").move(1) end, "bufferline: :Move Buffer to the Right." }
 })

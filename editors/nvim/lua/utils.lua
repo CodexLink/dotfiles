@@ -7,7 +7,7 @@ local F = {}
 
 function F.LSPCodeFormat()
 	local async_provider = require("plenary.async")
-	local notify_async = require("notify").async_provider
+	local notify_async = require("notify").async
 
 	vim.lsp.buf.format({ async = true })
 	async_provider.run(function() notify_async("Formatting done!") end)
@@ -27,7 +27,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 -- Highlight yank for a short time period.
-vim.api.nvim_create_autocmd("TextYankPost", { callback = function() vim.highlight.on_yank({ higroup = "HighlightedYank", timeout = 1250 }) end })
+vim.api.nvim_create_autocmd("TextYankPost",
+	{ callback = function() vim.highlight.on_yank({ higroup = "HighlightedYank", timeout = 1250 }) end })
 
 
 return F
