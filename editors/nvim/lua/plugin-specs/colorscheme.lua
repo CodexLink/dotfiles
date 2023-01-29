@@ -84,15 +84,23 @@ return {
 				CmpItemKindColor = { bg = kanagawa_colors.fujiWhite, fg = kanagawa_colors.sumiInk1 },
 				CmpItemKindTypeParameter = { bg = kanagawa_colors.fujiWhite, fg = kanagawa_colors.sumiInk1 },
 
-				CursorToNavigation = { bg = "NONE", fg = kanagawa_colors.roninYellow },
-				CursorToInsertion = { bg = "NONE", fg = kanagawa_colors.surimiOrange },
-				CursorToReplacement = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.samuraiRed },
+				CursorToNavigation = { fg = "NONE", bg = kanagawa_colors.roninYellow },
+				CursorToInsertion = { fg = "NONE", bg = kanagawa_colors.surimiOrange },
+				CursorToReplacement = { fg = kanagawa_colors.autumnYellow, bg = kanagawa_colors.samuraiRed },
+
+				-- !!! This highlight may work based on your terminal, currently this does not work in my case.
+				Cursor = { bg = kanagawa_colors.surimiOrange, fg = kanagawa_colors.surimiOrange },
+				TermCursor = { bg = kanagawa_colors.surimiOrange, fg = kanagawa_colors.surimiOrange },
+
+				HighlightedYank = { bg = kanagawa_colors.roninYellow, fg = kanagawa_colors.sumiInk1 },
 
 				IlluminatedWordRead = { bg = kanagawa_colors.carpYellow, bold = true, fg = kanagawa_colors.sumiInk1 },
 				IlluminatedWordText = { bg = kanagawa_colors.oldWhite, fg = kanagawa_colors.sumiInk1, underline = false },
-				IlluminatedWordWrite = { bg = kanagawa_colors.waveRed, bold = true, fg = kanagawa_colors.sumiInk1 },
+				IlluminatedWordWrite = { bg = kanagawa_colors.sakuraPink, bold = true, fg = kanagawa_colors.sumiInk1 },
 
-				Pmenu = { bg = kanagawa_colors.sumiInk4, fg = kanagawa_colors.sakuraPink },
+				Visual = { bg = kanagawa_colors.waveRed, fg = kanagawa_colors.sumiInk1 },
+
+				Pmenu = { bg = kanagawa_colors.sumiInk2, fg = kanagawa_colors.sakuraPink },
 				PmenuSel = { bg = kanagawa_colors.carpYellow, fg = kanagawa_colors.sumiInk1 },
 			}
 		})
