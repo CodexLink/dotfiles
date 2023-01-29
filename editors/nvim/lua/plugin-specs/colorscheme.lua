@@ -8,89 +8,94 @@ return {
 	"rebelot/kanagawa.nvim",
 	lazy = false,
 	priority = 1000,
-	config = function(_, opts)
-		require("kanagawa").setup(opts)
+	config = function()
+		local kanagawa_colors = require("kanagawa.colors").setup()
+
+		require("kanagawa").setup({
+			undercurl = true,
+			commentStyle = { italic = true },
+			functionStyle = { bold = true },
+			keywordStyle = { italic = true },
+			statementStyle = { bold = true },
+			typeStyle = {},
+			variablebuiltinStyle = { italic = true },
+			specialReturn = true,
+			specialException = true,
+			transparent = false,
+			dimInactive = true,
+			globalStatus = true,
+			terminalColors = true,
+			overrides = {
+				BufferLineBufferSelected = { bg = kanagawa_colors.autumnYellow, bold = true, fg = kanagawa_colors.sumiInk1 },
+				BufferLineDevIconDefaultSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
+				BufferLineDevIconGitCommitSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
+				BufferLineDevIconLogSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
+				BufferLineDevIconLuaSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
+				BufferLineDevIconPySelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
+
+				BufferLineErrorVisible = { bold = true, fg = kanagawa_colors.autumnRed, italic = false },
+				BufferLineErrorSelected = { bg = kanagawa_colors.autumnYellow, bold = true, fg = kanagawa_colors.samuraiRed, italic = false },
+				BufferLineHintVisible = { bold = true, fg = kanagawa_colors.sprintViolet1, italic = false },
+				BufferLineHintSelected = { bg = kanagawa_colors.autumnYellow, bold = true, fg = kanagawa_colors.oniViolet, italic = false },
+				BufferLineInfoVisible = { bold = true, fg = kanagawa_colors.lightBlue, italic = false },
+				BufferLineInfoSelected = { bg = kanagawa_colors.autumnYellow, bold = true, fg = kanagawa_colors.springBlue, italic = false },
+				BufferLineWarningVisible = { bold = true, fg = kanagawa_colors.boatYellow2, italic = false },
+				BufferLineWarningSelected = { bg = kanagawa_colors.autumnYellow, bold = true, fg = kanagawa_colors.boatYellow1, italic = false },
+
+				BufferLineIndicatorSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.fujiWhite },
+				BufferLineModifiedSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
+				BufferLinePickSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.samuraiRed },
+
+				CmpItemAbbrDeprecated = { bg = "NONE", fg = kanagawa_colors.waveRed, strikethrough = true },
+				CmpItemAbbrMatch = { bg = "NONE", bold = true, fg = kanagawa_colors.waveRed },
+				CmpItemAbbrMatchFuzzy = { bg = "NONE", bold = true, fg = kanagawa_colors.waveRed },
+				CmpItemMenu = { bg = "NONE", fg = kanagawa_colors.carpYellow, bold = true },
+
+				CmpItemKindField = { bg = kanagawa_colors.sakuraPink, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindProperty = { bg = kanagawa_colors.sakuraPink, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindEvent = { bg = kanagawa_colors.sakuraPink, fg = kanagawa_colors.sumiInk1 },
+
+				CmpItemKindText = { bg = kanagawa_colors.springGreen, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindEnum = { bg = kanagawa_colors.springGreen, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindKeyword = { bg = kanagawa_colors.springGreen, fg = kanagawa_colors.sumiInk1 },
+
+				CmpItemKindConstant = { bg = kanagawa_colors.carpYellow, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindConstructor = { bg = kanagawa_colors.carpYellow, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindReference = { bg = kanagawa_colors.carpYellow, fg = kanagawa_colors.sumiInk1 },
+
+				CmpItemKindFunction = { bg = kanagawa_colors.surimiOrange, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindStruct = { bg = kanagawa_colors.surimiOrange, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindClass = { bg = kanagawa_colors.surimiOrange, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindModule = { bg = kanagawa_colors.surimiOrange, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindOperator = { bg = kanagawa_colors.surimiOrange, fg = kanagawa_colors.sumiInk1 },
+
+				CmpItemKindVariable = { bg = kanagawa_colors.waveRed, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindFile = { bg = kanagawa_colors.waveRed, fg = kanagawa_colors.sumiInk1 },
+
+				CmpItemKindUnit = { bg = kanagawa_colors.autumnRed, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindSnippet = { bg = kanagawa_colors.autumnRed, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindFolder = { bg = kanagawa_colors.autumnRed, fg = kanagawa_colors.sumiInk1 },
+
+				CmpItemKindMethod = { bg = kanagawa_colors.roninYellow, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindValue = { bg = kanagawa_colors.roninYellow, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindEnumMember = { bg = kanagawa_colors.roninYellow, fg = kanagawa_colors.sumiInk1 },
+
+				CmpItemKindInterface = { bg = kanagawa_colors.fujiWhite, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindColor = { bg = kanagawa_colors.fujiWhite, fg = kanagawa_colors.sumiInk1 },
+				CmpItemKindTypeParameter = { bg = kanagawa_colors.fujiWhite, fg = kanagawa_colors.sumiInk1 },
+
+				CursorToNavigation = { bg = "NONE", fg = kanagawa_colors.roninYellow },
+				CursorToInsertion = { bg = "NONE", fg = kanagawa_colors.surimiOrange },
+				CursorToReplacement = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.samuraiRed },
+
+				IlluminatedWordRead = { bg = kanagawa_colors.carpYellow, bold = true, fg = kanagawa_colors.sumiInk1 },
+				IlluminatedWordText = { bg = kanagawa_colors.oldWhite, fg = kanagawa_colors.sumiInk1, underline = false },
+				IlluminatedWordWrite = { bg = kanagawa_colors.waveRed, bold = true, fg = kanagawa_colors.sumiInk1 },
+
+				Pmenu = { bg = kanagawa_colors.sumiInk4, fg = kanagawa_colors.sakuraPink },
+				PmenuSel = { bg = kanagawa_colors.carpYellow, fg = kanagawa_colors.sumiInk1 },
+			}
+		})
 		vim.cmd([[ colorscheme kanagawa ]])
-	end,
-	opts = {
-		undercurl = true,
-		commentStyle = { italic = true },
-		functionStyle = { bold = true },
-		keywordStyle = { italic = true },
-		statementStyle = { bold = true },
-		typeStyle = {},
-		variablebuiltinStyle = { italic = true },
-		specialReturn = true,
-		specialException = true,
-		transparent = false,
-		dimInactive = true,
-		globalStatus = true,
-		terminalColors = true,
-		overrides = {
-			BufferLineBufferSelected = { bg = "#DCA561", bold = true, fg = "#1F1F28" },
-			BufferLineDevIconDefaultSelected = { bg = "#DCA561", fg = "#1F1F28" },
-			BufferLineDevIconGitCommitSelected = { bg = "#DCA561", fg = "#1F1F28" },
-			BufferLineDevIconLogSelected = { bg = "#DCA561", fg = "#1F1F28" },
-			BufferLineDevIconLuaSelected = { bg = "#DCA561", fg = "#1F1F28" },
-			BufferLineDevIconPySelected = { bg = "#DCA561", fg = "#1F1F28" },
-
-			BufferLineErrorVisible = { bold = true, fg = "#FF5252", italic = false },
-			BufferLineErrorSelected = { bg = "#DCA561", bold = true, fg = "#D50000", italic = false },
-			BufferLineHintVisible = { bold = true, fg = "#E7B9FF", italic = false },
-			BufferLineHintSelected = { bg = "#DCA561", bold = true, fg = "#6200EA", italic = false },
-			BufferLineInfoVisible = { bold = true, fg = "#00E5FF", italic = false },
-			BufferLineInfoSelected = { bg = "#DCA561", bold = true, fg = "#00B8D4", italic = false },
-			BufferLineWarningVisible = { bold = true, fg = "#FF6E40", italic = false },
-			BufferLineWarningSelected = { bg = "#DCA561", bold = true, fg = "#DD2C00", italic = false },
-
-			BufferLineIndicatorSelected = { bg = "#DCA561", fg = "#FFFFFF" },
-			BufferLineModifiedSelected = { bg = "#DCA561", fg = "#1F1F28" },
-			BufferLinePickSelected = { bg = "#DCA561", fg = "#D50000" },
-
-			CmpItemAbbrDeprecated = { bg = "NONE", fg = "#7E8294", strikethrough = true },
-			CmpItemAbbrMatch = { bg = "NONE", bold = true, fg = "#82AAFF" },
-			CmpItemAbbrMatchFuzzy = { bg = "NONE", bold = true, fg = "#82AAFF" },
-			CmpItemMenu = { bg = "NONE", fg = "#C792EA", italic = true },
-
-			CmpItemKindField = { bg = "#B5585F", fg = "#EED8DA" },
-			CmpItemKindProperty = { bg = "#B5585F", fg = "#EED8DA" },
-			CmpItemKindEvent = { bg = "#B5585F", fg = "#EED8DA" },
-
-			CmpItemKindText = { bg = "#9FBD73", fg = "#C3E88D" },
-			CmpItemKindEnum = { bg = "#9FBD73", fg = "#C3E88D" },
-			CmpItemKindKeyword = { bg = "#9FBD73", fg = "#C3E88D" },
-
-			CmpItemKindConstant = { bg = "#D4BB6C", fg = "#FFE082" },
-			CmpItemKindConstructor = { bg = "#D4BB6C", fg = "#FFE082" },
-			CmpItemKindReference = { bg = "#D4BB6C", fg = "#FFE082" },
-
-			CmpItemKindFunction = { bg = "#A377BF", fg = "#EADFF0" },
-			CmpItemKindStruct = { bg = "#A377BF", fg = "#EADFF0" },
-			CmpItemKindClass = { bg = "#A377BF", fg = "#EADFF0" },
-			CmpItemKindModule = { bg = "#A377BF", fg = "#EADFF0" },
-			CmpItemKindOperator = { bg = "#A377BF", fg = "#EADFF0" },
-
-			CmpItemKindVariable = { bg = "#7E8294", fg = "#C5CDD9" },
-			CmpItemKindFile = { bg = "#7E8294", fg = "#C5CDD9" },
-
-			CmpItemKindUnit = { bg = "#D4A959", fg = "#F5EBD9" },
-			CmpItemKindSnippet = { bg = "#D4A959", fg = "#F5EBD9" },
-			CmpItemKindFolder = { bg = "#D4A959", fg = "#F5EBD9" },
-
-			CmpItemKindMethod = { bg = "#6C8ED4", fg = "#DDE5F5" },
-			CmpItemKindValue = { bg = "#6C8ED4", fg = "#DDE5F5" },
-			CmpItemKindEnumMember = { bg = "#6C8ED4", fg = "#DDE5F5" },
-
-			CmpItemKindInterface = { bg = "#58B5A8", fg = "#D8EEEB" },
-			CmpItemKindColor = { bg = "#58B5A8", fg = "#D8EEEB" },
-			CmpItemKindTypeParameter = { bg = "#58B5A8", fg = "#D8EEEB" },
-
-			IlluminatedWordRead = { bg = "#FFD740", bold = true, fg = "#424242", underline = false },
-			IlluminatedWordText = { bg = "#FFFF8D", bold = true, fg = "#424242", underline = false },
-			IlluminatedWordWrite = { bg = "#FFB2FF", bold = true, fg = "#424242", underline = false },
-
-			Pmenu = { bg = "#000000", fg = "#FFFFFF" },
-			PmenuSel = { bg = "#282C34", fg = "#1F1F28" },
-		},
-	},
+	end
 }
