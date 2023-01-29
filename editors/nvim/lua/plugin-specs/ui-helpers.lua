@@ -85,7 +85,11 @@ return {
 	{
 		-- ! Highlights similar case of a certain pattern from the code, similar to vscode's highlight behavior.
 		"RRethy/vim-illuminate",
-		event = "BufReadPost"
+		config = function (_, opts)
+			require("illuminate").configure(opts)
+		end,
+		event = "BufReadPost",
+		opts = { delay = 250 }
 	},
 	{
 		-- ! Window sizing management with animation.
