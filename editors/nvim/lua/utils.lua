@@ -23,5 +23,11 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		-- Problem with this autocmd was, this won't work when a single buffer has a split view.
 		local existing_buffers_count = vim.fn.len(vim.fn.filter(vim.fn.range(1, vim.fn.bufnr('$')), 'buflisted(v:val)'))
 		if (not is_window_lazy_loaded and existing_buffers_count > 1) then require("windows.commands").equalize() end
-  end
+	end
 })
+
+-- Highlight yank for a short time period.
+vim.api.nvim_create_autocmd("TextYankPost", { callback = function() vim.highlight.on_yank({ higroup = "HighlightedYank", timeout = 1250 }) end })
+
+
+return F
