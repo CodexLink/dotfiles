@@ -9,6 +9,9 @@
 -- [3] To reduce telescope startup time, require("telescop").load_extension was declared from the keybinds instead before initializing them.
 --
 local wk = require("which-key")
+local notifier = require("utils").NotifyAfterExecution
+
+local mapping_default_opts = { animate = true, timeout = 1250, title = "Mapping-to-Execution" }
 
 wk.register({
 	["<F1>"] = { function() require("telescope.builtin").builtin() end, "telesocpe.nvim: Toggle 'builtin'" },
@@ -54,7 +57,7 @@ wk.register({
 			["_"] = { function() require("windows.commands").maximize_horizontally() end, "Maximize horizontally" },
 		}
 	},
-	["M-`"] = { function() vim.cmd([[ set wrap! ]]) end, "builtin: Toggle wrap" },
+	["M-~"] = { function() vim.cmd([[ set wrap! ]]) end, "builtin: Toggle wrap" },
 	["<M-<>"] = { function() require("bufferline").cycle(-1) end, "bufferline: Move to Previous Buffer." },
 	["<M->>"] = { function() require("bufferline").cycle(1) end, "bufferline: Move to Next Buffer." },
 	["<M-a>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char" },
@@ -65,7 +68,7 @@ wk.register({
 		"hop.nvim: hop below anywhere" },
 	["<M-S>"] = { function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR }) end,
 		"hop.nvim: hop above anywhere" },
-	["<M-v>"] = { function() require("treesj").toggle() end, "treesj: Toggle 'One-Liner/Splitted' Style." },
+	["<M-v>"] = { function() notifier({ cmd = function() require("treesj").toggle() end, message = "treesj: toggled to wrap/one-line a context.", opts = mapping_default_opts }) end, "treesj: Toggle 'One-Liner/Splitted' Style." },
 	["<M-x>"] = { function() require("illuminate").goto_next_reference() end, "vim-illuminate: Jump to next reference" },
 	["<M-z>"] = { function() require("illuminate").goto_prev_reference() end, "vim-illuminate: Jump to previous reference" },
 	["<M-F>"] = { function() require("utils").LSPCodeFormat() end, "utils: Code Format (Async)" },
