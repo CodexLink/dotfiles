@@ -7,16 +7,6 @@
 
 local F = {}
 
-function F.LSPCodeFormat()
-	local async_provider = require("plenary.async")
-	local notify_async = require("notify").async
-
-	vim.lsp.buf.format({ async = true })
-	async_provider.run(function() notify_async("Formatting done!") end)
-end
-
-vim.api.nvim_create_user_command("LSPCodeFormat", F.LSPCodeFormat, {})
-
 -- Wrapper function for the `mapping.lua` that notifies the user after hitting the command for the sake of receiving the feedback.
 function F.NotifyAfterExecution(props)
 	-- Do type checking before proceeding.
