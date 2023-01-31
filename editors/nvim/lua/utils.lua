@@ -8,7 +8,9 @@
 local F = {}
 
 -- Wrapper function for the `mapping.lua` that notifies the user after hitting the command for the sake of receiving the feedback.
+---@params props, contains a table with the following attributes: [cmd<string|function>, message<string>, level<number>, opts<table<string, any>>]
 function F.NotifyAfterExecution(props)
+
 	-- Do type checking before proceeding.
 	-- REFACTORME: If we can create a blueprint of table for us to validate the context of the table without the need of extrenous amount of if-else statement.
 
@@ -67,6 +69,5 @@ vim.api.nvim_create_autocmd("BufEnter", {
 vim.api.nvim_create_autocmd("TextYankPost",
 	{ callback = function() vim.highlight.on_yank({ higroup = "HighlightedYank", timeout = 1250 }) end }
 )
-
 
 return F
