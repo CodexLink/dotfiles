@@ -154,7 +154,7 @@ function OpenWTConfig {
 }
 # - PSFzf
 Import-Module PSFzf
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+Shift+z' -PSReadlineChordReverseHistory 'Ctrl+Shift+x' -TabExpansion
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+Shift+f' -PSReadlineChordReverseHistory 'Alt+f' -TabExpansion
 
 # - Other Module Imports
 
