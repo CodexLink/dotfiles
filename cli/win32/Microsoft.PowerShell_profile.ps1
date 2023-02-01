@@ -2,6 +2,7 @@
 # Updated as of 08/24/2022, Version 0.6.3
 
 # # Aliases
+Set-Alias b bat
 Set-Alias c cat
 Set-Alias cbf CreateBlankFile
 Set-Alias ccp CopyCurrentPath
