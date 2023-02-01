@@ -86,7 +86,7 @@ wk.register({
 			end, "Maximize horizontally" },
 		}
 	},
-	["<M-~>"] = { function() vim.cmd([[ set wrap! ]]) end, "builtin: Toggle wrap" },
+	["<M-~>"] = { function() notifier({ cmd = function() vim.cmd([[ set wrap! ]]) end, message = "Code wrapping toggled.", opts = mapping_default_opts }) end, "builtin: Toggle wrap" },
 	["<M-<>"] = { function() require("bufferline").cycle(-1) end, "bufferline: Move to Previous Buffer." },
 	["<M->>"] = { function() require("bufferline").cycle(1) end, "bufferline: Move to Next Buffer." },
 	["<M-a>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char" },
