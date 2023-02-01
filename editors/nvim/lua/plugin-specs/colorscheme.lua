@@ -29,10 +29,11 @@ return {
 				BufferLineBufferSelected = { bg = kanagawa_colors.autumnYellow, bold = true, fg = kanagawa_colors.sumiInk1 },
 				BufferLineDevIconDefaultSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
 				BufferLineDevIconGitCommitSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
+				BufferLineDevIconJsonSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
 				BufferLineDevIconLogSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
 				BufferLineDevIconLuaSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
 				BufferLineDevIconPySelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
-
+				BufferLineDevIconPsScriptfileSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
 				BufferLineErrorVisible = { bold = true, fg = kanagawa_colors.autumnRed, italic = false },
 				BufferLineErrorSelected = { bg = kanagawa_colors.autumnYellow, bold = true, fg = kanagawa_colors.samuraiRed,
 					italic = false },
