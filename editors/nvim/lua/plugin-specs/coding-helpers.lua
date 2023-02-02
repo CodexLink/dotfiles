@@ -16,7 +16,8 @@ return {
 				max_concurrent_installers = 10
 			})
 		end,
-		lazy = false
+		lazy = false,
+		priority = 800,
 	},
 	-- ! Package manager extension as an LSP provider for the "nvim-lspconfig".
 	{
@@ -43,7 +44,8 @@ return {
 				automatic_installation = true
 			})
 		end,
-		lazy = false
+		lazy = false,
+		priority = 750,
 	},
 	-- ! Package manager extension as an LSP provider for the "null-ls".
 		-- * Note that we have to use the packages that is namespaced by `null-ls` to ensure no conflicts during setup.
@@ -57,7 +59,8 @@ return {
         automatic_setup = true
       }
     ) end,
-    lazy = false
+    lazy = false,
+		priority = 700,
   },
 	-- !!! Dependants from the external package were done by `mason.nvim` and `null-ls.nvim`.
 	{
@@ -292,7 +295,7 @@ return {
 			{ "saadparwaiz1/cmp_luasnip" },
 		},
 	},
-	{ "neovim/nvim-lspconfig", lazy = true }, -- For the LSP.
+	{ "neovim/nvim-lspconfig", lazy = true, priority = 640 }, -- For the LSP.
 	-- ! For the Code Actions, Formatters and Linters.
 	{
 		"jose-elias-alvarez/null-ls.nvim",
