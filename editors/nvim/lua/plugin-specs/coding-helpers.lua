@@ -5,16 +5,68 @@
 -- [1] Configuration for the LSP servers or the configurator is separated, the context of this plugin spec is all about advertising the completion plugin to the LSP to display at the editor.
 
 return {
+	-- ! A package manager for the external tools, such as: Debug Adapter Protocol (DAP), Linters, Formatters, etc.
 	{
-		-- !!! Dependants from the external package were done by `mason.nvim` and `null-ls.nvim`.
+		"williamboman/mason.nvim",
+		config = function()
+			require("mason").setup({
+				pip = {
+					upgrade_pip = true,
+				},
+				max_concurrent_installers = 10
+			})
+		end,
+		lazy = false
+	},
+	-- ! Package manager extension as an LSP provider for the "nvim-lspconfig".
+	{
+		"williamboman/mason-lspconfig.nvim",
+		config = function()
+			require("mason-lspconfig").setup({
+				ensure_installed = {
+					"cssmodules_ls",
+					"dockerls",
+					"eslint",
+					"graphql",
+					"html",
+					"jsonls",
+					"marksman",
+					"pyright",
+					"sqlls",
+					"sumneko_lua",
+					"svelte",
+					"tailwindcss",
+					"tsserver",
+					"volar",
+					"yamlls",
+				},
+				automatic_installation = true
+			})
+		end,
+		lazy = false
+	},
+	-- ! Package manager extension as an LSP provider for the "null-ls".
+		-- * Note that we have to use the packages that is namespaced by `null-ls` to ensure no conflicts during setup.
+	{
+    "jay-babu/mason-null-ls.nvim",
+    config = function(
+    ) require("mason-null-ls").setup(
+      {
+        ensured_installed = nil,
+        automatic_installation = true,
+        automatic_setup = true
+      }
+    ) end,
+    lazy = false
+  },
+	-- !!! Dependants from the external package were done by `mason.nvim` and `null-ls.nvim`.
+	{
 		"hrsh7th/nvim-cmp",
 		config = function()
 			-- Instantiations
-			local cmp = require("cmp")
 			local cmp_types = require("cmp.types")
 			local lspconfig = require("lspconfig")
 			local luasnip = require("luasnip")
-			local null_ls = require("null-ls")
 
 			-- ! This function is provided from the advanced configuration of `nvim-cmp`.
 			local has_words_before = function()
@@ -23,10 +75,17 @@ return {
 				return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 			end
 
+			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+			local cmp = require("cmp")
+
+			cmp.event:on(
+				"confirm_done",
+				cmp_autopairs.on_confirm_done()
+			)
 			-- * Setup for the completion.
 			cmp.setup({
 				completion = {
-					keyword_length = 1
+					keyword_length = 2
 				},
 				experimental = {
 					ghost_text = true
@@ -105,59 +164,6 @@ return {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } })
 			})
-			-- * Setup for the external tool pakage manager.
-			require("mason").setup({ pip = { upgrade_pip = true }, max_concurrent_installers = 10 })
-
-			-- * Setup for the package manager connector for the `lspconfig`.
-			-- !!! null-ls will be used for the DAPs, Linters, and Formatters.
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"cssmodules_ls",
-					"dockerls",
-					"eslint",
-					"graphql",
-					"html",
-					"jsonls",
-					"marksman",
-					"pyright",
-					"sqlls",
-					"sumneko_lua",
-					"svelte",
-					"tailwindcss",
-					"tsserver",
-					"volar",
-					"yamlls",
-				},
-				automatic_installation = true
-			})
-
-			null_ls.setup({
-				sources = {
-					-- * Diagnostics
-					null_ls.builtins.diagnostics.cppcheck,
-					null_ls.builtins.diagnostics.cpplint,
-					null_ls.builtins.diagnostics.mypy,
-					-- * Formatters
-					null_ls.builtins.formatting.black,
-					null_ls.builtins.formatting.clang_format,
-					null_ls.builtins.formatting.fixjson,
-					null_ls.builtins.formatting.eslint_d,
-					null_ls.builtins.formatting.isort,
-					null_ls.builtins.formatting.markdownlint,
-					null_ls.builtins.formatting.prettierd,
-					null_ls.builtins.formatting.remark,
-					null_ls.builtins.formatting.reorder_python_imports,
-					null_ls.builtins.formatting.sql_formatter
-				}
-			})
-
-			-- ! Setup the code actions, formatters and linters via `null-ls`.
-			-- Note that we have to use the packages that is namespaced by `null-ls` to ensure no conflicts during setup.
-			require("mason-null-ls").setup({
-				ensured_installed = nil,
-				automatic_installation = true,
-				automatic_setup = true
-			})
 
 			-- Require every LSP via lspconfig["lsp_name"].setup({<setup_table>})
 			local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -166,10 +172,10 @@ return {
 			-- after the language server attaches to the current buffer
 			local on_attach = function(_, bufnr)
 				vim.api.nvim_buf_set_option(
-          bufnr,
-          "omnifunc",
-          "v:lua.vim.lsp.omnifunc"
-        )
+					bufnr,
+					"omnifunc",
+					"v:lua.vim.lsp.omnifunc"
+				)
 			end
 
 			lspconfig["cssmodules_ls"].setup({
@@ -271,24 +277,47 @@ return {
 
 		end,
 		dependencies = {
-			-- ! A package manager for the external tools, such as: Debug Adapter Protocol (DAP), Linters, Formatters, etc.
 			{ "williamboman/mason.nvim" },
-			-- Package manager extension as an LSP provider for the "nvim-lspconfig".
 			{ "williamboman/mason-lspconfig.nvim" },
-			-- ! Primary plugins that is naturally dependant by these extension plugins.
-			{ "neovim/nvim-lspconfig", event = { "BufReadPost", "BufAdd", "BufNewFile" }, lazy = true }, -- For the LSP.
-			{ "jose-elias-alvarez/null-ls.nvim", dependencies = { "nvim-lua/plenary.nvim" } }, -- For the Code Actions, Formatters and Linters.
-			{ "jay-babu/mason-null-ls.nvim" }, -- Declared before the dependant.
+			{ "jay-babu/mason-null-ls.nvim" }, -- ! Primary plugins that is naturally dependant by these extension plugins.
+			{ "neovim/nvim-lspconfig" }, -- For the LSP.
+			{ "jose-elias-alvarez/null-ls.nvim" },
 			-- * Completion plugins
 			{ "hrsh7th/cmp-buffer" },
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "hrsh7th/cmp-path" },
 			{ "onsails/lspkind.nvim" },
-			{ "L3MON4D3/LuaSnip", lazy = true },
-			{ "rafamadriz/friendly-snippets", lazy = true },
+			{ "L3MON4D3/LuaSnip" },
+			{ "rafamadriz/friendly-snippets" },
 			{ "saadparwaiz1/cmp_luasnip" },
 		},
-		event = "InsertEnter",
-		lazy = true
+	},
+	{ "neovim/nvim-lspconfig", lazy = true }, -- For the LSP.
+	-- ! For the Code Actions, Formatters and Linters.
+	{
+		"jose-elias-alvarez/null-ls.nvim",
+		config = function()
+			-- !!! null-ls will be used for the DAPs, Linters, and Formatters.
+			local null_ls = require("null-ls")
+			null_ls.setup({
+				sources = {
+					null_ls.builtins.diagnostics.cppcheck,
+					null_ls.builtins.diagnostics.cpplint,
+					null_ls.builtins.diagnostics.mypy,
+					null_ls.builtins.formatting.black,
+					null_ls.builtins.formatting.clang_format,
+					null_ls.builtins.formatting.fixjson,
+					null_ls.builtins.formatting.eslint_d,
+					null_ls.builtins.formatting.isort,
+					null_ls.builtins.formatting.markdownlint,
+					null_ls.builtins.formatting.prettierd,
+					null_ls.builtins.formatting.remark,
+					null_ls.builtins.formatting.reorder_python_imports,
+					null_ls.builtins.formatting.sql_formatter
+				}
+			})
+		end,
+		dependencies = { "nvim-lua/plenary.nvim" },
+		lazy = false
 	}
 }

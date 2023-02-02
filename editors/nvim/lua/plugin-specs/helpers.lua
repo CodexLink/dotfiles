@@ -60,19 +60,11 @@ return {
 	{
 		-- ! Auto-adding or wrapping from both ends of a highlighted context.
 		"windwp/nvim-autopairs",
-		dependencies = { { "hrsh7th/nvim-cmp" } },
 		config = function(plugin, opts)
-			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-			local cmp = require("cmp")
-
-			cmp.event:on(
-				"confirm_done",
-				cmp_autopairs.on_confirm_done()
-			)
-
 			require(plugin.name).setup(opts)
 		end,
 		event = { "BufAdd", "BufReadPost", "BufNewFile" },
+		lazy = true,
 		opts = {
 			check_ts = true,
 			fast_wrap = { map = "<M-w>" },

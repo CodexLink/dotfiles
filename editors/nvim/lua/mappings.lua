@@ -70,11 +70,14 @@ wk.register({
 		s = {
 			name = "possession.nvim: Session Management",
 			d    = { function() require_input_on_fn_call({ fn_reference = require("possession").delete,
-				input_options = { prompt = "Session name to delete." } }) end, "possession.nvim: Delete session by name" },
+					input_options = { prompt = "Session name to delete." } })
+			end, "possession.nvim: Delete session by name" },
 			s    = { function() require_input_on_fn_call({ fn_reference = require("possession").save,
-				input_options = { prompt = "Session name to save." } }) end, "possession.nvim: Save current session" },
+					input_options = { prompt = "Session name to save." } })
+			end, "possession.nvim: Save current session" },
 			l    = { function() require_input_on_fn_call({ fn_reference = require("possession").load,
-				input_options = { prompt = "Session name to load. (Note: Use `telescope` to retrieve a list of sessions!)" } }) end,
+					input_options = { prompt = "Session name to load. (Note: Use `telescope` to retrieve a list of sessions!)" } })
+			end,
 				"Load saved session (dialogue)" },
 		},
 		t = { function() require("tsht").nodes() end, "nvim-treehopper: Hop to highlight context" },
@@ -120,7 +123,7 @@ wk.register({
 		"treesj: Toggle 'One-Liner/Splitted' Style." },
 	["<M-x>"] = { function() require("illuminate").goto_next_reference() end, "vim-illuminate: Jump to next reference" },
 	["<M-z>"] = { function() require("illuminate").goto_prev_reference() end, "vim-illuminate: Jump to previous reference" },
-	["<M-F>"] = { function() notifier({ cmd = function() vim.lsp.buf.format({ async = true }) end,
+	["<M-F>"] = { function() notifier({ cmd = vim.lsp.buf.format,
 			message = "Formatting done!", opts = mapping_default_opts })
 	end, "utils: Code Format (Async)" },
 	["<S-Left>"] = { function() require("bufferline").move(-1) end, "buffeline: Move Buffer to the Left." },

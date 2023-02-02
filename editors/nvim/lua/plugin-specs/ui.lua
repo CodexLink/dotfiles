@@ -69,8 +69,7 @@ return {
 		-- ! Status bar for the editor.
 		-- TODO: Requires further customization!
 		"nvim-lualine/lualine.nvim",
-		event = "VeryLazy",
-		lazy = true,
+		lazy = false,
 		opts = {
 			options = {
 				icons_enabled = true,

@@ -13,12 +13,7 @@ return {
 		config = function(_, opts)
 			require("nvim-treesitter.configs").setup(opts)
 		end,
-		dependencies = {
-			{ "andymass/vim-matchup", config = function() vim.g.matchup_matchparen_offscreen = { method = "popup" } end,
-				event = "BufReadPost", version = false },
-			{ "nvim-treesitter/nvim-treesitter-context", config = function() require("treesitter-context").setup() end,
-				event = "BufReadPost" }
-		},
+		lazy = true,
 		event = { "BufAdd", "BufReadPost", "BufNewFile" },
 		opts = {
 			additional_vim_regex_highlighting = false,
@@ -70,5 +65,32 @@ return {
 			textobjects = { enable = true }
 		},
 		version = false
-	}
+	},
+	-- ! Shows the header of a certain section of the code.
+	{
+    "nvim-treesitter/nvim-treesitter-context",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		lazy = false,
+    config = function() require("treesitter-context").setup() end,
+  },
+	{
+		-- ! Highlights similar case of a certain pattern from the code, similar to vscode's highlight behavior.
+		"RRethy/vim-illuminate",
+		config = function (_, opts)
+			require("illuminate").configure(opts)
+		end,
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		event = "VeryLazy",
+		lazy = true,
+		opts = { delay = 200 }
+	},
+	-- ! Leverages vim's % to match with the scope of the code context.
+	{
+    "andymass/vim-matchup",
+    config = function() vim.g.matchup_matchparen_offscreen = { method = "popup" } end,
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+    event = "VeryLazy",
+		lazy = true,
+    version = false,
+  },
 }
