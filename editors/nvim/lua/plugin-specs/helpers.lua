@@ -26,11 +26,8 @@ return {
 		-- ! Incremental renaming context, similar to vscode's F2 rename system but incremental in this case.
 		"smjonas/inc-rename.nvim",
 		config = true,
-		event = "BufReadPost",
 		lazy = true,
-		opts = {
-			input_buffer_type = "dressing"
-		}
+		opts = { input_buffer_type = "dressing" }
 	},
 	{
 		-- ! External helper tool that helps visualizesa the markdown or text file to the browser.
@@ -88,6 +85,23 @@ return {
 		"mfussenegger/nvim-treehopper",
 		dependencies = { { "phaazon/hop.nvim" } },
 		lazy = true
+	},
+	{
+		"jedrzejboczar/possession.nvim",
+		config = true,
+		dependencies = { "nvim-lua/plenary.nvim" },
+		lazy = true,
+		opts = {
+			autosave = {
+        current = false,
+        tmp = false,
+        tmp_name = 'tmp',
+        on_load = false,
+        on_quit = false
+			},
+			load_silent = true,
+			silent = false
+		}
 	},
 	{
 		-- ! Structural search then replace; far more advanced than the conventional find and replace system.
