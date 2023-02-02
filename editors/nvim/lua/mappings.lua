@@ -69,9 +69,13 @@ wk.register({
 		r = { function() require("ssr").open() end, mode = { "n", "x" }, "ssr.nvim: Do 'Structural Search and Replace'" },
 		s = {
 			name = "possession.nvim: Session Management",
-			d  = { function() require_input_on_fn_call({ fn_reference = require("possession").delete, input_options = { prompt = "Session name to delete." } }) end, "possession.nvim: Delete session by name" },
-			s  = { function() require_input_on_fn_call({ fn_reference = require("possession").save, input_options = { prompt = "Session name to save." } }) end, "possession.nvim: Save current session" },
-			l = { function() require_input_on_fn_call({ fn_reference = require("possession").load, input_options = { prompt = "Session name to load. (Note: Use `telescope` to retrieve a list of sessions!)" } }) end, "Load saved session (dialogue)" },
+			d    = { function() require_input_on_fn_call({ fn_reference = require("possession").delete,
+				input_options = { prompt = "Session name to delete." } }) end, "possession.nvim: Delete session by name" },
+			s    = { function() require_input_on_fn_call({ fn_reference = require("possession").save,
+				input_options = { prompt = "Session name to save." } }) end, "possession.nvim: Save current session" },
+			l    = { function() require_input_on_fn_call({ fn_reference = require("possession").load,
+				input_options = { prompt = "Session name to load. (Note: Use `telescope` to retrieve a list of sessions!)" } }) end,
+				"Load saved session (dialogue)" },
 		},
 		t = { function() require("tsht").nodes() end, "nvim-treehopper: Hop to highlight context" },
 		T = { function() notifier({ cmd = require("twilight").toggle,
@@ -146,7 +150,7 @@ wk.register({
 		end, "lsp: rename context" },
 		R = { ":IncRename ", "inc-rename.nvim: Rename on cursor" },
 		s = { function() notifier({ cmd = vim.lsp.buf.signature_help,
-				 opts = mapping_default_opts })
+				opts = mapping_default_opts })
 		end, "lsp: seek signature help" },
 		S = { function() notifier({ cmd = vim.lsp.buf.references,
 				opts = mapping_default_opts })
