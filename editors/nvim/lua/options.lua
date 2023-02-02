@@ -7,7 +7,7 @@
 -- [2] Declared context is a required configuration for the `which-key.nvim`.
 -- [3] This configuration might be working, or not, this does not work on my configuration as I use `Windows Terminal` + `pwsh` which is extremely annoying, I tried changing the highlight `TermCursor` but it doesn't change it.
 
-local vo = vim.o
+local vo = vim.opt
 local vg = vim.g
 
 vo.cursorline = true
