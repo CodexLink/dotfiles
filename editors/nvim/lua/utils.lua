@@ -7,6 +7,15 @@
 
 local F = {}
 
+--- DRY caller for the asynchronous notification.
+---@params ctx, a table that contains the following: [ message<string>, level<number>, opts<table<string, any>>]
+local function _call_async_notifier(ctx)
+	local _async_provider = require("plenary.async")
+	local _notify_async = require("notify").async
+
+	_async_provider.run(function() _notify_async(ctx.message, ctx.level, ctx.opts) end)
+end
+
 -- TODO: Implement case string + argument concatenation until actual use-case has been identified.
 -- IMPLEMENT-ME: Multiple arguments to a referenced function or a table composed of the fields.
 ---@params ctx, contains a table with the following attributes: [fn_reference<function>, message_success<optional | string>, message_failed<optional | string>, input_options<table<string, any>>]
@@ -45,28 +54,22 @@ function F.HandleInputToFn(ctx)
 	end
 
 	-- Handle input.
-	local _input = vim.ui.input(ctx.input_options)
-	if not _input then
-		return error("Operation has been cancelled. Passed parameter is empty.")
-	end
+	local _input = vim.ui.input(ctx.input_options, function(input)
+		if not input then
+			return error("Operation has been cancelled. Passed parameter is empty.")
+		end
+	end)
 
 	-- Execute the function along with the input with pcall() in place.
 	-- TODO: Do we even need these arguments?
 	local _is_success, _err = pcall(function() ctx.fn_reference(_input) end)
 
-	-- Then call `notify` in async.
-	local async_provider = require("plenary.async")
-	local notify_async = require("notify").async
-
-	async_provider.run(
-		function()
-			notify_async(
-				_is_success and ctx.message_success or ctx.message_failed .. " | Error Code: " .. _err,
-				(_is_success and vim.log.levels.INFO or vim.log.levels.ERROR),
-				{ animate = true, timeout = 1500, title = "Input Handler to Function Argument" }
-			)
-		end
-	)
+	-- Then call a notifier in async.
+	_call_async_notifier({
+		messasge = _is_success and ctx.message_success or ctx.message_failed .. " | Error Code: " .. _err,
+		level = _is_success and vim.log.levels.INFO or vim.log.levels.ERROR,
+		opts = { animate = true, timeout = 1500, title = "Input Handler to Function Argument" }
+	})
 end
 
 -- Wrapper function for the `mapping.lua` that notifies the user after hitting the command for the sake of receiving the feedback.
@@ -108,19 +111,11 @@ function F.NotifyAfterExecution(ctx)
 		return error("Passed contents to variable `opts` at function `F.NotifyAfterExecution` is not a table! Received: ")
 	end
 
-	-- ! Import required dependencies
-	local async_provider = require("plenary.async")
-	local notify_async = require("notify").async
-
 	-- Call the `cmd` or the function given from the `cmd`.
 	if is_cmd_a_function then ctx.cmd() else vim.cmd(ctx.cmd) end
 
 	-- Then call `notify` in async.
-	async_provider.run(
-		function()
-			notify_async(ctx.message, ctx.level or vim.log.levels.INFO, ctx.opts or {})
-		end
-	)
+	_call_async_notifier({ message = ctx.message, level = ctx.level or vim.log.levels.INFO, opts = ctx.opts or {} })
 end
 
 -- ! Lazy-load 'windows.nvim' when more buffer has been displayed.
