@@ -10,7 +10,7 @@
 --
 local wk = require("which-key")
 local notifier = require("utils").NotifyAfterExecution
-
+local require_input_on_fn = require("utils").HandleInputToFn
 local mapping_default_opts = { animate = true, timeout = 1250, title = "Mapping-to-Execution" }
 
 wk.register({
@@ -30,16 +30,22 @@ wk.register({
 	["<F5>"] = { function() require("lazy").home() end, "lazy.nvim: Opens UI window" },
 	["<F6>"] = { function() require("which-key").show() end, "which-key.nvim: Opens UI window for hinting keybinds" },
 	["<F7>"] = { function() require("mason.ui").open() end, "mason.nvim: Opens UI window" },
+	["<F8>"] = { function() notifier({ cmd = function() require("telescope").load_extension("possession")
+			require("telescope")
+					.extensions.possession.list()
+		end, message = "Session-to-load selection displayed.", opts = mapping_default_opts })
+	end,
+		"possesion.nvim: session-to-load selection" },
 	["<Leader>"] = {
-		a = { function() notifier({ cmd = function() require("neogen").generate() end,
+		a = { function() notifier({ cmd = require("neogen").generate,
 				message = "neogen: Code annotation added!", opts = mapping_default_opts })
 		end, "neogen: Annotate code context" },
 		G = {
 			name = "gitsigns.nvim",
-			b = { function() notifier({ cmd = function() require("gitsigns").toggle_current_line_blame() end,
+			b = { function() notifier({ cmd = require("gitsigns").toggle_current_line_blame,
 					message = "gitsigns: Line blame toggled.", opts = mapping_default_opts })
 			end, "Toggle line blame" },
-			d = { function() notifier({ cmd = function() require("gitsigns").diffthis() end,
+			d = { function() notifier({ cmd = require("gitsigns").diffthis,
 					message = "gitsigns: Diff view (at current line) activated.", opts = mapping_default_opts })
 			end,
 				"'diffthis' on current line" },
@@ -47,18 +53,13 @@ wk.register({
 					message = "gitsigns: Diff view (at whole file) activated.", opts = mapping_default_opts })
 			end,
 				"`diffthis` on whole file" },
-			h = { function() notifier({ cmd = function() require("gitsigns").preview_hunk() end,
+			h = { function() notifier({ cmd = require("gitsigns").preview_hunk,
 					message = "gitsigns: Hunk on current line preview, activated", opts = mapping_default_opts })
 			end, "Preview hunk" },
-			H = { function() notifier({ cmd = function() require("gitsigns").preview_hunk_inline() end,
+			H = { function() notifier({ cmd = require("gitsigns").preview_hunk_inline,
 					message = "gitsigns: Hunk on current line inline-preview, activated", opts = mapping_default_opts })
 			end,
 				"Preview hunk (Inlined)" },
-		},
-		i = { ":IncRename ", "inc-rename.nvim: Rename on cursor" },
-		I = { function() return ":IncRename " .. vim.fn.expand("<CWORD>") end, "inc-rename.nvim: Rename by type", expr = true },
-		l = {
-			name = "LSP Actions",
 		},
 		L = { function() require("telescope").load_extension("lazygit") require("lazygit").lazygit() end,
 			"lazygit.nvim: Toggle window" },
@@ -66,42 +67,50 @@ wk.register({
 		n = { function() require("telescope").extensions.notify.notify() end,
 			"nvim-notify: Check notifications via 'Telescope'" },
 		r = { function() require("ssr").open() end, mode = { "n", "x" }, "ssr.nvim: Do 'Structural Search and Replace'" },
+		s = {
+			name = "possession.nvim: Session Management",
+			d  = { function() require_input_on_fn({ fn_reference = require("possession").save, input_options = { prompt = "Session name to delete:" }, message_success = "Given session name (as argument) has been deleted!" }) end, "possesion.nvim: Delete session by name" },
+			s  = { function() require_input_on_fn({ fn_reference = require("possession").save, input_options = { prompt = "Session name to save:" }, message_success = "Current session has been saved!" }) end, "possesion.nvim: Save current session" },
+			l = { function() notifier({ cmd = require("possession").load, message = "Last saved session has been loaded!", opts = mapping_default_opts}) end, "Load last saved session" },
+		},
 		t = { function() require("tsht").nodes() end, "nvim-treehopper: Hop to highlight context" },
-		T = { function() notifier({ cmd = function() require("twilight").toggle() end,
+		T = { function() notifier({ cmd = require("twilight").toggle,
 				message = "twilight: Code dimming toggled.", opts = mapping_default_opts })
 		end, "twilight.nvim: Toggle code dimming" },
 		w = {
 			name = "windows.nvim",
-			["="] = { function() notifier({ cmd = function() require("windows.commands").equalize() end,
+			["="] = { function() notifier({ cmd = require("windows.commands").equalize,
 					message = "All windows were equalized.", opts = mapping_default_opts })
 			end, "Equalize" },
-			["+"] = { function() notifier({ cmd = function() require("windows.commands").maximize() end,
+			["+"] = { function() notifier({ cmd = require("windows.commands").maximize,
 					message = "Current window set to maximized.", opts = mapping_default_opts })
 			end, "Maximize" },
-			["-"] = { function() notifier({ cmd = function() require("windows.commands").maximize_vertically() end,
+			["-"] = { function() notifier({ cmd = require("windows.commands").maximize_vertically,
 					message = "Current window set to maximize vertically.", opts = mapping_default_opts })
 			end, "Maximize vertically" },
-			["_"] = { function() notifier({ cmd = function() require("windows.commands").maximize_horizontally() end,
+			["_"] = { function() notifier({ cmd = require("windows.commands").maximize_horizontally,
 					message = "Current window set to maximize horizontally", opts = mapping_default_opts })
 			end, "Maximize horizontally" },
 		}
 	},
-	["<M-~>"] = { function() notifier({ cmd = function() vim.cmd([[ set wrap! ]]) end, message = "Code wrapping toggled.", opts = mapping_default_opts }) end, "builtin: Toggle wrap" },
+	["<M-~>"] = { function() notifier({ cmd = [[ set wrap! ]], message = "Code wrapping toggled.",
+			opts = mapping_default_opts })
+	end, "builtin: Toggle wrap" },
 	["<M-<>"] = { function() require("bufferline").cycle(-1) end, "bufferline: Move to Previous Buffer." },
 	["<M->>"] = { function() require("bufferline").cycle(1) end, "bufferline: Move to Next Buffer." },
 	["<M-a>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char" },
 	["<M-A>"] = { function() require("hop").hint_char2() end, "hop.nvim: Hop 2 chars" },
-	["<M-c>"] = { function() notifier({ cmd = function() require("bufferline").close_buffer_with_pick() end,
+	["<M-c>"] = { function() notifier({ cmd = require("bufferline").close_buffer_with_pick,
 			message = "Selected buffer closed!", opts = mapping_default_opts })
 	end, "bufferline: Pick a buffer to close." }, -- [1]
-	["<M-d>"] = { function() notifier({ cmd = function() require("bufferline").pick_buffer() end,
+	["<M-d>"] = { function() notifier({ cmd = require("bufferline").pick_buffer,
 			message = "Selected buffer displayed!", opts = mapping_default_opts })
 	end, "bufferline: Pick a buffer to display." }, -- [1]
 	["<M-s>"] = { function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.AFTER_CURSOR }) end,
 		"hop.nvim: hop below anywhere" },
 	["<M-S>"] = { function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR }) end,
 		"hop.nvim: hop above anywhere" },
-	["<M-v>"] = { function() notifier({ cmd = function() require("treesj").toggle() end,
+	["<M-v>"] = { function() notifier({ cmd = require("treesj").toggle,
 			message = "treesj: toggled to wrap/one-line a context.", opts = mapping_default_opts })
 	end,
 		"treesj: Toggle 'One-Liner/Splitted' Style." },
@@ -113,38 +122,42 @@ wk.register({
 	["<S-Left>"] = { function() require("bufferline").move(-1) end, "buffeline: Move Buffer to the Left." },
 	["<S-Right>"] = { function() require("bufferline").move(1) end, "bufferline: :Move Buffer to the Right." },
 	["<Space>"] = {
-		name = "LSP Actions",
-		c = { function() notifier({ cmd = function() vim.lsp.buf.code_action() end, message = "Code action window triggered.",
+		name = "LSP + LSP-Related Actions",
+		c = { function() notifier({ cmd = vim.lsp.buf.code_action, message = "Code action window triggered.",
 				opts = mapping_default_opts })
 		end, "lsp: seek code action" },
-		d = { function() notifier({ cmd = vim.lsp.buf.declaration(), message = "Seek declaration triggered.",
-			opts = mapping_default_opts }) end, "lsp: seek declaration" },
-		D = { function() notifier({ cmd = vim.lsp.buf.definition(), message = "Seek definition triggered.",
-			opts = mapping_default_opts }) end, "lsp: seek definition" },
-		h = { function() notifier({ cmd = vim.lsp.buf.hover(), message = "Hover for context triggered.",
+		d = { function() notifier({ cmd = vim.lsp.buf.declaration, message = "Seek declaration triggered.",
+				opts = mapping_default_opts })
+		end, "lsp: seek declaration" },
+		D = { function() notifier({ cmd = vim.lsp.buf.definition, message = "Seek definition triggered.",
+				opts = mapping_default_opts })
+		end, "lsp: seek definition" },
+		h = { function() notifier({ cmd = vim.lsp.buf.hover, message = "Hover for context triggered.",
 				opts = mapping_default_opts })
 		end, "lsp: hover for context" },
-		i = { function() notifier({ cmd = vim.lsp.buf.implementation(), message = "Seek implementation triggered.",
-			opts = mapping_default_opts }) end, "lsp: seek implementation" },
-		o = { function() notifier({ cmd = function() vim.diagnostic.open_float() end, message = "Float for context opened.",
+		i = { function() notifier({ cmd = vim.lsp.buf.implementation, message = "Seek implementation triggered.",
+				opts = mapping_default_opts })
+		end, "lsp: seek implementation" },
+		o = { function() notifier({ cmd = vim.diagnostic.open_float, message = "Float for context opened.",
 				opts = mapping_default_opts })
 		end, "lsp: float context" },
-		r = { function() notifier({ cmd = function() vim.lsp.buf.rename() end, message = "Context renamed!",
+		r = { function() notifier({ cmd = vim.lsp.buf.rename, message = "Context renamed!",
 				opts = mapping_default_opts })
 		end, "lsp: rename context" },
-		R = { function() notifier({ cmd = function() vim.lsp.buf.references() end, message = "Seek reference triggered.",
-				opts = mapping_default_opts })
-		end, "lsp: seek references" },
-		s = { function() notifier({ cmd = function() vim.lsp.buf.signature_help() end,
+		R = { [[ <CMD>IncRename ]], "inc-rename.nvim: Rename on cursor" },
+		s = { function() notifier({ cmd = vim.lsp.buf.signature_help,
 				message = "Seek signature help triggered.", opts = mapping_default_opts })
 		end, "lsp: seek signature help" },
-		t = { function() notifier({ cmd = function() vim.lsp.buf.type_definition() end,
+		S = { function() notifier({ cmd = vim.lsp.buf.references, message = "Seek reference triggered.",
+				opts = mapping_default_opts })
+		end, "lsp: seek references" },
+		t = { function() notifier({ cmd = vim.lsp.buf.type_definition,
 				message = "Seek type definition triggered.", opts = mapping_default_opts })
 		end, "lsp: seek type definition" },
-		x = { function() notifier({ cmd = function() vim.diagnostic.goto_prev() end,
+		x = { function() notifier({ cmd = vim.diagnostic.goto_prev,
 				message = "Jumped from previous to diagnostic.", opts = mapping_default_opts })
 		end, "lsp: go to previous" },
-		z = { function() notifier({ cmd = function() vim.diagnostic.goto_next() end, message = "Jumped from next to diagnostic",
+		z = { function() notifier({ cmd = vim.diagnostic.goto_next, message = "Jumped from next to diagnostic",
 				opts = mapping_default_opts })
 		end, "lsp: go to next" }
 	}
