@@ -10,7 +10,7 @@
 --
 local wk = require("which-key")
 local notifier = require("utils").NotifyAfterExecution
-local require_input_on_fn = require("utils").HandleInputToFn
+local require_input_on_fn_call = require("utils").HandleInputToFn
 local mapping_default_opts = { animate = true, timeout = 1250, title = "Mapping-to-Execution" }
 
 wk.register({
@@ -35,7 +35,7 @@ wk.register({
 					.extensions.possession.list()
 		end, message = "Session-to-load selection displayed.", opts = mapping_default_opts })
 	end,
-		"possesion.nvim: session-to-load selection" },
+		"possession.nvim: session-to-load selection" },
 	["<Leader>"] = {
 		a = { function() notifier({ cmd = require("neogen").generate,
 				message = "neogen: Code annotation added!", opts = mapping_default_opts })
@@ -69,9 +69,9 @@ wk.register({
 		r = { function() require("ssr").open() end, mode = { "n", "x" }, "ssr.nvim: Do 'Structural Search and Replace'" },
 		s = {
 			name = "possession.nvim: Session Management",
-			d  = { function() require_input_on_fn({ fn_reference = require("possession").delete, input_options = { prompt = "Session name to delete" }, message_success = "Given session name (as argument) has been deleted!" }) end, "possesion.nvim: Delete session by name" },
-			s  = { function() require_input_on_fn({ fn_reference = require("possession").save, input_options = { prompt = "Session name to save" }, message_success = "Current session has been saved!" }) end, "possesion.nvim: Save current session" },
-			l = { function() notifier({ cmd = require("possession").load, message = "Last saved session has been loaded!", opts = mapping_default_opts}) end, "Load last saved session" },
+			d  = { function() require_input_on_fn_call({ fn_reference = require("possession").delete, input_options = { prompt = "Session name to delete." } }) end, "possession.nvim: Delete session by name" },
+			s  = { function() require_input_on_fn_call({ fn_reference = require("possession").save, input_options = { prompt = "Session name to save." } }) end, "possession.nvim: Save current session" },
+			l = { function() require_input_on_fn_call({ fn_reference = require("possession").load, input_options = { prompt = "Session name to load. (Note: Use `telescope` to retrieve a list of sessions!)" } }) end, "Load saved session (dialogue)" },
 		},
 		t = { function() require("tsht").nodes() end, "nvim-treehopper: Hop to highlight context" },
 		T = { function() notifier({ cmd = require("twilight").toggle,
@@ -123,32 +123,32 @@ wk.register({
 	["<S-Right>"] = { function() require("bufferline").move(1) end, "bufferline: :Move Buffer to the Right." },
 	["<Space>"] = {
 		name = "LSP + LSP-Related Actions",
-		c = { function() notifier({ cmd = vim.lsp.buf.code_action, message = "Code action window triggered.",
+		c = { function() notifier({ cmd = vim.lsp.buf.code_action,
 				opts = mapping_default_opts })
 		end, "lsp: seek code action" },
-		d = { function() notifier({ cmd = vim.lsp.buf.declaration, message = "Seek declaration triggered.",
+		d = { function() notifier({ cmd = vim.lsp.buf.declaration,
 				opts = mapping_default_opts })
 		end, "lsp: seek declaration" },
-		D = { function() notifier({ cmd = vim.lsp.buf.definition, message = "Seek definition triggered.",
+		D = { function() notifier({ cmd = vim.lsp.buf.definition,
 				opts = mapping_default_opts })
 		end, "lsp: seek definition" },
-		h = { function() notifier({ cmd = vim.lsp.buf.hover, message = "Hover for context triggered.",
+		h = { function() notifier({ cmd = vim.lsp.buf.hover,
 				opts = mapping_default_opts })
 		end, "lsp: hover for context" },
-		i = { function() notifier({ cmd = vim.lsp.buf.implementation, message = "Seek implementation triggered.",
+		i = { function() notifier({ cmd = vim.lsp.buf.implementation,
 				opts = mapping_default_opts })
 		end, "lsp: seek implementation" },
-		o = { function() notifier({ cmd = vim.diagnostic.open_float, message = "Float for context opened.",
+		o = { function() notifier({ cmd = vim.diagnostic.open_float,
 				opts = mapping_default_opts })
 		end, "lsp: float context" },
-		r = { function() notifier({ cmd = vim.lsp.buf.rename, message = "Context to rename dialog has been triggered.",
+		r = { function() notifier({ cmd = vim.lsp.buf.rename,
 				opts = mapping_default_opts })
 		end, "lsp: rename context" },
-		R = { [[ <CMD>IncRename ]], "inc-rename.nvim: Rename on cursor" },
+		R = { ":IncRename ", "inc-rename.nvim: Rename on cursor" },
 		s = { function() notifier({ cmd = vim.lsp.buf.signature_help,
-				message = "Seek signature help triggered.", opts = mapping_default_opts })
+				 opts = mapping_default_opts })
 		end, "lsp: seek signature help" },
-		S = { function() notifier({ cmd = vim.lsp.buf.references, message = "Seek reference triggered.",
+		S = { function() notifier({ cmd = vim.lsp.buf.references,
 				opts = mapping_default_opts })
 		end, "lsp: seek references" },
 		t = { function() notifier({ cmd = vim.lsp.buf.type_definition,

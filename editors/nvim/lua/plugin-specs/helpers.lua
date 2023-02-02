@@ -26,7 +26,7 @@ return {
 		-- ! Incremental renaming context, similar to vscode's F2 rename system but incremental in this case.
 		"smjonas/inc-rename.nvim",
 		config = true,
-		lazy = true,
+		lazy = false,
 		opts = { input_buffer_type = "dressing" }
 	},
 	{

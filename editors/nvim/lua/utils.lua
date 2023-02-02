@@ -13,14 +13,17 @@ local function _call_async_notifier(ctx)
 	local _async_provider = require("plenary.async")
 	local _notify_async = require("notify").async
 
-	_async_provider.run(function() _notify_async(ctx.message, ctx.level, ctx.opts) end)
+	_async_provider.run(function() _notify_async(ctx.message or "Notification has been called without further context.",
+		ctx.level or vim.log.levels.INFO, ctx.opts or {}) end)
 end
 
 -- TODO: Implement case string + argument concatenation until actual use-case has been identified.
 -- IMPLEMENT-ME: Multiple arguments to a referenced function or a table composed of the fields.
----@params ctx, contains a table with the following attributes: [fn_reference<function>, message_success<optional | string>, message_failed<optional | string>, input_options<table<string, any>>]
+---@params ctx, contains a table with the following attributes: [fn_reference<function>, message_success<optional | string>, message_failed<optional | string>, input_options<table<string, any>>, do_not_modify<boolean>]
 function F.HandleInputToFn(ctx)
 	-- Argument type checking
+	local state_messages_both_empty = false
+
 	if type(ctx) == "table" then
 		if next(ctx) == nil then
 			return error("Argument `ctx` should contain a key and value as a table!")
@@ -33,48 +36,55 @@ function F.HandleInputToFn(ctx)
 		return error("Argument `fn_reference` is not a function or a string!")
 	end
 
-	if ctx.message_success ~= nil then
-		if type(ctx.message_success) ~= "string" then
-			return error("Argument `message_success` is not a string!")
-		end
+	if ctx.message_failed == nil and ctx.message_success == nil then
+		state_messages_both_empty = true
 	else
-		ctx.message_success = "Passed input to the referenced function has been executed succesfully."
-	end
+		if ctx.message_success ~= nil then
+			if type(ctx.message_success) ~= "string" then
+				return error("Argument `message_success` is not a string!")
+			end
+		else
+			ctx.message_success = "Passed input to the referenced function has been executed succesfully."
+		end
 
-	if ctx.message_failed ~= nil then
-		if type(ctx.message_failed) ~= "string" then
-			return error("Argument `message_failed` is not a string!")
+		if ctx.message_failed ~= nil then
+			if type(ctx.message_failed) ~= "string" then
+				return error("Argument `message_failed` is not a string!")
+			end
+		else
+			ctx.message_failed = "Passed input to the referenced function has been failed to execute."
 		end
-	else
-		ctx.message_failed = "Passed input to the referenced function has been failed to execute."
 	end
 
 	if type(ctx.input_options) ~= "table" then
 		return error("Argument `input_options` is not a table!")
 	end
 
-	-- Initialize options for the `notifier`.
-	local _notifier_opts = { animate = true, timeout = 1500, title = "Input Handler to Function Argument" }
-
 	-- Handle input.
-	local _input = vim.ui.input(ctx.input_options, function(input)
-		if not input then
-			_call_async_notifier({ message = "Operation has been cancelled. Passed parameter is empty.",
-				level = vim.log.levels.WARN, opts = _notifier_opts })
-			return
+	vim.ui.input(ctx.input_options, function(input)
+		-- Initialize options for the `notifier`.
+		local _notifier_opts = { animate = true, timeout = 1500, title = "Input Handler to Function Argument" }
+
+		if not state_messages_both_empty then
+			if not input then
+				_call_async_notifier({ message = "Operation has been cancelled. Passed parameter is empty.",
+					level = vim.log.levels.WARN, opts = _notifier_opts })
+				return
+			end
+		end
+		-- Execute the function along with the input with pcall() in place.
+		local _is_success, _err = pcall(function() ctx.fn_reference(input) end)
+
+		-- Then call a notifier in async.
+		if not state_messages_both_empty then
+			_call_async_notifier({
+				message = _is_success and ctx.message_success or ctx.message_failed .. " | Error Code: " .. _err,
+				level = _is_success and vim.log.levels.INFO or vim.log.levels.ERROR,
+				opts = _notifier_opts
+			})
 		end
 	end)
 
-	-- Execute the function along with the input with pcall() in place.
-	-- TODO: Do we even need these arguments?
-	local _is_success, _err = pcall(function() ctx.fn_reference(_input) end)
-
-	-- Then call a notifier in async.
-	_call_async_notifier({
-		messasge = _is_success and ctx.message_success or ctx.message_failed .. " | Error Code: " .. _err,
-		level = _is_success and vim.log.levels.INFO or vim.log.levels.ERROR,
-		opts = _notifier_opts
-	})
 end
 
 -- Wrapper function for the `mapping.lua` that notifies the user after hitting the command for the sake of receiving the feedback.
@@ -108,8 +118,10 @@ function F.NotifyAfterExecution(ctx)
 		end
 	end
 
-	if type(ctx.message) ~= "string" then
-		return error("`message` is not a valid string, please pass a proper context.")
+	if ctx.message ~= nil then
+		if type(ctx.message) ~= "string" then
+			return error("`message` is not a valid string, please pass a proper context.")
+		end
 	end
 
 	if type(ctx.opts) ~= "table" then
@@ -120,7 +132,9 @@ function F.NotifyAfterExecution(ctx)
 	if is_cmd_a_function then ctx.cmd() else vim.cmd(ctx.cmd) end
 
 	-- Then call `notify` in async.
-	_call_async_notifier({ message = ctx.message, level = ctx.level or vim.log.levels.INFO, opts = ctx.opts or {} })
+	if ctx.message then
+		_call_async_notifier({ message = ctx.message, level = ctx.level or vim.log.levels.INFO, opts = ctx.opts or {} })
+	end
 end
 
 -- ! Lazy-load 'windows.nvim' when more buffer has been displayed.
