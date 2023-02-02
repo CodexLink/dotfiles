@@ -69,8 +69,8 @@ wk.register({
 		r = { function() require("ssr").open() end, mode = { "n", "x" }, "ssr.nvim: Do 'Structural Search and Replace'" },
 		s = {
 			name = "possession.nvim: Session Management",
-			d  = { function() require_input_on_fn({ fn_reference = require("possession").save, input_options = { prompt = "Session name to delete:" }, message_success = "Given session name (as argument) has been deleted!" }) end, "possesion.nvim: Delete session by name" },
-			s  = { function() require_input_on_fn({ fn_reference = require("possession").save, input_options = { prompt = "Session name to save:" }, message_success = "Current session has been saved!" }) end, "possesion.nvim: Save current session" },
+			d  = { function() require_input_on_fn({ fn_reference = require("possession").delete, input_options = { prompt = "Session name to delete" }, message_success = "Given session name (as argument) has been deleted!" }) end, "possesion.nvim: Delete session by name" },
+			s  = { function() require_input_on_fn({ fn_reference = require("possession").save, input_options = { prompt = "Session name to save" }, message_success = "Current session has been saved!" }) end, "possesion.nvim: Save current session" },
 			l = { function() notifier({ cmd = require("possession").load, message = "Last saved session has been loaded!", opts = mapping_default_opts}) end, "Load last saved session" },
 		},
 		t = { function() require("tsht").nodes() end, "nvim-treehopper: Hop to highlight context" },
@@ -80,7 +80,7 @@ wk.register({
 		w = {
 			name = "windows.nvim",
 			["="] = { function() notifier({ cmd = require("windows.commands").equalize,
-					message = "All windows were equalized.", opts = mapping_default_opts })
+					message = "All buffer windows were equalized.", opts = mapping_default_opts })
 			end, "Equalize" },
 			["+"] = { function() notifier({ cmd = require("windows.commands").maximize,
 					message = "Current window set to maximized.", opts = mapping_default_opts })
@@ -89,7 +89,7 @@ wk.register({
 					message = "Current window set to maximize vertically.", opts = mapping_default_opts })
 			end, "Maximize vertically" },
 			["_"] = { function() notifier({ cmd = require("windows.commands").maximize_horizontally,
-					message = "Current window set to maximize horizontally", opts = mapping_default_opts })
+					message = "Current window set to maximize horizontally.", opts = mapping_default_opts })
 			end, "Maximize horizontally" },
 		}
 	},
@@ -141,7 +141,7 @@ wk.register({
 		o = { function() notifier({ cmd = vim.diagnostic.open_float, message = "Float for context opened.",
 				opts = mapping_default_opts })
 		end, "lsp: float context" },
-		r = { function() notifier({ cmd = vim.lsp.buf.rename, message = "Context renamed!",
+		r = { function() notifier({ cmd = vim.lsp.buf.rename, message = "Context to rename dialog has been triggered.",
 				opts = mapping_default_opts })
 		end, "lsp: rename context" },
 		R = { [[ <CMD>IncRename ]], "inc-rename.nvim: Rename on cursor" },
