@@ -53,10 +53,15 @@ function F.HandleInputToFn(ctx)
 		return error("Argument `input_options` is not a table!")
 	end
 
+	-- Initialize options for the `notifier`.
+	local _notifier_opts = { animate = true, timeout = 1500, title = "Input Handler to Function Argument" }
+
 	-- Handle input.
 	local _input = vim.ui.input(ctx.input_options, function(input)
 		if not input then
-			return error("Operation has been cancelled. Passed parameter is empty.")
+			_call_async_notifier({ message = "Operation has been cancelled. Passed parameter is empty.",
+				level = vim.log.levels.WARN, opts = _notifier_opts })
+			return
 		end
 	end)
 
@@ -68,7 +73,7 @@ function F.HandleInputToFn(ctx)
 	_call_async_notifier({
 		messasge = _is_success and ctx.message_success or ctx.message_failed .. " | Error Code: " .. _err,
 		level = _is_success and vim.log.levels.INFO or vim.log.levels.ERROR,
-		opts = { animate = true, timeout = 1500, title = "Input Handler to Function Argument" }
+		opts = _notifier_opts
 	})
 end
 
