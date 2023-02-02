@@ -21,7 +21,7 @@ return {
 		-- ! Buffer file displayed as a tab.
 		"akinsho/bufferline.nvim",
 		dependencies = {
-				{ "nvim-tree/nvim-web-devicons" }
+			{ "nvim-tree/nvim-web-devicons" }
 		},
 		event = { "BufReadPost", "BufAdd", "BufNewFile" },
 		lazy = true,

@@ -1,4 +1,4 @@
--- ui-helpers.lua 	| Plugins that naturally makes the UI even more better, used for the package manager lazy.nvim"
+-- ui-helpers.lua 	| Plugins that naturally makes the UI even more better, or rather extends UI's capabilities, used for the package manager lazy.nvim"
 -- @CodexLink				| https://github.com/CodexLink
 
 return {
