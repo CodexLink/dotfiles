@@ -69,7 +69,6 @@ return {
     config = function()
       -- Instantiations
       local cmp_types = require("cmp.types")
-      local lspconfig = require("lspconfig")
       local luasnip = require("luasnip")
 
       -- ! This function is provided from the advanced configuration of `nvim-cmp`.
@@ -86,6 +85,7 @@ return {
         "confirm_done",
         cmp_autopairs.on_confirm_done()
       )
+
       -- * Setup for the completion.
       cmp.setup({
         completion = {
@@ -168,12 +168,27 @@ return {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } })
       })
-
-      -- Require every LSP via lspconfig["lsp_name"].setup({<setup_table>})
+    end,
+    dependencies = {
+      -- * Completion plugins
+      { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-path" },
+      { "onsails/lspkind.nvim" },
+      { "L3MON4D3/LuaSnip" },
+      { "rafamadriz/friendly-snippets" },
+      { "saadparwaiz1/cmp_luasnip" },
+    },
+    event = "InsertEnter",
+  },
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = { "hrsh7th/cmp-nvim-lsp" },
+    event = "BufReadPre",
+    config = function()
+      local lspconfig = require("lspconfig")
       local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      -- Use an on_attach function to only map the following keys
-      -- after the language server attaches to the current buffer
       local on_attach = function(_, bufnr)
         vim.api.nvim_buf_set_option(
           bufnr,
@@ -279,20 +294,8 @@ return {
         on_attach = on_attach
       })
     end,
-    dependencies = {
-      -- * Completion plugins
-      { "hrsh7th/cmp-buffer" },
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-path" },
-      { "onsails/lspkind.nvim" },
-      { "L3MON4D3/LuaSnip" },
-      { "rafamadriz/friendly-snippets" },
-      { "saadparwaiz1/cmp_luasnip" },
-    },
-    event = { "BufRead", "BufNewFile", "InsertEnter" },
-    lazy = true
-  },
-  { "neovim/nvim-lspconfig", dependencies = { "hrsh7th/nvim-cmp" }, lazy = true, priority = 640 }, -- For the LSP.
+    priority = 640
+  }, -- For the LSP.
   -- ! For the Code Actions, Formatters and Linters.
   {
     "jose-elias-alvarez/null-ls.nvim",
