@@ -18,19 +18,24 @@ I use Powershell ([pwsh](https://github.com/PowerShell/PowerShell)) with [oh-my-
 
 ## `nvim`
 
+### TODO
+Video here for demo purposes.
+
 ### References for Configuration
 > The following are references that I used for basis for my configuration. This can be dotfiles, guide, or whatever that helps me build this configuration.
 
 - [folke's dotfiles](https://github.com/folke/dot/tree/master/config/nvim)
 - [LSP Guide (lspconfig, null-ls, mason.nvim, etc.)](https://levelup.gitconnected.com/a-step-by-step-guide-to-configuring-lsp-in-neovim-for-coding-in-next-js-a052f500da2#429b)
-
-### Demo
-
-TODO
+- [ThePrimeagen's Keybinds and Options (_to which I adapted some of it_)](https://youtu.be/w7i4amO_zaE?t=1472)
+- [LazyVim's `Events` for Lazy-Loading](https://github.com/LazyVim/LazyVim)
 
 ## Font
 
 Iosevka + Pragmata Pro Variant (SS08) with Cherry-Picked Symbol Characters from [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts).
+
+### TODO
+
+I have to rebuild this and think of a better font choice if we ever thought we want a new font.
 
 ### Font Properties
 
