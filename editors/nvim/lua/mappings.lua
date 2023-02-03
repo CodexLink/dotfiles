@@ -69,7 +69,7 @@ wk.register({
 		r = { function() require("ssr").open() end, mode = { "n", "x" }, "ssr.nvim: Do 'Structural Search and Replace'" },
 		s = {
 			name = "possession.nvim: Session Management",
-			d    = { function() require_input_on_fn_call({ fn_reference = require("possession").delete,
+			d  = { function() require_input_on_fn_call({ fn_reference = require("possession").delete,
 					input_options = { prompt = "Session name to delete." } })
 			end, "possession.nvim: Delete session by name" },
 			s    = { function() require_input_on_fn_call({ fn_reference = require("possession").save,
@@ -105,6 +105,8 @@ wk.register({
 	end, "builtin: Toggle wrap" },
 	["<M-<>"] = { function() require("bufferline").cycle(-1) end, "bufferline: Move to Previous Buffer." },
 	["<M->>"] = { function() require("bufferline").cycle(1) end, "bufferline: Move to Next Buffer." },
+	["<M-Down"] = { function() require("bufferline").cycle(1) end, "code: shift one to bottom." },
+	["<M->Up"] = { function() require("bufferline").cycle(1) end, "code: shift one to top." },
 	["<M-a>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char" },
 	["<M-A>"] = { function() require("hop").hint_char2() end, "hop.nvim: Hop 2 chars" },
 	["<M-c>"] = { function() notifier({ cmd = require("bufferline").close_buffer_with_pick,

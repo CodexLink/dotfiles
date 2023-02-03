@@ -12,7 +12,6 @@ local vg = vim.g
 
 vo.cursorline = true
 vo.clipboard = "unnamedplus"
-vo.colorcolumn = 120
 vo.expandtab = true
 vo.hlsearch = false
 vo.guicursor = "n-v:block-CursorToNavigation,i-ci-ve:ver50-CursorToInsertion,r-c-cr-o:hor50-CursorToReplacement,a:blinkwait50-blinkoff25-blinkon25-CursorToNavigation,sm:ver50-CursorToNavigation-blinkwait25-blinkoff50-blinkon50" -- [3]
