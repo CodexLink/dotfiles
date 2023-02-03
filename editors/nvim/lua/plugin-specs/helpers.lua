@@ -115,7 +115,7 @@ return {
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		lazy = true,
 		opts = {
-			max_join_length = 512
+			max_join_length = 2048
 		}
 	},
 	{
