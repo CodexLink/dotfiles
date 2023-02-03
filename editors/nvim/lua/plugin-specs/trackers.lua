@@ -7,5 +7,5 @@
 return {
 	{ "wakatime/vim-wakatime", event = "VeryLazy" },
 	{ "andweeb/presence.nvim", event = "VeryLazy" },
-	{ "NTBBloodbath/codestats.nvim", event = "VeryLazy", pin = true } -- [1]
+	{ "NTBBloodbath/codestats.nvim", event = "InsertEnter", pin = true } -- [1]
 }

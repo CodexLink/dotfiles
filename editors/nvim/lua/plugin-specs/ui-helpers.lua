@@ -77,7 +77,7 @@ return {
 			-- Setup the plugin first.
 			require("twilight").setup(opts)
 		end,
-		event = "VeryLazy",
+    lazy = true,
 		opts = {
 			dimming = { alpha = .40 }
 		}
