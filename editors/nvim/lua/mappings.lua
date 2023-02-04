@@ -63,7 +63,7 @@ wk.register({
 		},
 		L = { function() require("telescope").load_extension("lazygit") require("lazygit").lazygit() end,
 			"lazygit.nvim: Toggle window" },
-		m = { [[ <CMD>MarkdownPreviewToggle<CR> ]], "markdown-preview.nvim: Toggle" },
+		m = { function() notifier({ cmd = [[ MarkdownPreviewToggle ]], message = "Markdown Preview toggled!", opts = mapping_default_opts }) end, "markdown-preview.nvim: Toggle" },
 		n = { function() require("telescope").extensions.notify.notify() end,
 			"nvim-notify: Check notifications via 'Telescope'" },
 		r = { function() require("ssr").open() end, mode = { "n", "x" }, "ssr.nvim: Do 'Structural Search and Replace'" },
