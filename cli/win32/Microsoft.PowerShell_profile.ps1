@@ -1,5 +1,4 @@
 # pwsh (Powershell) Config for Win32 with Oh-My-Posh as Prompt.
-# Updated as of 08/24/2022, Version 0.6.3
 
 # # Aliases
 Set-Alias b bat
@@ -18,6 +17,7 @@ Set-Alias ls PowerColorLS
 Set-Alias mk mkdir
 Set-Alias n nvim
 Set-Alias p ping
+Set-Alias pn pnpm
 Set-Alias py python
 Set-Alias wtc OpenWTConfig
 
