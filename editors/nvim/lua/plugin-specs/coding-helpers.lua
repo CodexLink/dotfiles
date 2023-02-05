@@ -16,8 +16,7 @@ return {
         max_concurrent_installers = 10
       })
     end,
-    lazy = false,
-    priority = 800,
+    lazy = false
   },
   -- ! Package manager extension as an LSP provider for the "nvim-lspconfig".
   {
@@ -44,8 +43,7 @@ return {
         automatic_installation = true
       })
     end,
-    lazy = false,
-    priority = 750,
+    lazy = false
   },
   -- ! Package manager extension as an LSP provider for the "null-ls".
   -- * Note that we have to use the packages that is namespaced by `null-ls` to ensure no conflicts during setup.
@@ -60,8 +58,7 @@ return {
         }
       )
     end,
-    lazy = false,
-    priority = 700,
+    lazy = false
   },
   -- !!! Dependants from the external package were done by `mason.nvim` and `null-ls.nvim`.
   {
@@ -80,11 +77,6 @@ return {
 
       local cmp_autopairs = require("nvim-autopairs.completion.cmp")
       local cmp = require("cmp")
-
-      cmp.event:on(
-        "confirm_done",
-        cmp_autopairs.on_confirm_done()
-      )
 
       -- * Setup for the completion.
       cmp.setup({
@@ -164,10 +156,19 @@ return {
         }
       })
 
+
+      -- 'nvim-autopairs' integration.
+      cmp.event:on(
+        "confirm_done",
+        cmp_autopairs.on_confirm_done()
+      )
+
+      -- 'cmd' integration.
       cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } })
       })
+
     end,
     dependencies = {
       -- * Completion plugins
@@ -184,7 +185,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = { "hrsh7th/cmp-nvim-lsp" },
-    event = "BufReadPre",
+    event = { "User", "InsertEnter" },
     config = function()
       local lspconfig = require("lspconfig")
       local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -294,7 +295,6 @@ return {
         on_attach = on_attach
       })
     end,
-    priority = 640
   }, -- For the LSP.
   -- ! For the Code Actions, Formatters and Linters.
   {
