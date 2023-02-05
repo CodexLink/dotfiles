@@ -83,14 +83,5 @@ return {
 		event = "VeryLazy",
 		lazy = true,
 		opts = { delay = 200 }
-	},
-	-- ! Leverages vim's % to match with the scope of the code context.
-	{
-    "andymass/vim-matchup",
-    config = function() vim.g.matchup_matchparen_offscreen = { method = "popup" } end,
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-    event = "VeryLazy",
-		lazy = true,
-    version = false,
-  },
+	}
 }
