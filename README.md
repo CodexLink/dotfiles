@@ -26,7 +26,8 @@ Video here for demo purposes.
 
 - [folke's dotfiles](https://github.com/folke/dot/tree/master/config/nvim)
 - [LSP Guide (lspconfig, null-ls, mason.nvim, etc.)](https://levelup.gitconnected.com/a-step-by-step-guide-to-configuring-lsp-in-neovim-for-coding-in-next-js-a052f500da2#429b)
-- [ThePrimeagen's Keybinds and Options (_to which I adapted some of it_)](https://youtu.be/w7i4amO_zaE?t=1472)
+- [Moving lines up or down](https://vim.fandom.com/wiki/Moving_lines_up_or_down)
+- > [Seen on 'ThePrimeagen's Keybinds and Options (_to which I adapted some of it_)'](https://youtu.be/w7i4amO_zaE?t=1472)
 - [LazyVim's `Events` for Lazy-Loading](https://github.com/LazyVim/LazyVim)
 
 ## Font
