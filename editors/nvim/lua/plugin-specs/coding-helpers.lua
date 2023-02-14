@@ -30,10 +30,10 @@ return {
           "graphql",
           "html",
           "jsonls",
+          "lua_ls",
           "marksman",
           "pyright",
           "sqlls",
-          "sumneko_lua",
           "svelte",
           "tailwindcss",
           "tsserver",
@@ -243,7 +243,7 @@ return {
         on_attach = on_attach
       })
 
-      lspconfig["sumneko_lua"].setup({
+      lspconfig["lua_ls"].setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach,
         settings = {
