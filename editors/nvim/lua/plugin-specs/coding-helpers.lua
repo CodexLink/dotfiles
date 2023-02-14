@@ -243,7 +243,7 @@ return {
         on_attach = on_attach
       })
 
-      lspconfig["lua_ls"].setup({
+      lspconfig["sumneko_lua"].setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach,
         settings = {
