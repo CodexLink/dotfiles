@@ -1,8 +1,7 @@
--- coding-helpers.lua | Plugin declaration for that provides snippets, autocompletion, advertisement of suggestion from the server, etc), used for the package manager lazy.nvim"
--- @CodexLink     | https://github.com/CodexLink
-
--- Info
--- [1] Configuration for the LSP servers or the configurator is separated, the context of this plugin spec is all about advertising the completion plugin to the LSP to display at the editor.
+---@module 'coding-helpers'
+---@author CodexLink <https://github.com/CodexLink>
+---@license Apache-2.0
+---@info [1] Configuration for the LSP servers or the configurator is separated, the context of this plugin spec is all about advertising the completion plugin to the LSP to display at the editor.
 
 return {
   -- ! A package manager for the external tools, such as: Debug Adapter Protocol (DAP), Linters, Formatters, etc.
@@ -130,8 +129,8 @@ return {
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
+            elseif luasnip.jumpable( -1) then
+              luasnip.jump( -1)
             elseif neogen.jumpable(true) then
               neogen.jump_prev()
             else
