@@ -12,8 +12,8 @@ local require_input_on_fn_call = require("utils").HandleInputToFn
 local mapping_default_opts = { animate = true, timeout = 1250, title = "Mapping-to-Execution" }
 
 wk.register({
-  ["<A-j>"] = { ":m '>+1<CR>gv=gv", mode = { "v" }, "code: shift highlighted to bottom" },
-  ["<A-k>"] = { ":m '<-2<CR>gv=gv", mode = { "v" }, "code: shift highlighted to top" },
+  ["<A-j>"] = { ":m '>+1<CR>gv=gv", "code: shift highlighted to bottom", mode = { "v" } },
+  ["<A-k>"] = { ":m '<-2<CR>gv=gv", "code: shift highlighted to top", mode = { "v" } },
   ["<F1>"] = { function() require("telescope.builtin").builtin() end, "telescope.nvim: Toggle 'builtin'" },
   ["<F2>"] = { function() require("trouble").toggle() end, "trouble.nvim (Diagnostics): Toggle" },
   ["<F3>"] = { function() require("aerial").toggle({ focus = false }) end, "aerial.nvim: Toggle (Unfocused)" },
@@ -96,7 +96,7 @@ wk.register({
     end, "markdown-preview.nvim: Toggle" },
     n = { function() require("telescope").extensions.notify.notify() end,
       "nvim-notify: Check notifications via 'Telescope'" },
-    r = { function() require("ssr").open() end, mode = { "n", "x" }, "ssr.nvim: Do 'Structural Search and Replace'" },
+    r = { function() require("ssr").open() end, "ssr.nvim: Do 'Structural Search and Replace'", mode = { "n", "x" } },
     s = {
       name = "possession.nvim: Session Management",
       d    = { function()
@@ -168,8 +168,8 @@ wk.register({
   end, "builtin: Toggle wrap" },
   ["<M-<>"] = { function() require("bufferline").cycle( -1) end, "bufferline: Move to Previous Buffer." },
   ["<M->>"] = { function() require("bufferline").cycle(1) end, "bufferline: Move to Next Buffer." },
-  ["<M-a>"] = { function() require("hop").hint_char1() end, mode = { "" }, "hop.nvim: Hop 1 char" },
-  ["<M-A>"] = { function() require("hop").hint_char2() end, mode = { "" }, "hop.nvim: Hop 2 chars" },
+  ["<M-a>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char", mode = { "n", "v" } },
+  ["<M-A>"] = { function() require("hop").hint_char2() end, "hop.nvim: Hop 2 chars", mode = { "n", "v" } },
   ["<M-c>"] = { function()
     notifier({
       cmd = require("bufferline").close_buffer_with_pick,
