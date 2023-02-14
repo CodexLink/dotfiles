@@ -50,7 +50,8 @@ return {
   {
     "jay-babu/mason-null-ls.nvim",
     config = function(
-    ) require("mason-null-ls").setup(
+    )
+      require("mason-null-ls").setup(
         {
           ensured_installed = nil,
           automatic_installation = true,
@@ -77,6 +78,7 @@ return {
 
       local cmp_autopairs = require("nvim-autopairs.completion.cmp")
       local cmp = require("cmp")
+      local neogen = require("neogen")
 
       -- * Setup for the completion.
       cmp.setup({
@@ -109,13 +111,15 @@ return {
           ["<M-a>"] = {
             i = { cmp.mapping.abort() },
           },
-          ["<M-q>"] = cmp.mapping.scroll_docs(-3),
+          ["<M-q>"] = cmp.mapping.scroll_docs( -3),
           ["<M-e>"] = cmp.mapping.scroll_docs(3),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
             elseif luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
+            elseif neogen.jumpable() then
+              neogen.jump_next()
             elseif has_words_before() then
               cmp.complete()
             else
@@ -128,6 +132,8 @@ return {
               cmp.select_prev_item()
             elseif luasnip.jumpable(-1) then
               luasnip.jump(-1)
+            elseif neogen.jumpable(true) then
+              neogen.jump_prev()
             else
               fallback()
             end
@@ -168,7 +174,6 @@ return {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } })
       })
-
     end,
     dependencies = {
       -- * Completion plugins
