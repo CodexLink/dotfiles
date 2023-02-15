@@ -10,7 +10,6 @@ local vo = vim.opt
 local vg = vim.g
 
 vo.cursorline = true
-vo.clipboard = "unnamedplus"
 vo.expandtab = true
 vo.hlsearch = false
 vo.guicursor =
