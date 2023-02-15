@@ -82,6 +82,7 @@ return {
       -- * Setup for the completion.
       cmp.setup({
         completion = {
+          completeopt = "menu,menuone,noinsert",
           keyword_length = 2
         },
         experimental = {
@@ -100,7 +101,7 @@ return {
           end,
         },
         mapping = {
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }), { "i", "c" }),
           ["<Down>"] = {
             i = cmp.mapping.select_next_item({ behavior = cmp_types.cmp.SelectBehavior.Select }),
           },
@@ -160,7 +161,6 @@ return {
           documentation = cmp.config.window.bordered({ border = "rounded" })
         }
       })
-
 
       -- 'nvim-autopairs' integration.
       cmp.event:on(
