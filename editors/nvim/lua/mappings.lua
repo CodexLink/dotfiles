@@ -117,7 +117,7 @@ wk.register({
           input_options = { prompt = "Session name to load. (Note: Use `telescope` to retrieve a list of sessions!)" }
         })
       end,
-        "Load saved session (dialogue)" },
+        "possession.nvim: Load saved session (dialogue)" },
     },
     t = { function() require("tsht").nodes() end, "nvim-treehopper: Hop to highlight context" },
     T = { function()
@@ -157,7 +157,7 @@ wk.register({
           opts = mapping_default_opts
         })
       end, "Maximize horizontally" },
-    }
+    },
   },
   ["<M-~>"] = { function()
     notifier({
