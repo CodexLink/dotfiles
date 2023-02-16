@@ -68,42 +68,39 @@ return {
   },
   {
     -- ! Status bar for the editor.
-    -- TODO: Requires further customization!
     "nvim-lualine/lualine.nvim",
     lazy = false,
     opts = {
+      extensions = { "aerial" },
       options = {
-        icons_enabled = true,
         component_separators = "|",
-        section_separators = { left = "", right = "" },
+        globalstatus = true,
+        icons_enabled = true,
       },
+      -- @note For section a, b, c, the left seperator is displayed on right side for other elements while first element is displayed at left.
+      -- @note This was the same case for the section x, y, z but in opposite.
+      -- @note Using the opposite of the dominant of the section (for instance, using right side of the left section (and those are section a, b, c)) destroys the style of the next element!
+      -- @note Using the opposite to the last element will make things more elegant to look at.
       sections = {
         lualine_a = {
-          {
-            "mode",
-            right_padding = 2,
-            separator = { left = "" },
-          },
+          { "mode", separator = { left = "", right = "" } },
         },
-        lualine_b = { "filename", "filetype" },
-        lualine_c = { "branch" },
-        lualine_x = {
-          {
-            "diagnostics",
-            sources = {
-              "nvim_diagnostic",
-              "nvim_workspace_diagnostic",
-              "nvim_lsp",
-            }
-          }
+        lualine_b = {
+          -- @note Right seperator is not handled specially when the next element is hidden.
+          -- @note Using custom function for this matter make things a little bit harder to understand and is quite an over-engineer; But since an arrow spike is used as a default, I'm fine with it.
+          { "filename", separator = "|" },
+          { "filetype", separator = "|" },
+          { "aerial",   dense = true,   dense_sep = ".", sep = " -> ", separator = { right = "" } },
         },
-        lualine_y = { "progress" },
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {
+          { "branch",      separator = { left = "" } },
+          { "diagnostics", sources = { "nvim_lsp", "nvim_diagnostic", "nvim_workspace_diagnostic" }, separator = "|" },
+        },
         lualine_z = {
-          {
-            "location",
-            separator = { right = "" },
-            right_padding = 2
-          },
+          { "progress", separator = { left = "", right = "|" } },
+          { "location", separator = { left = "|", right = "" } },
         },
       },
       inactive_sections = {
@@ -112,7 +109,7 @@ return {
         lualine_c = {},
         lualine_x = {},
         lualine_y = {},
-        lualine_z = {},
+        lualine_z = { { "aerial", dense = true, sep = " -> " } },
       }
     },
     priority = 900 -- ! Load after `colorscheme`.
@@ -140,18 +137,18 @@ return {
           },
           mappings = {
             i = {
+              ["<C-Down>"] = actions.preview_scrolling_down,
               ["<C-q>"] = actions.close,
-              ["<M-Up>"] = actions.preview_scrolling_up,
-              ["<M-Down>"] = actions.preview_scrolling_down,
-              ["<S-Up>"] = actions.results_scrolling_up,
+              ["<C-Up>"] = actions.preview_scrolling_up,
               ["<S-Down>"] = actions.results_scrolling_down,
+              ["<S-Up>"] = actions.results_scrolling_up
             },
             n = {
+              ["<C-Down>"] = actions.preview_scrolling_down,
+              ["<C-Up>"] = actions.preview_scrolling_up,
               ["q"] = actions.close,
-              ["<M-Up>"] = actions.preview_scrolling_up,
-              ["<M-Down>"] = actions.preview_scrolling_down,
-              ["<S-Up>"] = actions.results_scrolling_up,
               ["<S-Down>"] = actions.results_scrolling_down,
+              ["<S-Up>"] = actions.results_scrolling_up
             }
           }
         },
