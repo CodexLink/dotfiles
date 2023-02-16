@@ -49,10 +49,14 @@ return {
           untracked = { text = '?' },
         }
       })
+
+      -- Preference: Just wanted to enable it already.
+      require("gitsigns").toggle_current_line_blame()
     end,
     dependencies = {
       { "petertriho/nvim-scrollbar" } -- !!! Despite this plugin is declared in `ui.lua`, if `ui-helpers.lua` was the first plugin spec file to initialize, then install this plugin as possible, if missing, then re-configure on `ui.lua` later.
-    }
+    },
+    lazy = false
   },
   {
     -- ! Colorizes any string that states a color.
