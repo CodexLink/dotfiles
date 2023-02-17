@@ -73,9 +73,10 @@ return {
     opts = {
       extensions = { "aerial" },
       options = {
-        component_separators = "|",
+        component_separators = "",
         globalstatus = true,
         icons_enabled = true,
+        section_separators = { left = "", right = "" }
       },
       -- @note For section a, b, c, the left seperator is displayed on right side for other elements while first element is displayed at left.
       -- @note This was the same case for the section x, y, z but in opposite.
@@ -88,19 +89,19 @@ return {
         lualine_b = {
           -- @note Right seperator is not handled specially when the next element is hidden.
           -- @note Using custom function for this matter make things a little bit harder to understand and is quite an over-engineer; But since an arrow spike is used as a default, I'm fine with it.
-          { "filename", separator = "|" },
-          { "filetype", separator = "|" },
+          { "filename", icon = "", separator = "" },
+          { "filetype", separator = "" },
           { "aerial",   dense = true,   dense_sep = ".", sep = " -> ", separator = { right = "" } },
         },
         lualine_c = {},
         lualine_x = {},
         lualine_y = {
-          { "branch",      separator = { left = "" } },
-          { "diagnostics", sources = { "nvim_lsp", "nvim_diagnostic", "nvim_workspace_diagnostic" }, separator = "|" },
+          { "diagnostics", sources = { "nvim_lsp", "nvim_diagnostic", "nvim_workspace_diagnostic", separator = { left = "" } } },
+          { "branch",      separator = "" },
         },
         lualine_z = {
-          { "progress", separator = { left = "", right = "|" } },
-          { "location", separator = { left = "|", right = "" } },
+          { "progress", icon = "", separator = "" },
+          { "location", icon = "", separator = { right = "" } },
         },
       },
       inactive_sections = {
