@@ -100,8 +100,8 @@ return {
           { "branch",      separator = "" },
         },
         lualine_z = {
-          { "progress", icon = "", separator = "" },
-          { "location", icon = "", separator = { right = "" } },
+          { "progress", icon = "李", separator = "" },
+          { "location", icon = "", separator = { right = "" } },
         },
       },
       inactive_sections = {
