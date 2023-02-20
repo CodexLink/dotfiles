@@ -65,6 +65,13 @@ return {
     event = { "BufAdd", "BufNewFile", "BufReadPost" }
   },
   {
+    -- ! Displays context per indentation to see what part of code scope are we based on the cursor position.
+    -- This just visually supports `aerial.nvim`.
+    "haringsrob/nvim_context_vt",
+    config = true,
+    event = { "BufAdd", "BufNewFile", "BufReadPost" },
+  },
+  {
     -- ! Display notification from the right side, similar to modern game notification system.
     -- !!! Lazy-loaded because only my own config will use this plugin.
     "rcarriga/nvim-notify",
