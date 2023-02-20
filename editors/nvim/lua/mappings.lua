@@ -33,6 +33,7 @@ wk.register({
     })
   end,
     "possession.nvim: session-to-load selection" },
+  ["<F9>"] = { function() vim.cmd([[ TodoTelescope ]]) end, "todo-comments.nvim: Check TODO with Telescope." },
   ["<Leader>"] = {
     a = { function()
       notifier({
