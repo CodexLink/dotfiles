@@ -15,6 +15,11 @@ return {
       backends = { "lsp" },
       filter_kind = false,
       highlight_on_hover = true,
+      keymaps = {
+        ["z"] = "actions.tree_toggle",
+        ["x"] = "actions.tree_open_recursive",
+        ["c"] = "actions.tree_close_recursive",
+      },
       show_guides = true
     }
   },
