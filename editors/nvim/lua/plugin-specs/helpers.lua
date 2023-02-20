@@ -4,39 +4,39 @@
 
 return {
   {
-    -- ! Literally a comment creator, this can be paired with annotation plugin.
+    --- NOTE: Literally a comment creator, this can be paired with annotation plugin.
     "numToStr/Comment.nvim",
     config = true,
     event = { "BufNewFile", "BufReadPost" },
     lazy = true
   },
   {
-    -- ! Alternative `git diff` viewer, supported by `lazy.nvim` (package manager).
+    --- NOTE: Alternative `git diff` viewer, supported by `lazy.nvim` (package manager).
     "sindrets/diffview.nvim",
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim" }
   },
   {
-    -- ! Similar to Vimium C, jump to certain part of code, this is way similar to `leap.nvim` but it uses 2 letters to jump to certain part of code.
-    -- !!! This plugin is useful when we don't want a keyword-based jump.
+    --- NOTE: Similar to Vimium C, jump to certain part of code, this is way similar to `leap.nvim` but it uses 2 letters to jump to certain part of code.
+    --- NOTE: This plugin is useful when we don't want a keyword-based jump.
     "phaazon/hop.nvim",
     config = true,
     lazy = true
   },
   {
-    -- ! Incremental renaming context, similar to vscode's F2 rename system but incremental in this case.
+    --- NOTE: Incremental renaming context, similar to vscode's F2 rename system but incremental in this case.
     "smjonas/inc-rename.nvim",
     config = true,
     lazy = false,
     opts = { input_buffer_type = "dressing" }
   },
   {
-    -- ! External helper tool that helps visualizesa the markdown or text file to the browser.
+    --- NOTE: External helper tool that helps visualizesa the markdown or text file to the browser.
     "iamcco/markdown-preview.nvim",
     build = function() vim.fn["mkdp#util#install"]() end,
     config = function()
       -- After installation, run other global variable configs.
-      -- !!! The plugin runs in this way and not in the conventional 'config' function.
+      --- NOTE: The plugin runs in this way and not in the conventional 'config' function.
 
       -- Since this plugin is only loaded based on file extensiosn from 'ft' table, do not limit on markdown.
       local vg = vim.g
@@ -69,7 +69,7 @@ return {
     version = "*"
   },
   {
-    -- ! Auto-adding or wrapping from both ends of a highlighted context.
+    --- NOTE: Auto-adding or wrapping from both ends of a highlighted context.
     "windwp/nvim-autopairs",
     config = function(plugin, opts)
       require(plugin.name).setup(opts)
@@ -85,6 +85,13 @@ return {
     }
   },
   {
+    -- NOTE: surround.vim but in nvim
+    "kylechui/nvim-surround",
+    config = true,
+    event = { "BufAdd", "BufReadPost", "BufNewFile" },
+  },
+  {
+    -- NOTE: hop.nvim but encapsulates context based on selection of region.
     "mfussenegger/nvim-treehopper",
     dependencies = { { "phaazon/hop.nvim" } },
     lazy = true
@@ -107,7 +114,7 @@ return {
     }
   },
   {
-    -- ! Structural search then replace; far more advanced than the conventional find and replace system.
+    --- NOTE: Structural search then replace; far more advanced than the conventional find and replace system.
     "cshuaimin/ssr.nvim",
     lazy = true,
     opts = {
@@ -115,13 +122,13 @@ return {
         close = "q",
         next_match = "n",
         prev_match = "N",
-        replace_confirm = "<cr>",
-        replace_all = "<leader><cr>",
+        replace_confirm = "<CR>",
+        replace_all = "<Leader><CR>",
       },
     }
   },
   {
-    -- ! Code Context to `One-Liner` or `Split-by-Blocks` Plugin.
+    --- NOTE: Code Context to `One-Liner` or `Split-by-Blocks` Plugin.
     "Wansmer/treesj",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     lazy = true,
@@ -130,7 +137,7 @@ return {
     }
   },
   {
-    -- ! Outputs keybinds when pressed a key for the editor.
+    --- NOTE: Outputs keybinds when pressed a key for the editor.
     "folke/which-key.nvim",
     lazy = false,
     opts = {
