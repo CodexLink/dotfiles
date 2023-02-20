@@ -4,7 +4,7 @@
 
 return {
   {
-    -- ! Alternative dialogue, similar to `telescope.nvim`.
+    -- NOTE: Alternative dialogue, similar to `telescope.nvim`.
     "stevearc/dressing.nvim",
     config = true,
     lazy = false,
@@ -31,12 +31,12 @@ return {
     },
   },
   {
-    -- ! Displays git states from each line either by blame or by hunk (changes from that line).
+    -- NOTE: Displays git states from each line either by blame or by hunk (changes from that line).
     "lewis6991/gitsigns.nvim",
     config = function()
       require("scrollbar.handlers.gitsigns").setup()
-      -- ! Since we overriden the config field of this plugin spec, we have to re-establish this plugin's setup.
-      -- !! We cannot use `opts` field anymore because of the potential conflict configuration with the `config` field.
+      -- NOTE: Since we overriden the config field of this plugin spec, we have to re-establish this plugin's setup.
+      -- NOTE:! We cannot use `opts` field anymore because of the potential conflict configuration with the `config` field.
       require("gitsigns").setup({
         current_line_blame = true,
         numhl = true,
@@ -54,26 +54,26 @@ return {
       require("gitsigns").toggle_current_line_blame()
     end,
     dependencies = {
-      { "petertriho/nvim-scrollbar" } -- !!! Despite this plugin is declared in `ui.lua`, if `ui-helpers.lua` was the first plugin spec file to initialize, then install this plugin as possible, if missing, then re-configure on `ui.lua` later.
+      { "petertriho/nvim-scrollbar" } -- NOTE: Despite this plugin is declared in `ui.lua`, if `ui-helpers.lua` was the first plugin spec file to initialize, then install this plugin as possible, if missing, then re-configure on `ui.lua` later.
     },
     lazy = false
   },
   {
-    -- ! Colorizes any string that states a color.
+    -- NOTE: Colorizes any string that states a color.
     "NvChad/nvim-colorizer.lua",
     config = true,
     event = { "BufAdd", "BufNewFile", "BufReadPost" }
   },
   {
-    -- ! Displays context per indentation to see what part of code scope are we based on the cursor position.
+    -- NOTE: Displays context per indentation to see what part of code scope are we based on the cursor position.
     -- This just visually supports `aerial.nvim`.
     "haringsrob/nvim_context_vt",
     config = true,
     event = { "BufAdd", "BufNewFile", "BufReadPost" },
   },
   {
-    -- ! Display notification from the right side, similar to modern game notification system.
-    -- !!! Lazy-loaded because only my own config will use this plugin.
+    -- NOTE: Display notification from the right side, similar to modern game notification system.
+    -- NOTE: Lazy-loaded because only my own config will use this plugin.
     "rcarriga/nvim-notify",
     config = function(_, opts)
       require("notify").setup(opts)
@@ -83,7 +83,13 @@ return {
     opts = { render = "compact" }
   },
   {
-    -- ! Code dimmer (by buffer, blocks) when the cursor is focused elsewhere.
+    -- NOTE: Better alternative for `GIX DECO Comments` plugin from VSCode
+    "folke/todo-comments.nvim",
+    config = true,
+    event = { "BufReadPost" },
+  },
+  {
+    -- NOTE: Code dimmer (by buffer, blocks) when the cursor is focused elsewhere.
     "folke/twilight.nvim",
     config = function(_, opts)
       -- Setup the plugin first.
@@ -95,7 +101,7 @@ return {
     }
   },
   {
-    -- ! Window sizing management with animation.
+    -- NOTE: Window sizing management with animation.
     "anuvyklack/windows.nvim",
     config = function()
       vim.o.winwidth = 10
