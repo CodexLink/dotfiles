@@ -32,51 +32,40 @@ Video here for demo purposes.
 
 ## Font
 
-Iosevka + Pragmata Pro Variant (SS08) with Cherry-Picked Symbol Characters from [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts).
+Iosevka + Pragmata Pro Variant (SS08) with Complete Set of [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts).
 
-### TODO
+_Baked with Iosevka's Build Script, Created in TTF format, patched with Nerd Font's Font Patcher in the following parameters: `--complete --mono`_
 
-I have to rebuild this and think of a better font choice if we ever thought we want a new font.
+[![Iosevka Configuration #1](https://github.com/CodexLink/dotfiles-configs-archive/blob/latest/assets/iosevka_config_1.png)](https://typeof.net/Iosevka/)
+[![Iosevka Configuration #2-1](https://github.com/CodexLink/dotfiles-configs-archive/blob/latest/assets/iosevka_config_2_1.png)](https://typeof.net/Iosevka/)
+[![Iosevka Configuration #2-2](https://github.com/CodexLink/dotfiles-configs-archive/blob/latest/assets/iosevka_config_2_2.png)](https://typeof.net/Iosevka/)
+[![Iosevka Configuration #3](https://github.com/CodexLink/dotfiles-configs-archive/blob/latest/assets/iosevka_config_3.png)](https://typeof.net/Iosevka/)
 
-### Font Properties
-
-This font does not include the complete sets provided from Nerd Fonts. The following are the selected icon sets.
-
-With the [Iosevka](https://github.com/be5invis/Iosevka)'s option allowing us to choose Normal, Italics, and Oblique; please note that Normal and Italics are only included.
-
-Compiling them with [fontforge](https://github.com/fontforge/fontforge) with the script provided from the [nerd-fonts-patcher](https://github.com/ryanoasis/nerd-fonts) in addition to the PR request of supporting [TTC files](https://github.com/ryanoasis/nerd-fonts/tree/feature/process-ttc), the script silently fails.
-
-Discretionary Ligatures (dilg) + Cherry-Picked Symbol Characters + Terminal Spacing - No Italic or Oblique Set.
-
-<Picture Here>
+[See build configuration for more information](https://github.com/CodexLink/dotfiles-configs-archive/blob/latest/font-recipe/private-build-plans.toml)
 
 ### How to Build
 
-You need to pull the docker repository and build the docker on your own. That is if you were having problems with the script not running due to characters. That was an issue to encoding. I recommend building the font in Docker Container. `git pull`ing the repository is huge, therefore not recommended.
+- You need to have a copy of the Iosevka repository, learn how to clone and install pre-requisites from [here](https://github.com/be5invis/Iosevka/blob/main/doc/custom-build.md).
 
-```txt
-docker build -t iosevka-build .; docker run -it -v ${PWD}:/build iosevka-build super-ttc::iosevka-codex-link
-```
+- After that, copy my font-recipe file (_private-build-plans.toml_) and replace it from the existing `private-build-plans.toml` of the Iosevka repository.
+
+- Once done, issue the following command (_with the location of your prompt set to the main directory of the Iosevka repository_): `npm run build -- ttf::iosevka-codex-link`
+
+  > This will create `ttf` and `ttf-unhinted` from the `dist` folder, found in the Iosevka repository.
+
+**Once done, you are ready to patch the font.**
 
 ### Patching with Nerd Font
 
-I'm aware that Nerd Font Patcher doesn't like TTC files, therefore you need to adjust by setting things up by yourself.
+- You need [Docker](https://www.docker.com/), [fontforge](https://fontforge.org/en-US/), [Nerd Font's](https://github.com/ryanoasis/nerd-fonts) [FontPatcher (_from latest upstream_)](https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FontPatcher.zip), and [python](https://www.python.org/) to patch the font.
 
-Please fetch the `font-patcher.py` from the [feature/process-tcc] branch and replace it from the current upstream local branch that you have.
+- Once you setup everything, issue the following command: `docker run --rm -v <Root directory>\Iosevka\dist\iosevka-codex-link\ttf:/in -v <Root directory>\Iosevka\dist\patched:/out nerdfonts/patcher --also-windows --careful --complete --mono`
 
-...
+> Modify the `<Root directory` before issueing the command.
 
-> To be continued.
+Please check the [font patcher's option](https://github.com/ryanoasis/nerd-fonts#examples) if you wish to go more than what is provided.
 
-```
-.\fontforge -script font-patcher.py --glyphdir ./glyphs/ --mono --windows --complete --careful --progressbars E:\Developments\Forks\iosevka-docker\dist/.super-ttc/iosevka-codex-link.ttc -out E:\Developments\Forks\iosevka-docker\dist\patched-nerd-fonts
-```
-
-We should consider this cherry-picked version.
-
-```
-.\ffpython font-patcher.py --glyphdir ./glyphs/ --adjust-line-height --careful --codicons --fontawesome --fontawesomeextension --material --mono --octicons --powerline --powerlineextra --progressbars --weather --windows E:\Developments\Forks\iosevka-docker\dist/.super-ttc/iosevka-codex-link.ttc -out E:\Developments\Forks\iosevka-docker\dist\patched-nerd-fonts
-```
+After patching, install and you are good to go!
 
 ## Credits
 
