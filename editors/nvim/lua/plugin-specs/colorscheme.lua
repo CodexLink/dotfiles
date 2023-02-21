@@ -36,6 +36,7 @@ return {
         BufferLineDevIconLogSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
         BufferLineDevIconLuaSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
         BufferLineDevIconMarkdownSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
+        BufferLineDevIconPackageJsonSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
         BufferLineDevIconPySelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
         BufferLineDevIconPsScriptfileSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
         BufferLineDevIconPsScriptModulefileSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
