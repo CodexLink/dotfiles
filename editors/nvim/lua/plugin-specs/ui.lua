@@ -94,9 +94,9 @@ return {
         lualine_b = {
           -- @note Right seperator is not handled specially when the next element is hidden.
           -- @note Using custom function for this matter make things a little bit harder to understand and is quite an over-engineer; But since an arrow spike is used as a default, I'm fine with it.
-          { "filename", icon = "", separator = "" },
+          { "filename", icon = "",     separator = "" },
           { "filetype", separator = "" },
-          { "aerial",   dense = true,   dense_sep = ".", sep = " -> ", separator = { right = "" } },
+          { "aerial",   dense = true,     dense_sep = ".",  sep = " -> ", separator = { right = "" } },
         },
         lualine_c = {},
         lualine_x = {},
@@ -105,8 +105,8 @@ return {
           { "branch",      separator = "" },
         },
         lualine_z = {
-          { "progress", icon = "李", separator = "" },
-          { "location", icon = "", separator = { right = "" } },
+          { "progress", separator = "" },
+          { "location", icon = "",    separator = { right = "" } },
         },
       },
       inactive_sections = {
