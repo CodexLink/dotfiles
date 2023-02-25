@@ -36,7 +36,7 @@ return {
     config = function()
       require("scrollbar.handlers.gitsigns").setup()
       -- NOTE: Since we overriden the config field of this plugin spec, we have to re-establish this plugin's setup.
-      -- NOTE:! We cannot use `opts` field anymore because of the potential conflict configuration with the `config` field.
+      -- NOTE: We cannot use `opts` field anymore because of the potential conflict configuration with the `config` field.
       require("gitsigns").setup({
         current_line_blame = true,
         numhl = true,
@@ -53,9 +53,6 @@ return {
       -- Preference: Just wanted to enable it already.
       require("gitsigns").toggle_current_line_blame()
     end,
-    dependencies = {
-      { "petertriho/nvim-scrollbar" } -- NOTE: Despite this plugin is declared in `ui.lua`, if `ui-helpers.lua` was the first plugin spec file to initialize, then install this plugin as possible, if missing, then re-configure on `ui.lua` later.
-    },
     lazy = false
   },
   {

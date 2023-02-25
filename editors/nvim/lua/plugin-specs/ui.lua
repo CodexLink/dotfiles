@@ -4,7 +4,7 @@
 
 return {
   {
-    -- ! DAP-Equivalent for displaying code context in one sidebar.
+    -- NOTE: DAP-Equivalent for displaying code context in one sidebar.
     "stevearc/aerial.nvim",
     config = true,
     dependencies = {
@@ -24,7 +24,7 @@ return {
     }
   },
   {
-    -- ! Buffer file displayed as a tab.
+    -- NOTE: Buffer file displayed as a tab.
     "akinsho/bufferline.nvim",
     dependencies = {
       { "nvim-tree/nvim-web-devicons" }
@@ -53,7 +53,35 @@ return {
     }
   },
   {
-    -- ! Indention guider, useful on identifying space or tabs on code.
+    -- NOTE: Just an LSP stats indicator on top of the 'lualine'.
+    "j-hui/fidget.nvim",
+    config = true,
+    lazy = true,
+    opts = {
+      text = { spinner = "dots" }
+    },
+  },
+  {
+    -- NOTE: VSCode style code context previewer, binds to LSP actions.
+    "DNLHC/glance.nvim",
+    config = function()
+      local glance_actions = require("glance").actions
+      require("glance").setup({
+        border = {
+          enable = false, -- Show window borders. Only horizontal borders allowed
+          top_char = '―',
+          bottom_char = '―',
+        },
+        mappings = {
+          ['<C-Down>'] = glance_actions.preview_scroll_win( -5),
+          ['<C-Up>'] = glance_actions.preview_scroll_win(5)
+        }
+      })
+    end,
+    lazy = true
+  },
+  {
+    -- NOTE: Indention guider, useful on identifying space or tabs on code.
     "lukas-reineke/indent-blankline.nvim",
     event = "BufReadPost",
     opts = {
@@ -63,7 +91,7 @@ return {
     }
   },
   {
-    -- ! Lazygit but in neovim window, added in the UI as its not an enhancement plugin but rather an extender which is a UI component at this point.
+    -- NOTE: Lazygit but in neovim window, added in the UI as its not an enhancement plugin but rather an extender which is a UI component at this point.
     "kdheepak/lazygit.nvim",
     lazy = true,
     config = function()
@@ -72,9 +100,49 @@ return {
     end
   },
   {
-    -- ! Status bar for the editor.
+    -- NOTE: Status bar for the editor.
     "nvim-lualine/lualine.nvim",
     lazy = false,
+    config = function(_, opts)
+      -- Define custom function for the section C.
+      -- NOTE: Reference for getting the length (The unary '#' operator): https://en.wikibooks.org/wiki/Lua_Programming/length_operator.
+      local lsp_active_server = function()
+        local _get_active_servers = vim.lsp.get_active_clients({ buffer = vim.fn.bufnr() })
+        if #_get_active_servers == 0 then
+          return "None"
+        else
+          -- NOTE: Only get the first one.
+          return _get_active_servers[1].name
+        end
+      end
+
+      local lsp_active_formatter = function()
+        if lsp_active_server() == "sumneko_lua" then
+          return "Same as LSP"
+        else
+          local _available_sources = require("null-ls.sources").get_available(vim.bo.filetype)
+          if (#_available_sources == 0) then
+            return "None"
+          else
+            local sources = ""
+
+            for _, each_formatter in pairs(_available_sources) do
+              sources = sources .. (_ == 1 and "" or ", ") .. each_formatter.name
+            end
+
+            return sources
+          end
+        end
+      end
+
+      -- NOTE: Inject these functions.
+      opts.sections.lualine_c[2] = { lsp_active_server, icon = "󰒋 " }
+      opts.sections.lualine_c[3] = { lsp_active_formatter, icon = "󱇧 " }
+
+      opts.sections.lualine_c[4] = { '=%', separator = "" }
+      -- Then run the setup.
+      require("lualine").setup(opts)
+    end,
     opts = {
       extensions = { "aerial" },
       options = {
@@ -98,7 +166,9 @@ return {
           { "filetype", separator = "" },
           { "aerial",   dense = true,     dense_sep = ".",  sep = " -> ", separator = { right = "" } },
         },
-        lualine_c = {},
+        lualine_c = {
+          { '%=', separator = "" }
+        },
         lualine_x = {},
         lualine_y = {
           { "diagnostics", sources = { "nvim_lsp", "nvim_diagnostic", "nvim_workspace_diagnostic", separator = { left = "" } } },
@@ -106,7 +176,7 @@ return {
         },
         lualine_z = {
           { "progress", separator = "" },
-          { "location", icon = "",    separator = { right = "" } },
+          { "location", icon = "",     separator = { right = "" } },
         },
       },
       inactive_sections = {
@@ -118,20 +188,20 @@ return {
         lualine_z = { { "aerial", dense = true, sep = " -> " } },
       }
     },
-    priority = 900 -- ! Load after `colorscheme`.
+    priority = 900 -- NOTE: Load after `colorscheme`.
   },
   {
-    -- ! Literally a scrollbar, but in nvim.
+    -- NOTE: Literally a scrollbar, but in nvim.
     "petertriho/nvim-scrollbar",
     config = true,
     event = "BufReadPost"
   },
   {
-    -- ! File explorer, but in dialogue, this is very similar to `dressing.nvim`, but has all-in-one capabilities.
+    -- NOTE: File explorer, but in dialogue, this is very similar to `dressing.nvim`, but has all-in-one capabilities.
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
     config = function()
-      -- !!! Since `opts` cannot recognize other plugins and there are other configs that needed to be done after initializing the plugins through `function` scope, I have to not lazy-load them and NOT load them on init.
+      -- NOTE:!! Since `opts` cannot recognize other plugins and there are other configs that needed to be done after initializing the plugins through `function` scope, I have to not lazy-load them and NOT load them on init.
       local telescope = require("telescope")
       local actions = require("telescope.actions")
 
@@ -176,14 +246,13 @@ return {
     end,
     dependencies = {
       { "nvim-lua/plenary.nvim" },
-      { "kdheepak/lazygit.nvim",                      lazy = true },
       { "nvim-telescope/telescope-file-browser.nvim", lazy = true },
       { "nvim-telescope/telescope-fzf-native.nvim",   build = "make", lazy = true },
     },
     lazy = true
   },
   {
-    -- ! Displays icons, more like from the `Nerd Fonts`, note that lots of plugins depend on this plugin!
+    -- NOTE: Displays icons, more like from the `Nerd Fonts`, note that lots of plugins depend on this plugin!
     "nvim-tree/nvim-web-devicons",
     lazy = true,
     opts = {
@@ -192,7 +261,7 @@ return {
     }
   },
   {
-    -- ! Bottom panel that contains diagnostics.
+    -- NOTE: Bottom panel that contains diagnostics.
     "folke/trouble.nvim",
     config = true,
     opts = {
@@ -218,7 +287,7 @@ return {
     }
   },
   {
-    -- ! Similar to every other OS's window nanager where each `n` of scope window contains `k` of tabs.
+    -- NOTE: Similar to every other OS's window nanager where each `n` of scope window contains `k` of tabs.
     "tiagovla/scope.nvim",
     config = true
   }

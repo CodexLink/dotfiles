@@ -4,7 +4,7 @@
 ---@info [1] Configuration for the LSP servers or the configurator is separated, the context of this plugin spec is all about advertising the completion plugin to the LSP to display at the editor.
 
 return {
-  -- ! A package manager for the external tools, such as: Debug Adapter Protocol (DAP), Linters, Formatters, etc.
+  -- NOTE: A package manager for the external tools, such as: Debug Adapter Protocol (DAP), Linters, Formatters, etc.
   {
     "williamboman/mason.nvim",
     config = function()
@@ -17,7 +17,7 @@ return {
     end,
     lazy = false
   },
-  -- ! Package manager extension as an LSP provider for the "nvim-lspconfig".
+  -- NOTE: Package manager extension as an LSP provider for the "nvim-lspconfig".
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
@@ -44,7 +44,7 @@ return {
     end,
     lazy = false
   },
-  -- ! Package manager extension as an LSP provider for the "null-ls".
+  -- NOTE: Package manager extension as an LSP provider for the "null-ls".
   -- * Note that we have to use the packages that is namespaced by `null-ls` to ensure no conflicts during setup.
   {
     "jay-babu/mason-null-ls.nvim",
@@ -60,7 +60,7 @@ return {
     end,
     lazy = false
   },
-  -- !!! Dependants from the external package were done by `mason.nvim` and `null-ls.nvim`.
+  -- NOTE: Dependants from the external package were done by `mason.nvim` and `null-ls.nvim`.
   {
     "hrsh7th/nvim-cmp",
     config = function()
@@ -68,7 +68,7 @@ return {
       local cmp_types = require("cmp.types")
       local luasnip = require("luasnip")
 
-      -- ! This function is provided from the advanced configuration of `nvim-cmp`.
+      -- NOTE: This function is provided from the advanced configuration of `nvim-cmp`.
       local has_words_before = function()
         unpack = unpack or table.unpack
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -188,7 +188,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    dependencies = { "hrsh7th/cmp-nvim-lsp" },
+    dependencies = { "hrsh7th/cmp-nvim-lsp", "j-hui/fidget.nvim" },
     event = { "User", "InsertEnter" },
     config = function()
       local lspconfig = require("lspconfig")
@@ -300,11 +300,11 @@ return {
       })
     end,
   }, -- For the LSP.
-  -- ! For the Code Actions, Formatters and Linters.
+  -- NOTE: For the Code Actions, Formatters and Linters.
   {
     "jose-elias-alvarez/null-ls.nvim",
     config = function()
-      -- !!! null-ls will be used for the DAPs, Linters, and Formatters.
+      -- NOTE: null-ls will be used for the DAPs, Linters, and Formatters.
       local null_ls = require("null-ls")
       null_ls.setup({
         sources = {

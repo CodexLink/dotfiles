@@ -36,6 +36,7 @@ return {
         BufferLineDevIconLogSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
         BufferLineDevIconLuaSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
         BufferLineDevIconMarkdownSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
+        BufferLineDevIconMdSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
         BufferLineDevIconPackageJsonSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
         BufferLineDevIconPySelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
         BufferLineDevIconPsScriptfileSelected = { bg = kanagawa_colors.autumnYellow, fg = kanagawa_colors.sumiInk1 },
@@ -103,7 +104,7 @@ return {
         CursorToInsertion = { fg = "NONE", bg = kanagawa_colors.surimiOrange },
         CursorToReplacement = { fg = kanagawa_colors.autumnYellow, bg = kanagawa_colors.samuraiRed },
 
-        -- !!! This highlight may work based on your terminal, currently this does not work in my case.
+        -- NOTE: This highlight may work based on your terminal, currently this does not work in my case.
         Cursor = { bg = kanagawa_colors.surimiOrange, fg = kanagawa_colors.surimiOrange },
         TermCursor = { bg = kanagawa_colors.surimiOrange, fg = kanagawa_colors.surimiOrange },
 

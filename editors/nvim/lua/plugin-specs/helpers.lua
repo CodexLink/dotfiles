@@ -93,7 +93,7 @@ return {
   {
     -- NOTE: hop.nvim but encapsulates context based on selection of region.
     "mfussenegger/nvim-treehopper",
-    dependencies = { { "phaazon/hop.nvim" } },
+    dependencies = { "phaazon/hop.nvim" },
     lazy = true
   },
   {
