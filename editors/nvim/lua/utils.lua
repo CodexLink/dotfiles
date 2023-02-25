@@ -2,11 +2,50 @@
 ---@author CodexLink <https://github.com/CodexLink>
 ---@license Apache-2.0
 
--- ! Code Formatting
--- !!! Reference: https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Avoiding-LSP-formatting-conflicts
+-- NOTE: Code Formatting
+-- NOTE: Reference: https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Avoiding-LSP-formatting-conflicts
 -- TODO: Do multiple protected calls for all cases + abstraction + DRY principles. (Reference: https://www.lua.org/pil/8.4.html)
 
 local F = {}
+
+local uv = require("luv")
+
+F.WakaTimeToday = ""
+
+-- NOTE: Reference for this function: https://github.com/wakatime/vim-wakatime/issues/110.
+-- NOTE: though I typed all of it to better understand how `uv` works.
+local function SetFnInterval(interval_minutes, callback)
+  local uv_timer = uv.new_timer()
+
+  local has_interval_cb_started = false
+  local evaluated_interval = interval_minutes * 60000
+
+  uv_timer:start(not has_interval_cb_started and 0 or evaluated_interval, evaluated_interval, function() callback() end)
+end
+
+local function WakaTimeCLITodayProcessor()
+  local process_stdout = uv.new_pipe()
+  local _, __ = uv.spawn("wakatime", { args = { "--today" }, stdio = { nil, process_stdout, nil } },
+    function(code, signal)
+      if (code > 1) then
+        require("notify")("WakaTime CLI returned an error code of " .. code .. " | Signal:" .. signal)
+        return
+      end
+      process_stdout:close()
+    end)
+
+  process_stdout:read_start(
+    function(err, data)
+      assert(not err, err)
+
+      if data then
+        F.WakaTimeToday = string.gsub(data, "\n", "")
+      end
+    end
+  )
+end
+
+SetFnInterval(5, WakaTimeCLITodayProcessor)
 
 --- DRY caller for the asynchronous notification.
 ---@params ctx, a table that contains the following: [ message<string>, level<number>, opts<table<string, any>>]

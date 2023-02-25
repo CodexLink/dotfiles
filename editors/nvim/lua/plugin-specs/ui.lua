@@ -136,10 +136,10 @@ return {
       end
 
       -- NOTE: Inject these functions.
-      opts.sections.lualine_c[2] = { lsp_active_server, icon = "󰒋 " }
-      opts.sections.lualine_c[3] = { lsp_active_formatter, icon = "󱇧 " }
-
-      opts.sections.lualine_c[4] = { '=%', separator = "" }
+      opts.sections.lualine_c[2] = { function() return require("utils").WakaTimeToday end, icon = "󰔚 " }
+      opts.sections.lualine_c[3] = { lsp_active_server, icon = "󰒋 " }
+      opts.sections.lualine_c[4] = { lsp_active_formatter, icon = "󱇧 " }
+      opts.sections.lualine_c[5] = { '=%', separator = "" }
       -- Then run the setup.
       require("lualine").setup(opts)
     end,
