@@ -237,10 +237,10 @@ wk.register({
     end, "lsp: seek declaration" },
     D = { function()
       notifier({
-        cmd = vim.lsp.buf.definition,
-        opts = mapping_default_opts
+        cmd = function() require("glance").open("definitions") end,
+        opts = mapping_default_opts,
       })
-    end, "lsp: seek definition" },
+    end, "lsp: seek definitions" },
     h = { function()
       notifier({
         cmd = vim.lsp.buf.hover,
@@ -249,10 +249,10 @@ wk.register({
     end, "lsp: hover for context" },
     i = { function()
       notifier({
-        cmd = vim.lsp.buf.implementation,
+        cmd = function() require("glance").open("implementations") end,
         opts = mapping_default_opts
       })
-    end, "lsp: seek implementation" },
+    end, "lsp: seek implementations" },
     o = { function()
       notifier({
         cmd = vim.diagnostic.open_float,
@@ -274,17 +274,17 @@ wk.register({
     end, "lsp: seek signature help" },
     S = { function()
       notifier({
-        cmd = vim.lsp.buf.references,
+        cmd = function() require("glance").open("references") end,
         opts = mapping_default_opts
       })
     end, "lsp: seek references" },
     t = { function()
       notifier({
-        cmd = vim.lsp.buf.type_definition,
+        cmd = function() require("glance").open("type_definitions") end,
         message = "Seek type definition triggered.",
         opts = mapping_default_opts
       })
-    end, "lsp: seek type definition" },
+    end, "lsp: seek type definitions" },
     x = { function()
       notifier({
         cmd = vim.diagnostic.goto_prev,
