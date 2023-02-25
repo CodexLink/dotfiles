@@ -19,6 +19,7 @@ I use Powershell ([pwsh](https://github.com/PowerShell/PowerShell)) with [oh-my-
 ## `nvim`
 
 ### TODO
+
 Video here for demo purposes.
 
 ### References for Configuration
@@ -29,7 +30,7 @@ Video here for demo purposes.
 - [Moving lines up or down](https://vim.fandom.com/wiki/Moving_lines_up_or_down)
 - > [Seen on 'ThePrimeagen's Keybinds and Options (_to which I adapted some of it_)'](https://youtu.be/w7i4amO_zaE?t=1472)
 - [LazyVim's `Events` for Lazy-Loading](https://github.com/LazyVim/LazyVim)
-
+- [Wansmer's `nvim-config`, used `lualine` Section C's config + LSP status](https://github.com/Wansmer/nvim-config) 
 ## Font
 
 Iosevka + Pragmata Pro Variant (SS08) with Complete Set of [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts).
@@ -66,19 +67,3 @@ _Baked with Iosevka's Build Script, Created in TTF format, patched with Nerd Fon
 Please check the [font patcher's option](https://github.com/ryanoasis/nerd-fonts#examples) if you wish to go more than what is provided.
 
 After patching, install and you are good to go!
-
-## Credits
-
-> Currently on construction.
-
-- Base Configuration for OMP (Oh-My-Posh) [Inspiration] | https://www.youtube.com/watch?v=5-aK2_WwrmMa
-- Command to Clipboard | https://stackoverflow.com/questions/43633273/copy-current-location-to-clipboard
-- PowerShell Command Function Creation | https://docs.microsoft.com/en-us/powershell/scripting/learn/ps101/09-functions?view=powershell-7.2
-- ??? | https://stackoverflow.com/questions/61824177/visual-block-mode-not-working-in-vim-with-c-v-on-wslwindows-10
-- (VIM) Multiple Lines at Ones | https://riptutorial.com/vim/example/7301/insert-text-into-multiple-lines-at-once
-- ??? | For allowing to let us build in docker environment. https://github.com/avivace/iosevka-docker
-- https://jdhitsolutions.com/blog/powershell/8969/powershell-predicting-with-style/
-- https://devblogs.microsoft.com/powershell/announcing-psreadline-2-1-with-predictive-intellisense/
-- https://stackoverflow.com/questions/63079605/powershell-6-0-command-line-background-color-with-ansi-sequences-psreadline
-- https://docs.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.2
-- https://stackoverflow.com/questions/71283083/accept-part-of-the-autocompletion
