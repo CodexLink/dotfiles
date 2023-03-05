@@ -188,7 +188,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    dependencies = { "hrsh7th/cmp-nvim-lsp", "j-hui/fidget.nvim" },
+    dependencies = { "hrsh7th/cmp-nvim-lsp", "j-hui/fidget.nvim", "marilari88/twoslash-queries.nvim" },
     event = { "User", "InsertEnter" },
     config = function()
       local lspconfig = require("lspconfig")
@@ -286,7 +286,14 @@ return {
 
       lspconfig["tsserver"].setup({
         capabilities = lsp_capabilities,
-        on_attach = on_attach
+        on_attach = function(client, bufnr)
+          require("twoslash-queries").attach(client, bufnr)
+          vim.api.nvim_buf_set_option(
+            bufnr,
+            "omnifunc",
+            "v:lua.vim.lsp.omnifunc"
+          )
+        end
       })
 
       lspconfig["volar"].setup({

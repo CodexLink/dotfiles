@@ -86,6 +86,16 @@ return {
     event = { "BufReadPost" },
   },
   {
+    -- NOTE: Just a typescript-specific plugin that displays the evaluated type of the context.
+    "marilari88/twoslash-queries.nvim",
+    config = true,
+    ft = { "ts", "tsx" },
+    lazy = true,
+    opts = {
+      multi_line = true
+    },
+  },
+  {
     -- NOTE: Code dimmer (by buffer, blocks) when the cursor is focused elsewhere.
     "folke/twilight.nvim",
     config = function(_, opts)
