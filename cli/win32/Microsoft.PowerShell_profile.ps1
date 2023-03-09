@@ -25,6 +25,7 @@ Set-Alias wtc OpenWTConfig
 
 # - For Python
 $Env:PYTHONIOENCODING = "utf-8"			# Force Encoding to "UTF-8"
+$Env:VIRTUAL_ENV_DISABLE_PROMPT = 1
 
 # - Oh-My-Posg chips.omp.json config.
 $Env:DISABLE_SEGMENT_BATTERY = $false
