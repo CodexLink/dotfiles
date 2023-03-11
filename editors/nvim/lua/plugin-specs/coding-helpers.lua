@@ -83,7 +83,7 @@ return {
       cmp.setup({
         completion = {
           completeopt = "menu,menuone,noinsert",
-          keyword_length = 2
+          keyword_length = 1
         },
         experimental = {
           ghost_text = true
@@ -326,7 +326,6 @@ return {
           null_ls.builtins.formatting.markdownlint,
           null_ls.builtins.formatting.prettierd,
           null_ls.builtins.formatting.remark,
-          null_ls.builtins.formatting.reorder_python_imports,
           null_ls.builtins.formatting.sql_formatter
         }
       })
