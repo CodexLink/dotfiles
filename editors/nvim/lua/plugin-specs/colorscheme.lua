@@ -28,6 +28,7 @@ return {
           BufferLineBufferSelected = { bg = colors.palette.autumnYellow, bold = true, fg = colors.palette.sumiInk1 },
           BufferLineDevIconDefaultSelected = { bg = colors.palette.autumnYellow, fg = colors.palette.sumiInk1 },
           BufferLineDevIconGitCommitSelected = { bg = colors.palette.autumnYellow, fg = colors.palette.sumiInk1 },
+          BufferLineDevIconGoSelected = { bg = colors.palette.autumnYellow, fg = colors.palette.sumiInk1 },
           BufferLineDevIconGitIgnoreSelected = { bg = colors.palette.autumnYellow, fg = colors.palette.sumiInk1 },
           BufferLineDevIconHtmlSelected = { bg = colors.palette.autumnYellow, fg = colors.palette.sumiInk1 },
           BufferLineDevIconJsSelected = { bg = colors.palette.autumnYellow, fg = colors.palette.sumiInk1 },
