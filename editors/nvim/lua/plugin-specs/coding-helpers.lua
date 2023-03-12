@@ -32,6 +32,7 @@ return {
           "lua_ls",
           "marksman",
           "pyright",
+          "ruff_lsp",
           "sqlls",
           "svelte",
           "tailwindcss",
@@ -202,52 +203,65 @@ return {
         )
       end
 
-      lspconfig["cssmodules_ls"].setup({
+      lspconfig.cssmodules_ls.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
 
-      lspconfig["dockerls"].setup({
+      lspconfig.dockerls.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
 
-      lspconfig["eslint"].setup({
+      lspconfig.eslint.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
 
-      lspconfig["graphql"].setup({
+      lspconfig.graphql.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
 
-      lspconfig["html"].setup({
+      lspconfig.html.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
 
-      lspconfig["jsonls"].setup({
+      lspconfig.jsonls.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
 
-      lspconfig["marksman"].setup({
+      lspconfig.marksman.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
 
-      lspconfig["pyright"].setup({
+      lspconfig.pyright.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
 
-      lspconfig["sqlls"].setup({
+      lspconfig.ruff_lsp.setup({
+        capabilities = lsp_capabilities,
+        on_attach = function(client, bufnr)
+          vim.api.nvim_buf_set_option(
+            bufnr,
+            "omnifunc",
+            "v:lua.vim.lsp.omnifunc"
+          )
+
+          client.server_capabilities.hover = false
+        end
+      })
+
+      lspconfig.sqlls.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
 
-      lspconfig["sumneko_lua"].setup({
+      lspconfig.sumneko_lua.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach,
         settings = {
@@ -274,17 +288,17 @@ return {
         }
       })
 
-      lspconfig["svelte"].setup({
+      lspconfig.svelte.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
 
-      lspconfig["tailwindcss"].setup({
+      lspconfig.tailwindcss.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
 
-      lspconfig["tsserver"].setup({
+      lspconfig.tsserver.setup({
         capabilities = lsp_capabilities,
         on_attach = function(client, bufnr)
           require("twoslash-queries").attach(client, bufnr)
@@ -296,12 +310,12 @@ return {
         end
       })
 
-      lspconfig["volar"].setup({
+      lspconfig.volar.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
 
-      lspconfig["yamlls"].setup({
+      lspconfig.yamlls.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
@@ -317,10 +331,14 @@ return {
         sources = {
           null_ls.builtins.diagnostics.cppcheck,
           null_ls.builtins.diagnostics.cpplint,
-          null_ls.builtins.diagnostics.mypy,
           null_ls.builtins.diagnostics.ruff,
           null_ls.builtins.formatting.black.with({
-            args = { "--stdin-filename", "$FILENAME", "-" }
+            args = {
+              "--stdin-filename",
+              "$FILENAME",
+              "--verbose",
+              "-",
+            }
           }),
           null_ls.builtins.formatting.clang_format,
           null_ls.builtins.formatting.fixjson,
