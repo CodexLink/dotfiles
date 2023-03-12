@@ -331,7 +331,6 @@ return {
         sources = {
           null_ls.builtins.diagnostics.cppcheck,
           null_ls.builtins.diagnostics.cpplint,
-          null_ls.builtins.diagnostics.ruff,
           null_ls.builtins.formatting.black.with({
             args = {
               "--stdin-filename",
