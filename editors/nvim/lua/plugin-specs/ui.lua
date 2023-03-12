@@ -65,16 +65,20 @@ return {
     -- NOTE: VSCode style code context previewer, binds to LSP actions.
     "DNLHC/glance.nvim",
     config = function()
-      local glance_actions = require("glance").actions
-      require("glance").setup({
+      local glance = require("glance")
+      local glance_actions = glance.actions
+
+      glance.setup({
         border = {
-          enable = false, -- Show window borders. Only horizontal borders allowed
+          enable = true, -- Show window borders. Only horizontal borders allowed
           top_char = '―',
           bottom_char = '―',
         },
         mappings = {
-          ['<C-Down>'] = glance_actions.preview_scroll_win( -5),
-          ['<C-Up>'] = glance_actions.preview_scroll_win(5)
+          list = {
+            ['<A-e>'] = glance_actions.preview_scroll_win( -5),
+            ['<A-q>'] = glance_actions.preview_scroll_win(5)
+          }
         }
       })
     end,
