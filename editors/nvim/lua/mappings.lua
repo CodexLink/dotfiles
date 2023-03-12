@@ -213,7 +213,8 @@ wk.register({
   ["<M-z>"] = { function() require("illuminate").goto_prev_reference() end, "vim-illuminate: Jump to previous reference" },
   ["<M-F>"] = { function()
     notifier({
-      cmd = function() vim.lsp.buf.format({ async = true, timeout = 5000 }) end,
+      cmd = function() vim.lsp.buf.format({ async = false, bufnr = vim.fn.bufnr(),
+          filter = function(client) return client.name == "null-ls" end, timeout = 5000 }) end,
       message = "Formatting done!",
       opts = mapping_default_opts
     })
@@ -281,21 +282,18 @@ wk.register({
     t = { function()
       notifier({
         cmd = function() require("glance").open("type_definitions") end,
-        message = "Seek type definition triggered.",
         opts = mapping_default_opts
       })
     end, "lsp: seek type definitions" },
     x = { function()
       notifier({
         cmd = vim.diagnostic.goto_prev,
-        message = "Jumped from previous to diagnostic.",
         opts = mapping_default_opts
       })
     end, "lsp: go to previous" },
     z = { function()
       notifier({
         cmd = vim.diagnostic.goto_next,
-        message = "Jumped from next to diagnostic",
         opts = mapping_default_opts
       })
     end, "lsp: go to next" }
