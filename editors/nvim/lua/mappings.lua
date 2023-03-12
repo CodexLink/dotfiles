@@ -213,8 +213,7 @@ wk.register({
   ["<M-z>"] = { function() require("illuminate").goto_prev_reference() end, "vim-illuminate: Jump to previous reference" },
   ["<M-F>"] = { function()
     notifier({
-      cmd = function() vim.lsp.buf.format({ async = false, bufnr = vim.fn.bufnr(),
-          filter = function(client) return client.name == "null-ls" end, timeout = 5000 }) end,
+      cmd = function() vim.lsp.buf.format({ async = false, bufnr = vim.fn.bufnr(), filter = function(client) return client.name == "null-ls" end, timeout = 5000 }) end,
       message = "Formatting done!",
       opts = mapping_default_opts
     })
