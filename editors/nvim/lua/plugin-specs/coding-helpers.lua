@@ -319,7 +319,9 @@ return {
           null_ls.builtins.diagnostics.cpplint,
           null_ls.builtins.diagnostics.mypy,
           null_ls.builtins.diagnostics.ruff,
-          null_ls.builtins.formatting.black,
+          null_ls.builtins.formatting.black.with({
+            args = { "--stdin-filename", "$FILENAME", "-" }
+          }),
           null_ls.builtins.formatting.clang_format,
           null_ls.builtins.formatting.fixjson,
           null_ls.builtins.formatting.eslint_d,
