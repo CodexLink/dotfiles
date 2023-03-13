@@ -139,7 +139,7 @@ $PSReadLineOptions = @{
 	HistoryNoDuplicates 					= $true
 	HistorySearchCursorMovesToEnd = $true
 	PredictionSource 							= "HistoryAndPlugin"
-	PredictionViewStyle 					= "ListView"
+	PredictionViewStyle 					= "InlineView"
 	ShowToolTips 									= $true
 	ViModeIndicator 							= "Script"
 }  
@@ -147,19 +147,18 @@ Set-PSReadLineOption @PSReadLineOptions
 Set-PSReadLineKeyHandler -Chord "Alt+w" -Function SwitchPredictionView
 Set-PSReadLineKeyHandler -Chord "Alt+q" -Function PreviousHistory
 Set-PSReadLineKeyHandler -Chord "Alt+e" -Function NextHistory
+Set-PSReadlineKeyHandler -Chord "Alt+d" -Function ForwardWord
+Set-PSReadlineKeyHandler -Chord "Alt+s" -Function BackwardKillWord
 Set-PSReadlineKeyHandler -Key "Tab" -Function AcceptSuggestion
-Set-PSReadlineKeyHandler -Key "Alt+d" -Function ForwardWord
-Set-PSReadlineKeyHandler -Key "Alt+s" -Function BackwardKillWord
+Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+Set-PSReadLineKeyHandler -Key Tab -Function Complete
 
 function OpenWTConfig {
 	Start-Process nvim -ArgumentList $Global:WinTermConfigFilePath -NoNewWindow -Wait; return
 }
-# - PSFzf
-Import-Module PSFzf
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+Shift+f' -PSReadlineChordReverseHistory 'Alt+f' -TabExpansion
 
 # - Other Module Imports
-
 Import-Module CompletionPredictor		# Extension for PSReadLine.
 Import-Module PowerColorLS	  			# Better LS Equivalent.
 Import-Module z 										# Directory-Jump based on History.
