@@ -6,10 +6,7 @@
   "license": "MIT",
   "homepage": "https://github.com/CodexLink/dotfiles-configs-archive#readme",
 	"scripts": {
-		"nvim-to-local": "",
-		"nvim-to-upstream": "",
-		"copy-lazy-lock": "",
-		"-local": "pwsh -NoProfile -Command Copy-Item -Destination \"./\" -Path \"~/chips.omp.json\" -Confirm",
-    "-git": "pwsh -NoProfile -Command Copy-Item -Destination \"~/\" -Path \"chips.omp.json\"  -Confirm",
+		"nvim-to-local": "pwsh -NoProfile -Command Copy-Item -Destination \"C:/Users/janja/AppData/Local/nvim/\" -Exclude \"*.json\" -Path \"./editors/nvim/**\" -Confirm -Force -Recurse",
+		"update-lock": "pwsh -NoProfile -Command Copy-Item -Destination \"./editors/nvim/lazy-lock.json\" -Path \"C:/Users/janja/AppData/Local/nvim/lazy-lock.json\" -Confirm -Force"
 	}
 }
