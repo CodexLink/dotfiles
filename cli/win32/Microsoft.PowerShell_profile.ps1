@@ -147,9 +147,9 @@ Set-PSReadLineOption @PSReadLineOptions
 Set-PSReadLineKeyHandler -Chord "Alt+w" -Function SwitchPredictionView
 Set-PSReadLineKeyHandler -Chord "Alt+q" -Function PreviousHistory
 Set-PSReadLineKeyHandler -Chord "Alt+e" -Function NextHistory
-Set-PSReadlineKeyHandler -Chord "Alt+d" -Function ForwardWord
-Set-PSReadlineKeyHandler -Chord "Alt+s" -Function BackwardKillWord
-Set-PSReadlineKeyHandler -Key "Tab" -Function AcceptSuggestion
+Set-PSReadLineKeyHandler -Chord "Alt+d" -Function ForwardWord
+Set-PSReadLineKeyHandler -Chord "Alt+s" -Function BackwardKillWord
+Set-PSReadLineKeyHandler -Key "Tab" -Function AcceptSuggestion
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 Set-PSReadLineKeyHandler -Key Tab -Function Complete
