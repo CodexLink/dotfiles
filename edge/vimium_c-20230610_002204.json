@@ -1,0 +1,40 @@
+{
+	"name": "Vimium C",
+	"@time": "6/10/2023, 12:22:04 AM",
+	"time": 1686327724199,
+	"environment": {
+		"extension": "1.99.991",
+		"platform": "win",
+		"chromium": 114
+	},
+	"allBrowserUrls": true,
+	"exclusionRules": [
+		{
+			"passKeys": "",
+			"pattern": ":https://mail.google.com/"
+		},
+		{
+			"passKeys": "",
+			"pattern": ":https://www.tradingview.com/chart/"
+		}
+	],
+	"keyLayout": 148,
+	"keyMappings": [
+		"#!no-check",
+		"unmap d",
+		"unmap u",
+		"unmap H",
+		"unmap L",
+		"map s scrollPageDown",
+		"map S scrollPageUp",
+		"map <a-a> goBack",
+		"map <a-s> goForward",
+		""
+	],
+	"keyupTime": 150,
+	"linkHintCharacters": "qwerasdfzxcv",
+	"scrollStepSize": 220,
+	"vimSync": true,
+	"ignoreCapsLock": 2,
+	"mapModifier": 2
+}
