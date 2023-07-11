@@ -159,6 +159,7 @@ function OpenWTConfig {
 }
 
 # - Other Module Imports
+Import-Module Terminal-Icons        # For the PowerColorLS Dependency.
 Import-Module CompletionPredictor		# Extension for PSReadLine.
 Import-Module PowerColorLS	  			# Better LS Equivalent.
 Import-Module z 										# Directory-Jump based on History.
