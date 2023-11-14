@@ -43,17 +43,16 @@ end
 update_or_prep_lazy()
 
 -- Load the packager and check whether it was really installed or not.
-local instantiated, lazy = pcall(require, "lazy")
+local inst, lz = pcall(require, "lazy")
 
-if not instantiated then
+if not inst then
   error("Lazy was not installed! Please check the folder location and try again.")
   os.exit(1)
 end
 
-
 -- Package manager configuration
 -- Signature arguments: (string, table)
-lazy.setup("plugin-specs", {
+lz.setup("plugin-specs", {
   checker = {
     concurrency = 10,
     enabled = true,

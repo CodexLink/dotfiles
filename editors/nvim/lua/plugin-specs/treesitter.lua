@@ -25,7 +25,6 @@ return {
         "dockerfile",
         "gitignore",
         "go",
-        "graphql",
         "html",
         "http",
         "javascript",

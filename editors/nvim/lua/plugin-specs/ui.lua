@@ -58,7 +58,7 @@ return {
     config = true,
     lazy = true,
     opts = {
-      text = { spinner = "dots" }
+      display = { progress_icon = { { pattern = "dots" } } }
     },
   },
   {
@@ -76,7 +76,7 @@ return {
         },
         mappings = {
           list = {
-            ['<A-e>'] = glance_actions.preview_scroll_win( -5),
+            ['<A-e>'] = glance_actions.preview_scroll_win(-5),
             ['<A-q>'] = glance_actions.preview_scroll_win(5)
           }
         }
@@ -88,11 +88,7 @@ return {
     -- NOTE: Indention guider, useful on identifying space or tabs on code.
     "lukas-reineke/indent-blankline.nvim",
     event = "BufReadPost",
-    opts = {
-      show_current_context = true,
-      show_current_context_start = true,
-      show_end_of_line = true
-    }
+    main = "ibl"
   },
   {
     -- NOTE: Lazygit but in neovim window, added in the UI as its not an enhancement plugin but rather an extender which is a UI component at this point.
