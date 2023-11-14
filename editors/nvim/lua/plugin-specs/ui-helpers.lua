@@ -107,19 +107,5 @@ return {
       dimming = { alpha = .40 }
     }
   },
-  {
-    -- NOTE: Window sizing management with animation.
-    "anuvyklack/windows.nvim",
-    config = function()
-      vim.o.winwidth = 10
-      vim.o.winminwidth = 10
-      vim.o.equalalways = false
-
-      require("windows").setup()
-    end,
-    dependencies = {
-      { "anuvyklack/middleclass" },
-      { "anuvyklack/animation.nvim" }
-    }
   }
 }

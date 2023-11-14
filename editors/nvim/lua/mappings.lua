@@ -128,37 +128,6 @@ wk.register({
         opts = mapping_default_opts
       })
     end, "twilight.nvim: Toggle code dimming" },
-    w = {
-      name = "windows.nvim",
-      ["="] = { function()
-        notifier({
-          cmd = require("windows.commands").equalize,
-          message = "All buffer windows were equalized.",
-          opts = mapping_default_opts
-        })
-      end, "Equalize" },
-      ["+"] = { function()
-        notifier({
-          cmd = require("windows.commands").maximize,
-          message = "Current window set to maximized.",
-          opts = mapping_default_opts
-        })
-      end, "Maximize" },
-      ["-"] = { function()
-        notifier({
-          cmd = require("windows.commands").maximize_vertically,
-          message = "Current window set to maximize vertically.",
-          opts = mapping_default_opts
-        })
-      end, "Maximize vertically" },
-      ["_"] = { function()
-        notifier({
-          cmd = require("windows.commands").maximize_horizontally,
-          message = "Current window set to maximize horizontally.",
-          opts = mapping_default_opts
-        })
-      end, "Maximize horizontally" },
-    },
   },
   ["<M-~>"] = { function()
     notifier({
