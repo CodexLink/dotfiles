@@ -58,7 +58,7 @@ return {
     config = true,
     lazy = true,
     opts = {
-      display = { progress_icon = { { pattern = "dots" } } }
+      progress = { display = { progress_icon = { { pattern = "dots", period = 1 } } } }
     },
   },
   {
@@ -104,42 +104,8 @@ return {
     "nvim-lualine/lualine.nvim",
     lazy = false,
     config = function(_, opts)
-      -- Define custom function for the section C.
-      -- NOTE: Reference for getting the length (The unary '#' operator): https://en.wikibooks.org/wiki/Lua_Programming/length_operator.
-      local lsp_active_server = function()
-        local _get_active_servers = vim.lsp.get_active_clients({ buffer = vim.fn.bufnr() })
-        if #_get_active_servers == 0 then
-          return "None"
-        else
-          -- NOTE: Only get the first one.
-          return _get_active_servers[1].name
-        end
-      end
-
-      local lsp_active_formatter = function()
-        if lsp_active_server() == "sumneko_lua" then
-          return "Same as LSP"
-        else
-          local _available_sources = require("null-ls.sources").get_available(vim.bo.filetype)
-          if (#_available_sources == 0) then
-            return "None"
-          else
-            local sources = ""
-
-            for _, each_formatter in pairs(_available_sources) do
-              sources = sources .. (_ == 1 and "" or ", ") .. each_formatter.name
-            end
-
-            return sources
-          end
-        end
-      end
-
-      -- NOTE: Inject these functions.
+-- NOTE: Inject these functions.
       opts.sections.lualine_c[2] = { function() return require("utils").WakaTimeToday end, icon = "󰔚 " }
-      opts.sections.lualine_c[3] = { lsp_active_server, icon = "󰒋 " }
-      opts.sections.lualine_c[4] = { lsp_active_formatter, icon = "󱇧 " }
-      opts.sections.lualine_c[5] = { '=%', separator = "" }
       -- Then run the setup.
       require("lualine").setup(opts)
     end,

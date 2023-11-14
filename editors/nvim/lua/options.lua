@@ -22,6 +22,7 @@ vo.showmatch = true
 vo.softtabstop = 2
 vo.tabstop = 2
 vo.termguicolors = true
+vo.shortmess = "I"
 vo.syntax = "on"
 vo.timeout = true -- [2]
 vo.timeoutlen = 300 -- [2]

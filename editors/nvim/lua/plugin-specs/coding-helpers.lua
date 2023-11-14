@@ -26,7 +26,6 @@ return {
           "cssmodules_ls",
           "dockerls",
           "eslint",
-          "graphql",
           "html",
           "jsonls",
           "lua_ls",
