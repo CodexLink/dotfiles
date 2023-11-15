@@ -136,24 +136,8 @@ wk.register({
       opts = mapping_default_opts
     })
   end, "builtin: Toggle wrap" },
-  ["<M-<>"] = { function() require("bufferline").cycle( -1) end, "bufferline: Move to Previous Buffer." },
-  ["<M->>"] = { function() require("bufferline").cycle(1) end, "bufferline: Move to Next Buffer." },
   ["<M-a>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char", mode = { "n", "v" } },
   ["<M-A>"] = { function() require("hop").hint_char2() end, "hop.nvim: Hop 2 chars", mode = { "n", "v" } },
-  ["<M-c>"] = { function()
-    notifier({
-      cmd = require("bufferline").close_buffer_with_pick,
-      message = "Selected buffer closed!",
-      opts = mapping_default_opts
-    })
-  end, "bufferline: Pick a buffer to close." }, -- [1]
-  ["<M-d>"] = { function()
-    notifier({
-      cmd = require("bufferline").pick_buffer,
-      message = "Selected buffer displayed!",
-      opts = mapping_default_opts
-    })
-  end, "bufferline: Pick a buffer to display." }, -- [1]
   ["<M-F1>"] = { function()
     require("telescope").load_extension("file_browser")
     require("telescope").extensions.file_browser
@@ -188,8 +172,6 @@ wk.register({
     })
   end, "utils: Code Format (Async)" },
   ["<S-F3>"] = { function() require("aerial").toggle({ focus = true }) end, "aerial.nvim: Toggle (Focused)" },
-  ["<S-Left>"] = { function() require("bufferline").move( -1) end, "buffeline: Move Buffer to the Left." },
-  ["<S-Right>"] = { function() require("bufferline").move(1) end, "bufferline: Move Buffer to the Right." },
   ["<Space>"] = {
     name = "LSP + LSP-Related Actions",
     c = { function()

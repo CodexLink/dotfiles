@@ -24,35 +24,6 @@ return {
     }
   },
   {
-    -- NOTE: Buffer file displayed as a tab.
-    "akinsho/bufferline.nvim",
-    dependencies = {
-      { "nvim-tree/nvim-web-devicons" }
-    },
-    event = { "BufReadPost", "BufAdd", "BufNewFile" },
-    lazy = true,
-    opts = {
-      options = {
-        always_show_bufferline = true,
-        color_icons = false,
-        diagnostics = "nvim_lsp",
-        groups = {
-          options = {
-            toggle_hidden_on_enter = true
-          }
-        },
-        hover = {
-          enabled = true,
-          delay = 200,
-          reveal = { "close" }
-        },
-        show_close_icon = false,
-        show_buffer_close_icons = false,
-        show_tab_indicators = true
-      }
-    }
-  },
-  {
     -- NOTE: Just an LSP stats indicator on top of the 'lualine'.
     "j-hui/fidget.nvim",
     config = true,
