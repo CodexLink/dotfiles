@@ -15,7 +15,4 @@ end
 v.opt.rtp:prepend(lazy_path)
 
 -- Package manager configuration
-require("lazy").setup("plugin-specs", {
-  diff = { cmd = "diffview.nvim" },
-  profiling = { loader = true, require = true }
-})
+require("lazy").setup("plugin-specs", {})

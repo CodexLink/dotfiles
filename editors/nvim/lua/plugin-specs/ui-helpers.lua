@@ -33,6 +33,7 @@ return {
   {
     -- NOTE: Displays git states from each line either by blame or by hunk (changes from that line).
     "lewis6991/gitsigns.nvim",
+    event = "VeryLazy",
     config = function()
       require("scrollbar.handlers.gitsigns").setup()
       -- NOTE: Since we overriden the config field of this plugin spec, we have to re-establish this plugin's setup.
@@ -53,7 +54,7 @@ return {
       -- Preference: Just wanted to enable it already.
       require("gitsigns").toggle_current_line_blame()
     end,
-    lazy = false
+    lazy = true
   },
   {
     -- NOTE: Colorizes any string that states a color.
