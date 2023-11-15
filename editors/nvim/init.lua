@@ -2,8 +2,6 @@
 ---@author CodexLink <https://github.com/CodexLink>
 ---@license Apache-2.0
 
-vim.loader.enable()
-
 -- Step 1: Create a set of modules for us to import.
 local required_modules = {
   "options",
