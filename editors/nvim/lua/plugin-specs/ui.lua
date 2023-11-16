@@ -10,7 +10,6 @@ return {
     dependencies = {
       { "nvim-tree/nvim-web-devicons" }
     },
-    lazy = true,
     opts = {
       backends = { "lsp" },
       filter_kind = false,
