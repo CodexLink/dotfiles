@@ -9,9 +9,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-    end,
+    config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
     lazy = true,
     event = { "BufAdd", "BufReadPost", "BufNewFile" },
     opts = {
@@ -60,7 +58,8 @@ return {
         node_decremental = "grm",
       },
       matchup = { enable = true },
-      textobjects = { enable = true }
+      textobjects = { enable = true },
+      prefer_git = false
     },
     version = false
   },
