@@ -33,30 +33,11 @@ return {
           "pyright",
           "ruff_lsp",
           "sqlls",
-          "svelte",
-          "tailwindcss",
           "tsserver",
-          "volar",
           "yamlls",
         },
         automatic_installation = true
       })
-    end,
-    lazy = false
-  },
-  -- NOTE: Package manager extension as an LSP provider for the "null-ls".
-  -- * Note that we have to use the packages that is namespaced by `null-ls` to ensure no conflicts during setup.
-  {
-    "jay-babu/mason-null-ls.nvim",
-    config = function(
-    )
-      require("mason-null-ls").setup(
-        {
-          ensured_installed = nil,
-          automatic_installation = true,
-          automatic_setup = true
-        }
-      )
     end,
     lazy = false
   },
@@ -319,36 +300,31 @@ return {
         on_attach = on_attach
       })
     end,
-  }, -- For the LSP.
-  -- NOTE: For the Code Actions, Formatters and Linters.
-  {
-    "jose-elias-alvarez/null-ls.nvim",
+  },
+  { -- ! Linters
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPost", "BufWritePost", "BufWritePre" },
+    lazy = true,
     config = function()
-      -- NOTE: null-ls will be used for the DAPs, Linters, and Formatters.
-      local null_ls = require("null-ls")
-      null_ls.setup({
-        sources = {
-          null_ls.builtins.diagnostics.cppcheck,
-          null_ls.builtins.diagnostics.cpplint,
-          null_ls.builtins.formatting.black.with({
-            args = {
-              "--stdin-filename",
-              "$FILENAME",
-              "--verbose",
-              "-",
-            }
-          }),
-          null_ls.builtins.formatting.clang_format,
-          null_ls.builtins.formatting.fixjson,
-          null_ls.builtins.formatting.eslint_d,
-          null_ls.builtins.formatting.markdownlint,
-          null_ls.builtins.formatting.prettierd,
-          null_ls.builtins.formatting.remark,
-          null_ls.builtins.formatting.sql_formatter
-        }
-      })
-    end,
-    dependencies = { "nvim-lua/plenary.nvim" },
-    lazy = false
-  }
+      require('lint').linters_by_ft = {
+        clang = { "clangtidy" },
+        cpp = { "cpplint" },
+        gdscript = { "gdlint" },
+        gitcommit = { "commitlint" },
+        javascript = { "eslint_d" },
+        javascriptreact = { "eslint_d" },
+        json = { "jsonlint" },
+        lua = { "luacheck" },
+        markdown = { "markdownlint" },
+        python = { "ruff", "mypy" },
+        typescript = { "eslint_d" },
+        typescriptreact = { "eslint_d" },
+        sql = { "sqlfluff" }
+      }
+
+      vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "BufWritePre" }, { callback = function() require('lint').try_lint() end })
+
+    end
+  },
+  { "mhartington/formatter.nvim", config = true, lazy = true } -- ! Formatters
 }
