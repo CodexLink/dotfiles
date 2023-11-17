@@ -17,10 +17,10 @@ for _, module_name in ipairs(required_modules) do
 
   if (not success) then
     error("Importing module" ..
-    _ ..
-    " (" ..
-    module_instance ..
-    ") has occured an error, it was either not installed or the location of these plugins were not correct.")
+      _ ..
+      " (" ..
+      module_instance ..
+      ") has occured an error, it was either not installed or the location of these plugins were not correct.")
     return
   end
 end

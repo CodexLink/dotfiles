@@ -74,7 +74,7 @@ return {
     "nvim-lualine/lualine.nvim",
     lazy = false,
     config = function(_, opts)
--- NOTE: Inject these functions.
+      -- NOTE: Inject these functions.
       opts.sections.lualine_c[2] = { function() return require("utils").WakaTimeToday end, icon = "󰔚 " }
       -- Then run the setup.
       require("lualine").setup(opts)
@@ -98,9 +98,9 @@ return {
         lualine_b = {
           -- @note Right seperator is not handled specially when the next element is hidden.
           -- @note Using custom function for this matter make things a little bit harder to understand and is quite an over-engineer; But since an arrow spike is used as a default, I'm fine with it.
-          { "filename", icon = "",     separator = "" },
+          { "filename", icon = "", separator = "" },
           { "filetype", separator = "" },
-          { "aerial",   dense = true,     dense_sep = ".",  sep = " -> ", separator = { right = "" } },
+          { "aerial", dense = true, dense_sep = ".", sep = " -> ", separator = { right = "" } },
         },
         lualine_c = {
           { '%=', separator = "" }
@@ -108,11 +108,11 @@ return {
         lualine_x = {},
         lualine_y = {
           { "diagnostics", sources = { "nvim_lsp", "nvim_diagnostic", "nvim_workspace_diagnostic", separator = { left = "" } } },
-          { "branch",      separator = "" },
+          { "branch", separator = "" },
         },
         lualine_z = {
           { "progress", separator = "" },
-          { "location", icon = "",     separator = { right = "" } },
+          { "location", icon = "", separator = { right = "" } },
         },
       },
       inactive_sections = {
@@ -183,7 +183,7 @@ return {
     dependencies = {
       { "nvim-lua/plenary.nvim" },
       { "nvim-telescope/telescope-file-browser.nvim", lazy = true },
-      { "nvim-telescope/telescope-fzf-native.nvim",   build = "make", lazy = true },
+      { 'nvim-telescope/telescope-fzf-native.nvim',   build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
     },
     lazy = true
   },

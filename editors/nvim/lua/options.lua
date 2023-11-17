@@ -15,7 +15,7 @@ vo.hlsearch = false
 vo.guicursor =
 "n-v:block-CursorToNavigation,i-ci-ve:ver50-CursorToInsertion,r-c-cr-o:hor50-CursorToReplacement,a:blinkwait50-blinkoff25-blinkon25-CursorToNavigation,sm:ver50-CursorToNavigation-blinkwait25-blinkoff50-blinkon50" -- [3]
 vo.number = true
-vg.mapleader = "\\" -- [1]
+vg.mapleader = "\\"                                                                                                                                                                                                  -- [1]
 vo.smartindent = true
 vo.shiftwidth = 2
 vo.showmatch = true
@@ -24,6 +24,6 @@ vo.tabstop = 2
 vo.termguicolors = true
 vo.shortmess = "I"
 vo.syntax = "on"
-vo.timeout = true -- [2]
+vo.timeout = true   -- [2]
 vo.timeoutlen = 300 -- [2]
 vo.updatetime = 50
