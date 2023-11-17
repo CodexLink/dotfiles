@@ -2,10 +2,6 @@
 ---@author CodexLink <https://github.com/CodexLink>
 ---@license Apache-2.0
 
--- NOTE: Code Formatting
--- NOTE: Reference: https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Avoiding-LSP-formatting-conflicts
--- TODO: Do multiple protected calls for all cases + abstraction + DRY principles. (Reference: https://www.lua.org/pil/8.4.html)
-
 local F = {}
 
 local uv = require("luv")
@@ -25,7 +21,7 @@ end
 
 local function WakaTimeCLITodayProcessor()
   local process_stdout = uv.new_pipe()
-  local _, __ = uv.spawn("wakatime", { args = { "--today" }, stdio = { nil, process_stdout, nil } },
+  local _, __ = uv.spawn("wakatime-cli", { args = { "--today" }, stdio = { nil, process_stdout, nil } },
     function(code, signal)
       if (code > 1) then
         require("notify")("WakaTime CLI returned an error code of " .. code .. " | Signal:" .. signal)
