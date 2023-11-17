@@ -139,8 +139,8 @@ wk.register({
   ["<M-a>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char", mode = { "n", "v" } },
   ["<M-A>"] = { function() require("hop").hint_char2() end, "hop.nvim: Hop 2 chars", mode = { "n", "v" } },
   ["<M-b>"] = { function() require("telescope.builtin").buffers() end, "telescope.nvim: Toggle buffers", mode = { "n", "v" } },
+  ["<M-c>"] = { function() require("telescope.builtin").live_grep() end, "telescope.nvim: Toggle live grep ('ripgrep')", mode = { "n", "v" } },
   ["<M-f>"] = { function() require("telescope.builtin").find_files() end, "telescope.nvim: Toggle file search", mode = { "n", "v" } },
-  ["<M-g>"] = { function() require("telescope.builtin").live_grep() end, "telescope.nvim: Toggle live grep ('ripgrep')", mode = { "n", "v" } },
   ["<M-F1>"] = { function()
     require("telescope").load_extension("file_browser")
     require("telescope").extensions.file_browser
