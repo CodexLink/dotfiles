@@ -82,7 +82,8 @@ return {
           end,
         },
         mapping = {
-          ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }), { "i", "c" }),
+          ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }),
+            { "i", "c" }),
           ["<Down>"] = {
             i = cmp.mapping.select_next_item({ behavior = cmp_types.cmp.SelectBehavior.Select }),
           },
@@ -92,7 +93,7 @@ return {
           ["<M-a>"] = {
             i = { cmp.mapping.abort() },
           },
-          ["<M-q>"] = cmp.mapping.scroll_docs( -3),
+          ["<M-q>"] = cmp.mapping.scroll_docs(-3),
           ["<M-e>"] = cmp.mapping.scroll_docs(3),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
@@ -111,8 +112,8 @@ return {
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
-            elseif luasnip.jumpable( -1) then
-              luasnip.jump( -1)
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
             elseif neogen.jumpable(true) then
               neogen.jump_prev()
             else
@@ -241,7 +242,7 @@ return {
         on_attach = on_attach
       })
 
-      lspconfig.sumneko_lua.setup({
+      lspconfig.lua_ls.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach,
         settings = {
@@ -303,7 +304,7 @@ return {
   },
   { -- ! Linters
     "mfussenegger/nvim-lint",
-    event = { "BufReadPost", "BufWritePost", "BufWritePre" },
+    event = { "InsertLeave", "BufWritePost" },
     lazy = true,
     config = function()
       require('lint').linters_by_ft = {
@@ -321,10 +322,6 @@ return {
         typescriptreact = { "eslint_d" },
         sql = { "sqlfluff" }
       }
-
-      vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "BufWritePre" }, { callback = function() require('lint').try_lint() end })
-
     end
-  },
-  { "mhartington/formatter.nvim", config = true, lazy = true } -- ! Formatters
+  }
 }
