@@ -139,7 +139,8 @@ wk.register({
   ["<M-a>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char", mode = { "n", "v" } },
   ["<M-A>"] = { function() require("hop").hint_char2() end, "hop.nvim: Hop 2 chars", mode = { "n", "v" } },
   ["<M-b>"] = { function() require("telescope.builtin").buffers() end, "telescope.nvim: Toggle buffers", mode = { "n", "v" } },
-  ["<M-f>"] = { function() require("telescope.builtin").live_grep() end, "telescope.nvim: Toggle file search with 'ripgrep'", mode = { "n", "v" } },
+  ["<M-f>"] = { function() require("telescope.builtin").find_files() end, "telescope.nvim: Toggle file search", mode = { "n", "v" } },
+  ["<M-g>"] = { function() require("telescope.builtin").live_grep() end, "telescope.nvim: Toggle live grep ('ripgrep')", mode = { "n", "v" } },
   ["<M-F1>"] = { function()
     require("telescope").load_extension("file_browser")
     require("telescope").extensions.file_browser
@@ -168,7 +169,7 @@ wk.register({
   ["<M-z>"] = { function() require("illuminate").goto_prev_reference() end, "vim-illuminate: Jump to previous reference" },
   ["<M-F>"] = { function()
     notifier({
-      cmd = function() vim.lsp.buf.format({ async = false, bufnr = vim.fn.bufnr(), filter = function(client) return client.name == "null-ls" end, timeout = 5000 }) end,
+      cmd = function() vim.lsp.buf.format({ async = true, bufnr = vim.fn.bufnr(), timeout = 5000 }) end,
       message = "Formatting done!",
       opts = mapping_default_opts
     })
