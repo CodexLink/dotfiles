@@ -1,11 +1,11 @@
 {
 	"name": "Vimium C",
-	"@time": "7/3/2023, 7:40:24 PM",
-	"time": 1688384424232,
+	"@time": "11/19/2023, 10:43:29 PM",
+	"time": 1700405009955,
 	"environment": {
-		"extension": "1.99.992",
+		"extension": "1.99.994",
 		"platform": "win",
-		"chromium": 114
+		"chromium": 119
 	},
 	"allBrowserUrls": true,
 	"exclusionRules": [
@@ -40,14 +40,18 @@
 		"map S scrollPageUp",
 		"map <a-a> goBack",
 		"map <a-s> goForward",
-		"map <a-s-f> LinkHints.activateHover",
+		"map <a-s-f> LinkHints.activateFocus",
 		"map h Vomnibar.activateHistory",
 		"map H Vomnibar.activateHistoryInNewTab",
 		"map < moveTabLeft",
 		"map > moveTabRight",
-		"map cH clearFindHistory",
+		"map fch clearFindHistory",
 		"map <a-q> previousTab",
 		"map <a-w> nextTab",
+		"map e scrollUp",
+		"map c scrollDown",
+		"map E scrollLeft",
+		"map C scrollRight",
 		""
 	],
 	"keyupTime": 150,
