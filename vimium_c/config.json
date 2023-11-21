@@ -1,7 +1,7 @@
 {
 	"name": "Vimium C",
-	"@time": "11/19/2023, 10:43:29 PM",
-	"time": 1700405009955,
+	"@time": "11/21/2023, 11:31:50 AM",
+	"time": 1700537510087,
 	"environment": {
 		"extension": "1.99.994",
 		"platform": "win",
@@ -45,7 +45,6 @@
 		"map H Vomnibar.activateHistoryInNewTab",
 		"map < moveTabLeft",
 		"map > moveTabRight",
-		"map fch clearFindHistory",
 		"map <a-q> previousTab",
 		"map <a-w> nextTab",
 		"map e scrollUp",
