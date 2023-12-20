@@ -74,9 +74,9 @@ return {
     "nvim-lualine/lualine.nvim",
     lazy = false,
     config = function(_, opts)
-      local auto_theme_custom = require('lualine.themes.auto')
-      auto_theme_custom.normal.c.bg = 'none'
-      table.insert(opts.options, { theme = { auto_theme_custom } })
+      local th = require('lualine.themes.catppuccin')
+      th.normal.c.bg = nil
+      opts.options.theme = th
 
       require("lualine").setup(opts)
     end,
@@ -87,6 +87,7 @@ return {
         globalstatus = true,
         icons_enabled = true,
         section_separators = { left = "", right = "" },
+        -- theme = "catppuccin"
       },
       -- @note For section a, b, c, the left seperator is displayed on right side for other elements while first element is displayed at left.
       -- @note This was the same case for the section x, y, z but in opposite.
@@ -105,7 +106,7 @@ return {
               separator = "",
               modified = ' +',
               readonly = ' —',
-              unnamed = ' ?',
+              unnamed = '???',
               newfile = ' N',
             },
           },
@@ -141,7 +142,6 @@ return {
         lualine_z = { { "aerial", dense = true, sep = " -> " } },
       }
     },
-    priority = 900 -- NOTE: Load after `colorscheme`.
   },
   {
     -- NOTE: Literally a scrollbar, but in nvim.
