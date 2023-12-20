@@ -21,7 +21,7 @@ end
 
 local function WakaTimeCLITodayProcessor()
   local process_stdout = uv.new_pipe()
-  local _, __ = uv.spawn("wakatime-cli", { args = { "--today" }, stdio = { nil, process_stdout, nil } },
+  local _, __ = uv.spawn("wakatime", { args = { "--today" }, stdio = { nil, process_stdout, nil } },
     function(code, signal)
       if (code > 1) then
         require("notify")("WakaTime CLI returned an error code of " .. code .. " | Signal:" .. signal)

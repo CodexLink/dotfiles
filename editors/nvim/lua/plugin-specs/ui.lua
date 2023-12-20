@@ -74,9 +74,10 @@ return {
     "nvim-lualine/lualine.nvim",
     lazy = false,
     config = function(_, opts)
-      -- NOTE: Inject these functions.
-      opts.sections.lualine_c[2] = { function() return require("utils").WakaTimeToday end, icon = "󰔚 " }
-      -- Then run the setup.
+      local auto_theme_custom = require('lualine.themes.auto')
+      auto_theme_custom.normal.c.bg = 'none'
+      table.insert(opts.options, { theme = { auto_theme_custom } })
+
       require("lualine").setup(opts)
     end,
     opts = {
@@ -85,7 +86,7 @@ return {
         component_separators = "",
         globalstatus = true,
         icons_enabled = true,
-        section_separators = { left = "", right = "" }
+        section_separators = { left = "", right = "" },
       },
       -- @note For section a, b, c, the left seperator is displayed on right side for other elements while first element is displayed at left.
       -- @note This was the same case for the section x, y, z but in opposite.
@@ -98,22 +99,38 @@ return {
         lualine_b = {
           -- @note Right seperator is not handled specially when the next element is hidden.
           -- @note Using custom function for this matter make things a little bit harder to understand and is quite an over-engineer; But since an arrow spike is used as a default, I'm fine with it.
-          { "filename", icon = "", separator = "" },
-          { "filetype", separator = "" },
+          {
+            "filename",
+            symbols = {
+              separator = "",
+              modified = ' +',
+              readonly = ' —',
+              unnamed = ' ?',
+              newfile = ' N',
+            },
+          },
           { "aerial", dense = true, dense_sep = ".", sep = " -> ", separator = { right = "" } },
         },
         lualine_c = {
-          { '%=', separator = "" }
+          { '=%', separator = "" }
         },
         lualine_x = {},
         lualine_y = {
           { "diagnostics", sources = { "nvim_lsp", "nvim_diagnostic", "nvim_workspace_diagnostic", separator = { left = "" } } },
           { "branch", separator = "" },
         },
-        lualine_z = {
-          { "progress", separator = "" },
-          { "location", icon = "", separator = { right = "" } },
-        },
+        lualine_z = { {
+          function()
+            local _wakatime = require("utils").WakaTimeToday
+            if _wakatime == nil or _wakatime == '' then
+              return "—"
+            else
+              return _wakatime
+            end
+          end,
+          icon = "󰔚 ",
+          separator = { left = "", right = "" },
+        } },
       },
       inactive_sections = {
         lualine_a = { "filename", "location" },
