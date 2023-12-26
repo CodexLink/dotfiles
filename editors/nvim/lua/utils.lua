@@ -1,4 +1,4 @@
----@module 'utils'
+--@module 'utils'
 ---@author CodexLink <https://github.com/CodexLink>
 ---@license Apache-2.0
 
