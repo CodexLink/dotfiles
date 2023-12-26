@@ -12,6 +12,7 @@ return {
   {
     --- NOTE: Alternative `git diff` viewer, supported by `lazy.nvim` (package manager).
     "sindrets/diffview.nvim",
+    config = true,
     dependencies = "nvim-lua/plenary.nvim",
     lazy = true,
   },
@@ -19,11 +20,13 @@ return {
     --- NOTE: Similar to Vimium C, jump to certain part of code, this is way similar to `leap.nvim` but it uses 2 letters to jump to certain part of code.
     --- NOTE: This plugin is useful when we don't want a keyword-based jump.
     "phaazon/hop.nvim",
+    config = true,
     lazy = true
   },
   {
     --- NOTE: Incremental renaming context, similar to vscode's F2 rename system but incremental in this case.
     "smjonas/inc-rename.nvim",
+    config = true,
     lazy = true,
     opts = { input_buffer_type = "dressing" }
   },
@@ -68,6 +71,7 @@ return {
   {
     --- NOTE: Auto-adding or wrapping from both ends of a highlighted context.
     "windwp/nvim-autopairs",
+    config = true,
     event = { "BufAdd", "BufReadPost", "BufNewFile" },
     opts = {
       check_ts = true,
@@ -80,11 +84,13 @@ return {
   -- NOTE: surround.vim but in nvim
   {
     "kylechui/nvim-surround",
+    config = true,
     event = { "BufAdd", "BufReadPost", "BufNewFile" },
   },
   {
     -- NOTE: hop.nvim but encapsulates context based on selection of region.
     "mfussenegger/nvim-treehopper",
+    config = true,
     dependencies = "phaazon/hop.nvim",
     lazy = true
   },
