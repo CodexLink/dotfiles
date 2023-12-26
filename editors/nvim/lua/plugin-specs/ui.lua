@@ -19,7 +19,6 @@ return {
       },
       show_guides = true
     },
-    event = "VeryLazy"
   },
   {
     -- NOTE: Just an LSP stats indicator on top of the 'lualine'.
@@ -72,6 +71,7 @@ return {
   {
     -- NOTE: Status bar for the editor.
     "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
     config = function(_, opts)
       local th = require('lualine.themes.catppuccin')
       th.normal.c.bg = nil
