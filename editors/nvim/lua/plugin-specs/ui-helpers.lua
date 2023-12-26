@@ -6,8 +6,7 @@ return {
   {
     -- NOTE: Alternative dialogue, similar to `telescope.nvim`.
     "stevearc/dressing.nvim",
-    config = true,
-    lazy = false,
+    event = "VeryLazy",
     opts = {
       input = {
         override = function(conf)
@@ -59,14 +58,12 @@ return {
   {
     -- NOTE: Colorizes any string that states a color.
     "NvChad/nvim-colorizer.lua",
-    config = true,
     event = { "BufAdd", "BufNewFile", "BufReadPost" }
   },
   {
     -- NOTE: Displays context per indentation to see what part of code scope are we based on the cursor position.
     -- This just visually supports `aerial.nvim`.
     "haringsrob/nvim_context_vt",
-    config = true,
     event = { "BufAdd", "BufNewFile", "BufReadPost" },
   },
   {
@@ -77,32 +74,16 @@ return {
       require("notify").setup(opts)
       vim.notify = require("notify")
     end,
-    lazy = false,
     opts = { render = "compact" }
   },
   {
     -- NOTE: Better alternative for `GIX DECO Comments` plugin from VSCode
     "folke/todo-comments.nvim",
-    config = true,
-    event = { "BufReadPost" },
-  },
-  {
-    -- NOTE: Just a typescript-specific plugin that displays the evaluated type of the context.
-    "marilari88/twoslash-queries.nvim",
-    config = true,
-    ft = { "ts", "tsx" },
-    lazy = true,
-    opts = {
-      multi_line = true
-    },
+    event = { "VeryLazy" },
   },
   {
     -- NOTE: Code dimmer (by buffer, blocks) when the cursor is focused elsewhere.
     "folke/twilight.nvim",
-    config = function(_, opts)
-      -- Setup the plugin first.
-      require("twilight").setup(opts)
-    end,
     lazy = true,
     opts = {
       dimming = { alpha = .40 }

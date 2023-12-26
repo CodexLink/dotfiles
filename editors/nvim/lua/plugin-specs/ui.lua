@@ -6,10 +6,8 @@ return {
   {
     -- NOTE: DAP-Equivalent for displaying code context in one sidebar.
     "stevearc/aerial.nvim",
-    config = true,
-    dependencies = {
-      { "nvim-tree/nvim-web-devicons" }
-    },
+    dependencies = "nvim-tree/nvim-web-devicons",
+    lazy = true,
     opts = {
       backends = { "lsp" },
       filter_kind = false,
@@ -20,13 +18,15 @@ return {
         ["c"] = "actions.tree_close_recursive",
       },
       show_guides = true
-    }
+    },
+    event = "VeryLazy"
   },
   {
     -- NOTE: Just an LSP stats indicator on top of the 'lualine'.
     "j-hui/fidget.nvim",
-    config = true,
+    event = "LspAttach",
     lazy = true,
+    config = function(_, opts) require("fidget").setup(opts) end,
     opts = {
       progress = { display = { progress_icon = { { pattern = "dots", period = 1 } } } }
     },
@@ -54,11 +54,11 @@ return {
     end,
     lazy = true
   },
+  -- NOTE: Indention guider, useful on identifying space or tabs on code.
   {
-    -- NOTE: Indention guider, useful on identifying space or tabs on code.
     "lukas-reineke/indent-blankline.nvim",
     event = "BufReadPost",
-    main = "ibl"
+    main = "ibl",
   },
   {
     -- NOTE: Lazygit but in neovim window, added in the UI as its not an enhancement plugin but rather an extender which is a UI component at this point.
@@ -72,7 +72,6 @@ return {
   {
     -- NOTE: Status bar for the editor.
     "nvim-lualine/lualine.nvim",
-    lazy = false,
     config = function(_, opts)
       local th = require('lualine.themes.catppuccin')
       th.normal.c.bg = nil
@@ -143,11 +142,10 @@ return {
       }
     },
   },
+  -- NOTE: Literally a scrollbar, but in nvim.
   {
-    -- NOTE: Literally a scrollbar, but in nvim.
     "petertriho/nvim-scrollbar",
-    config = true,
-    event = "BufReadPost"
+    event = "BufReadPost",
   },
   {
     -- NOTE: File explorer, but in dialogue, this is very similar to `dressing.nvim`, but has all-in-one capabilities.
@@ -216,7 +214,7 @@ return {
   {
     -- NOTE: Bottom panel that contains diagnostics.
     "folke/trouble.nvim",
-    config = true,
+    lazy = true,
     opts = {
       action_keys = {
         close = "q",
@@ -238,10 +236,5 @@ return {
         next = "j"
       }
     }
-  },
-  {
-    -- NOTE: Similar to every other OS's window nanager where each `n` of scope window contains `k` of tabs.
-    "tiagovla/scope.nvim",
-    config = true
   }
 }

@@ -9,9 +9,8 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
     lazy = true,
-    event = { "BufAdd", "BufReadPost", "BufNewFile" },
+    event = "VeryLazy",
     opts = {
       additional_vim_regex_highlighting = false,
       autopairs = { enable = true },
@@ -66,9 +65,9 @@ return {
   -- NOTE: Shows the header of a certain section of the code.
   {
     "nvim-treesitter/nvim-treesitter-context",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    lazy = false,
-    config = function() require("treesitter-context").setup() end,
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    event = "VeryLazy"
+    -- config = function() require("treesitter-context").setup() end,
   },
   {
     -- NOTE: Highlights similar case of a certain pattern from the code, similar to vscode's highlight behavior.
@@ -76,8 +75,7 @@ return {
     config = function(_, opts)
       require("illuminate").configure(opts)
     end,
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    event = "VeryLazy",
+    dependencies = "nvim-treesitter/nvim-treesitter",
     lazy = true,
     opts = { delay = 200 }
   }
