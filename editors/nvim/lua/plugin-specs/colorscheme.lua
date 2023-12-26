@@ -15,12 +15,14 @@ return {
       CursorLineNr = { bg = "NONE", fg = "#FECE2A" },
       Comment = { bg = "NONE", fg = "#00BFFF" },
       Directory = { bg = "NONE", fg = "#FECE2A" },
-      WinSeparator = { bg = "NONE", fg = "#FECE2A" },
+      EndOfBuffer = { bg = "NONE", fg = "#00BFFF" },
+      LineNr = { fg = "#FFFFFF" },
       Normal = { bg = "NONE" },
       NormalNC = { bg = "NONE" },
       NormalSB = { bg = "NONE" },
-      LineNr = { fg = "#FFFFFF" },
-      EndOfBuffer = { bg = "NONE", fg = "#00BFFF" }
+      StatusLine = { bg = "NONE" },
+      TelescopeResultsDiffChange = { bg = "NONE" },
+      WinSeparator = { bg = "NONE", fg = "#FECE2A" },
     },
     integrations = {
       aerial = true,
