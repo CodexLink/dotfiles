@@ -16,7 +16,7 @@ return {
       Comment = { bg = "NONE", fg = "#00BFFF" },
       Directory = { bg = "NONE", fg = "#FECE2A" },
       EndOfBuffer = { bg = "NONE", fg = "#00BFFF" },
-      IndentionHighlight = { fg = "#FECE2A" },
+      IblScope = { fg = "#FECE2A" },
       HighlightedYank = { bg = "#FFFFFF" },
       LineNr = { fg = "#FFFFFF" },
       Normal = { bg = "NONE" },

@@ -24,9 +24,9 @@ return {
     -- NOTE: Just an LSP stats indicator on top of the 'lualine'.
     "j-hui/fidget.nvim",
     event = "LspAttach",
-    tag = "legacy",
     opts = {
-      progress = { display = { progress_icon = { { pattern = "dots", period = 1 } } } }
+      progress = { display = { progress_icon = { { pattern = "dots", period = 1 } } } },
+      logger = { level = vim.log.levels.DEBUG }
     },
   },
   {
@@ -57,7 +57,7 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     event = "BufReadPost",
     main = "ibl",
-    opts = { indent = { highlight = "IndentionHighlight" } }
+    opts = { indent = { char = "┃" } }
   },
   {
     -- NOTE: Lazygit but in neovim window, added in the UI as its not an enhancement plugin but rather an extender which is a UI component at this point.
@@ -145,6 +145,7 @@ return {
   -- NOTE: Literally a scrollbar, but in nvim.
   {
     "petertriho/nvim-scrollbar",
+    config = true,
     event = "BufReadPost",
   },
   {
