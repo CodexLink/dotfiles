@@ -39,23 +39,26 @@ return {
       }
     }
   },
-  -- NOTE: Dependants from the external package were done by `mason.nvim` and `null-ls.nvim`.
+  "neovim/nvim-lspconfig",
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-cmdline",
+  {
+    "onsails/lspkind.nvim",
+    {
+      "L3MON4D3/LuaSnip",
+      dependencies = "rafamadriz/friendly-snippets",
+      config = function(
+      )
+        require("luasnip.loaders.from_vscode").lazy_load()
+      end
+    }
+  },
   {
     "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "onsails/lspkind.nvim",
-      {
-        "L3MON4D3/LuaSnip",
-        build = "make install_jsregexp",
-        dependencies = { "rafamadriz/friendly-snippets" },
-        config = function(
-        )
-          require("luasnip.loaders.from_vscode").lazy_load()
-        end
-      }
-    },
+    event = { "BufReadPost", "BufNewFile", "InsertEnter" },
+    dependencies =
     "saadparwaiz1/cmp_luasnip",
     config = function()
       -- Instantiations
@@ -77,7 +80,7 @@ return {
       cmp.setup({
         completion = {
           completeopt = "menu,menuone,noinsert",
-          keyword_length = 1
+          keyword_length = 4
         },
         experimental = {
           ghost_text = true
@@ -168,13 +171,9 @@ return {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } })
       })
-    end,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = "hrsh7th/cmp-nvim-lsp",
-    event = { "BufReadPost", "BufNewFile", "InsertEnter" },
-    config = function()
+
+
+      -- ! Setup `lspconfig`
       local lspconfig = require("lspconfig")
       local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
