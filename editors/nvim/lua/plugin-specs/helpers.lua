@@ -6,28 +6,24 @@ return {
   {
     --- NOTE: Literally a comment creator, this can be paired with annotation plugin.
     "numToStr/Comment.nvim",
-    config = true,
-    event = { "BufNewFile", "BufReadPost" },
-    lazy = true
+    event = { "BufAdd", "BufNewFile", "BufReadPost" }
   },
   {
     --- NOTE: Alternative `git diff` viewer, supported by `lazy.nvim` (package manager).
     "sindrets/diffview.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
     lazy = true,
-    dependencies = { "nvim-lua/plenary.nvim" }
   },
   {
     --- NOTE: Similar to Vimium C, jump to certain part of code, this is way similar to `leap.nvim` but it uses 2 letters to jump to certain part of code.
     --- NOTE: This plugin is useful when we don't want a keyword-based jump.
     "phaazon/hop.nvim",
-    config = true,
     lazy = true
   },
   {
     --- NOTE: Incremental renaming context, similar to vscode's F2 rename system but incremental in this case.
     "smjonas/inc-rename.nvim",
-    config = true,
-    lazy = false,
+    lazy = true,
     opts = { input_buffer_type = "dressing" }
   },
   {
@@ -52,7 +48,7 @@ return {
   },
   {
     "danymat/neogen",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    dependencies = "nvim-treesitter/nvim-treesitter",
     config = function()
       require("neogen").setup({
         snippet_engine = "luasnip",
@@ -71,11 +67,7 @@ return {
   {
     --- NOTE: Auto-adding or wrapping from both ends of a highlighted context.
     "windwp/nvim-autopairs",
-    config = function(plugin, opts)
-      require(plugin.name).setup(opts)
-    end,
     event = { "BufAdd", "BufReadPost", "BufNewFile" },
-    lazy = true,
     opts = {
       check_ts = true,
       fast_wrap = { map = "<M-w>" },
@@ -84,22 +76,20 @@ return {
       map_cr = true
     }
   },
+  -- NOTE: surround.vim but in nvim
   {
-    -- NOTE: surround.vim but in nvim
     "kylechui/nvim-surround",
-    config = true,
     event = { "BufAdd", "BufReadPost", "BufNewFile" },
   },
   {
     -- NOTE: hop.nvim but encapsulates context based on selection of region.
     "mfussenegger/nvim-treehopper",
-    dependencies = { "phaazon/hop.nvim" },
+    dependencies = "phaazon/hop.nvim",
     lazy = true
   },
   {
     "jedrzejboczar/possession.nvim",
-    config = true,
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = "nvim-lua/plenary.nvim",
     lazy = true,
     opts = {
       autosave = {
@@ -130,7 +120,7 @@ return {
   {
     --- NOTE: Code Context to `One-Liner` or `Split-by-Blocks` Plugin.
     "Wansmer/treesj",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    dependencies = "nvim-treesitter/nvim-treesitter",
     lazy = true,
     opts = {
       max_join_length = 2048
@@ -139,7 +129,7 @@ return {
   {
     --- NOTE: Outputs keybinds when pressed a key for the editor.
     "folke/which-key.nvim",
-    lazy = false,
+    lazy = true,
     opts = {
       layout = {
         spacing = 5,
