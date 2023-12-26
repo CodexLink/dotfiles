@@ -7,14 +7,14 @@ return {
   -- NOTE: A package manager for the external tools, such as: Debug Adapter Protocol (DAP), Linters, Formatters, etc.
   {
     "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup({
+    opts = {
+      {
         pip = {
           upgrade_pip = true,
         },
         max_concurrent_installers = 10
-      })
-    end,
+      }
+    }
   },
   -- NOTE: Package manager extension as an LSP provider for the "nvim-lspconfig".
   {
@@ -303,12 +303,12 @@ return {
       })
     end,
   },
-  { -- ! Linters
+  {
+    -- ! Linters
     "mfussenegger/nvim-lint",
-    event = { "BufReadPre" },
-    lazy = true,
-    config = function()
-      require('lint').linters_by_ft = {
+    event = "BufReadPre",
+    opts = {
+      linters_by_ft = {
         clang = { "clangtidy" },
         cpp = { "cpplint" },
         gdscript = { "gdlint" },
@@ -321,8 +321,8 @@ return {
         python = { "ruff", "mypy" },
         typescript = { "eslint_d" },
         typescriptreact = { "eslint_d" },
-        sql = { "sqlfluff" }
-      }
-    end
+        sql = { "sqlfluff" },
+      },
+    },
   }
 }

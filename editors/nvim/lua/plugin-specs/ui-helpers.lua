@@ -58,6 +58,7 @@ return {
   {
     -- NOTE: Colorizes any string that states a color.
     "NvChad/nvim-colorizer.lua",
+    config = true,
     event = { "BufAdd", "BufNewFile", "BufReadPost" }
   },
   {

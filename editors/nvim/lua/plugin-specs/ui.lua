@@ -24,8 +24,7 @@ return {
     -- NOTE: Just an LSP stats indicator on top of the 'lualine'.
     "j-hui/fidget.nvim",
     event = "LspAttach",
-    lazy = true,
-    config = function(_, opts) require("fidget").setup(opts) end,
+    tag = "legacy",
     opts = {
       progress = { display = { progress_icon = { { pattern = "dots", period = 1 } } } }
     },
@@ -58,6 +57,7 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     event = "BufReadPost",
     main = "ibl",
+    opts = { indent = { highlight = "IndentionHighlight" } }
   },
   {
     -- NOTE: Lazygit but in neovim window, added in the UI as its not an enhancement plugin but rather an extender which is a UI component at this point.

@@ -6,6 +6,7 @@ return {
   {
     --- NOTE: Literally a comment creator, this can be paired with annotation plugin.
     "numToStr/Comment.nvim",
+    config = true,
     event = { "BufAdd", "BufNewFile", "BufReadPost" }
   },
   {
