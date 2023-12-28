@@ -4,62 +4,56 @@
 ---@info [1] Configuration for the LSP servers or the configurator is separated, the context of this plugin spec is all about advertising the completion plugin to the LSP to display at the editor.
 
 return {
-  -- NOTE: A package manager for the external tools, such as: Debug Adapter Protocol (DAP), Linters, Formatters, etc.
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      {
-        pip = {
-          upgrade_pip = true,
-        },
-        max_concurrent_installers = 10
-      }
-    }
-  },
+  -- -- NOTE: A package manager for the external tools, such as: Debug Adapter Protocol (DAP), Linters, Formatters, etc.
+  -- {
+  --   "williamboman/mason.nvim",
+  -- },
   -- NOTE: Package manager extension as an LSP provider for the "nvim-lspconfig".
-  {
-    "williamboman/mason-lspconfig.nvim",
-    opts = {
-      {
-        ensure_installed = {
-          "cssmodules_ls",
-          "dockerls",
-          "eslint",
-          "html",
-          "jsonls",
-          "lua_ls",
-          "marksman",
-          "pyright",
-          "ruff_lsp",
-          "sqlls",
-          "tsserver",
-          "yamlls",
-        },
-        automatic_installation = true
-      }
-    }
-  },
-  "neovim/nvim-lspconfig",
-  "hrsh7th/cmp-nvim-lsp",
-  "hrsh7th/cmp-buffer",
-  "hrsh7th/cmp-path",
-  "hrsh7th/cmp-cmdline",
-  {
-    "onsails/lspkind.nvim",
-    {
-      "L3MON4D3/LuaSnip",
-      dependencies = "rafamadriz/friendly-snippets",
-      config = function(
-      )
-        require("luasnip.loaders.from_vscode").lazy_load()
-      end
-    }
-  },
   {
     "hrsh7th/nvim-cmp",
     event = { "BufReadPost", "BufNewFile", "InsertEnter" },
-    dependencies =
-    "saadparwaiz1/cmp_luasnip",
+    dependencies = {
+      {
+        "williamboman/mason-lspconfig.nvim",
+        dependencies = "williamboman/mason.nvim",
+        config = function()
+          require("mason-lspconfig").setup({
+            ensure_installed = {
+              "cssmodules_ls",
+              "dockerls",
+              "eslint",
+              "html",
+              "jsonls",
+              "lua_ls",
+              "marksman",
+              "pyright",
+              "ruff_lsp",
+              "sqlls",
+              "tsserver",
+              "yamlls",
+            },
+            automatic_installation = true
+          })
+        end,
+      },
+      "neovim/nvim-lspconfig",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      {
+        "onsails/lspkind.nvim",
+        {
+          "L3MON4D3/LuaSnip",
+          dependencies = "rafamadriz/friendly-snippets",
+          config = function(
+          )
+            require("luasnip.loaders.from_vscode").lazy_load()
+          end
+        }
+      },
+      "saadparwaiz1/cmp_luasnip"
+    },
     config = function()
       -- Instantiations
       local cmp_types = require("cmp.types")
@@ -302,6 +296,16 @@ return {
         on_attach = on_attach
       })
     end,
+  },
+  {
+    -- NOTE: Just an LSP stats indicator on top of the 'lualine'.
+    "j-hui/fidget.nvim",
+    config = true,
+    -- event = "LspAttach",
+    -- opts = {
+    --   notification = { window = { winblend = 0 } },
+    --   progress = { display = { progress_icon = { { pattern = "dots", period = 1 } } } },
+    -- },
   },
   {
     -- ! Linters
