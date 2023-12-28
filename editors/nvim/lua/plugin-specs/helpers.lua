@@ -17,13 +17,6 @@ return {
     lazy = true,
   },
   {
-    --- NOTE: Similar to Vimium C, jump to certain part of code, this is way similar to `leap.nvim` but it uses 2 letters to jump to certain part of code.
-    --- NOTE: This plugin is useful when we don't want a keyword-based jump.
-    "phaazon/hop.nvim",
-    config = true,
-    lazy = true
-  },
-  {
     --- NOTE: Incremental renaming context, similar to vscode's F2 rename system but incremental in this case.
     "smjonas/inc-rename.nvim",
     config = true,
@@ -90,8 +83,13 @@ return {
   {
     -- NOTE: hop.nvim but encapsulates context based on selection of region.
     "mfussenegger/nvim-treehopper",
-    config = true,
-    dependencies = "phaazon/hop.nvim",
+    dependencies = {
+      --- NOTE: Similar to Vimium C, jump to certain part of code, this is way similar to `leap.nvim` but it uses 2 letters to jump to certain part of code.
+      --- NOTE: This plugin is useful when we don't want a keyword-based jump.
+      "phaazon/hop.nvim",
+      config = true,
+      lazy = true
+    },
     lazy = true
   },
   {
