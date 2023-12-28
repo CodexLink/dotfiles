@@ -129,18 +129,10 @@ wk.register({
       })
     end, "twilight.nvim: Toggle code dimming" },
   },
-  ["<M-~>"] = { function()
-    notifier({
-      cmd = [[ set wrap! ]],
-      message = "Code wrapping toggled.",
-      opts = mapping_default_opts
-    })
-  end, "builtin: Toggle wrap" },
-  ["<M-a>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char", mode = { "n", "v" } },
-  ["<M-A>"] = { function() require("hop").hint_char2() end, "hop.nvim: Hop 2 chars", mode = { "n", "v" } },
-  ["<M-b>"] = { function() require("telescope.builtin").buffers() end, "telescope.nvim: Toggle buffers", mode = { "n", "v" } },
-  ["<M-c>"] = { function() require("telescope.builtin").live_grep() end, "telescope.nvim: Toggle live grep ('ripgrep')", mode = { "n", "v" } },
-  ["<M-f>"] = { function() require("telescope.builtin").find_files() end, "telescope.nvim: Toggle file search", mode = { "n", "v" } },
+
+  ["<M-1>"] = { function() require("telescope.builtin").buffers() end, "telescope.nvim: Toggle buffers", mode = { "n", "v" } },
+  ["<M-2>"] = { function() require("telescope.builtin").live_grep() end, "telescope.nvim: Toggle live grep ('ripgrep')", mode = { "n", "v" } },
+  ["<M-3>"] = { function() require("telescope.builtin").find_files() end, "telescope.nvim: Toggle file search", mode = { "n", "v" } },
   ["<M-F1>"] = { function()
     require("telescope").load_extension("file_browser")
     require("telescope").extensions.file_browser
@@ -153,27 +145,39 @@ wk.register({
     require("telescope").extensions.aerial.aerial()
   end,
     "telescope.nvim: Toggle 'aerial'" },
-  ["<M-s>"] = { function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.AFTER_CURSOR }) end,
+  ["<M-q>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char", mode = { "n", "v" } },
+  ["<M-Q>"] = { function() require("hop").hint_char2() end, "hop.nvim: Hop 2 chars", mode = { "n", "v" } },
+  ["<M-w>"] = { function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.AFTER_CURSOR }) end,
     "hop.nvim: hop below anywhere" },
-  ["<M-S>"] = { function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR }) end,
+  ["<M-W>"] = { function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR }) end,
     "hop.nvim: hop above anywhere" },
-  ["<M-v>"] = { function()
+  ["<M-e>"] = { function()
     notifier({
       cmd = require("treesj").toggle,
-      message = "treesj: toggled to wrap/one-line a context.",
+      message = "treesj: toggled to wrap/one-line.",
       opts = mapping_default_opts
     })
   end,
     "treesj: Toggle 'One-Liner/Splitted' Style." },
-  ["<M-x>"] = { function() require("illuminate").goto_next_reference() end, "vim-illuminate: Jump to next reference" },
-  ["<M-z>"] = { function() require("illuminate").goto_prev_reference() end, "vim-illuminate: Jump to previous reference" },
-  ["<M-F>"] = { function()
+  ["<M-a>"] = { function() require("illuminate").goto_next_reference() end, "vim-illuminate: Jump to next reference" },
+  ["<M-s>"] = { function() require("illuminate").goto_prev_reference() end, "vim-illuminate: Jump to previous reference" },
+  ["<M-d>"] = { function()
+    notifier({
+      cmd = [[ set wrap! ]],
+      message = "Code wrapping toggled.",
+      opts = mapping_default_opts
+    })
+  end, "builtin: Toggle wrap" },
+  ["<M-f>"] = { function()
     notifier({
       cmd = function() vim.lsp.buf.format({ async = true, bufnr = vim.fn.bufnr(), timeout = 5000 }) end,
       message = "Formatting done!",
       opts = mapping_default_opts
     })
   end, "utils: Code Format" },
+  ["<M-z>"] = { function() vim.cmd [[ bprev ]] end, mode = { "n", "v" }, "buffer: previous" },
+  ["<M-x>"] = { function() vim.cmd [[ bnext ]] end, mode = { "n", "v" }, "buffer: next" },
+  ["<M-c>"] = { function() vim.cmd [[ bdelete ]] end, mode = { "n", "v" }, "buffer: delete current buffer" },
   ["<S-F3>"] = { function() require("aerial").toggle({ focus = true }) end, "aerial.nvim: Toggle (Focused)" },
   ["<Space>"] = {
     name = "LSP + LSP-Related Actions",
