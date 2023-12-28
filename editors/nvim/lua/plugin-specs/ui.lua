@@ -21,15 +21,6 @@ return {
     },
   },
   {
-    -- NOTE: Just an LSP stats indicator on top of the 'lualine'.
-    "j-hui/fidget.nvim",
-    event = "LspAttach",
-    opts = {
-      progress = { display = { progress_icon = { { pattern = "dots", period = 1 } } } },
-      logger = { level = vim.log.levels.DEBUG }
-    },
-  },
-  {
     -- NOTE: VSCode style code context previewer, binds to LSP actions.
     "DNLHC/glance.nvim",
     config = function()

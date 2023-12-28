@@ -4,56 +4,80 @@
 ---@info [1] Configuration for the LSP servers or the configurator is separated, the context of this plugin spec is all about advertising the completion plugin to the LSP to display at the editor.
 
 return {
-  -- -- NOTE: A package manager for the external tools, such as: Debug Adapter Protocol (DAP), Linters, Formatters, etc.
-  -- {
-  --   "williamboman/mason.nvim",
-  -- },
-  -- NOTE: Package manager extension as an LSP provider for the "nvim-lspconfig".
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = { "williamboman/mason.nvim", config = true },
+    config = function()
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "cssmodules_ls",
+          "dockerls",
+          "eslint",
+          "html",
+          "jsonls",
+          "lua_ls",
+          "marksman",
+          "pyright",
+          "ruff_lsp",
+          "sqlls",
+          "tsserver",
+          "yamlls",
+        },
+        automatic_installation = true
+      })
+    end,
+  },
+  {
+    "jay-babu/mason-null-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      { "nvimtools/none-ls.nvim", dependencies = "nvim-lua/plenary.nvim" }
+    },
+    config = function()
+      local nls = require("null-ls")
+      nls.setup({
+        sources = {
+          nls.builtins.completion.luasnip,
+          nls.builtins.completion.spell,
+          nls.builtins.diagnostics.bandit,
+          nls.builtins.diagnostics.mypy,
+          nls.builtins.diagnostics.ruff,
+          nls.builtins.formatting.black,
+          nls.builtins.formatting.eslint_d,
+          nls.builtins.formatting.fixjson,
+          nls.builtins.formatting.markdownlint,
+          nls.builtins.formatting.prettierd,
+          nls.builtins.formatting.remark,
+          nls.builtins.formatting.sql_formatter,
+          nls.builtins.formatting.uncrustify,
+        }
+      })
+
+      require("mason-null-ls").setup({ ensure_installed = nil, automatic_installation = true })
+    end,
+  },
+  "neovim/nvim-lspconfig",
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-cmdline",
+  {
+    "onsails/lspkind.nvim",
+    {
+      "L3MON4D3/LuaSnip",
+      dependencies = "rafamadriz/friendly-snippets",
+      config = function(
+      )
+        require("luasnip.loaders.from_vscode").lazy_load()
+      end
+    }
+  },
   {
     "hrsh7th/nvim-cmp",
     event = { "BufReadPost", "BufNewFile", "InsertEnter" },
-    dependencies = {
-      {
-        "williamboman/mason-lspconfig.nvim",
-        dependencies = "williamboman/mason.nvim",
-        config = function()
-          require("mason-lspconfig").setup({
-            ensure_installed = {
-              "cssmodules_ls",
-              "dockerls",
-              "eslint",
-              "html",
-              "jsonls",
-              "lua_ls",
-              "marksman",
-              "pyright",
-              "ruff_lsp",
-              "sqlls",
-              "tsserver",
-              "yamlls",
-            },
-            automatic_installation = true
-          })
-        end,
-      },
-      "neovim/nvim-lspconfig",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
-      {
-        "onsails/lspkind.nvim",
-        {
-          "L3MON4D3/LuaSnip",
-          dependencies = "rafamadriz/friendly-snippets",
-          config = function(
-          )
-            require("luasnip.loaders.from_vscode").lazy_load()
-          end
-        }
-      },
-      "saadparwaiz1/cmp_luasnip"
-    },
+    dependencies =
+    "saadparwaiz1/cmp_luasnip",
     config = function()
       -- Instantiations
       local cmp_types = require("cmp.types")
@@ -297,36 +321,5 @@ return {
       })
     end,
   },
-  {
-    -- NOTE: Just an LSP stats indicator on top of the 'lualine'.
-    "j-hui/fidget.nvim",
-    config = true,
-    -- event = "LspAttach",
-    -- opts = {
-    --   notification = { window = { winblend = 0 } },
-    --   progress = { display = { progress_icon = { { pattern = "dots", period = 1 } } } },
-    -- },
-  },
-  {
-    -- ! Linters
-    "mfussenegger/nvim-lint",
-    event = "BufReadPre",
-    opts = {
-      linters_by_ft = {
-        clang = { "clangtidy" },
-        cpp = { "cpplint" },
-        gdscript = { "gdlint" },
-        gitcommit = { "commitlint" },
-        javascript = { "eslint_d" },
-        javascriptreact = { "eslint_d" },
-        json = { "jsonlint" },
-        lua = { "luacheck" },
-        markdown = { "markdownlint" },
-        python = { "ruff", "mypy" },
-        typescript = { "eslint_d" },
-        typescriptreact = { "eslint_d" },
-        sql = { "sqlfluff" },
-      },
-    },
-  }
+  { "j-hui/fidget.nvim", config = true }
 }
