@@ -17,7 +17,7 @@ return {
       Directory = { bg = "NONE", fg = "#FECE2A" },
       EndOfBuffer = { bg = "NONE", fg = "#00BFFF" },
       IblScope = { fg = "#FECE2A" },
-      HighlightedYank = { bg = "#FFFFFF" },
+      HighlightedYank = { bg = "#FECE2A", fg = "#000000" },
       LineNr = { fg = "#FFFFFF" },
       Normal = { bg = "NONE" },
       NormalNC = { bg = "NONE" },
