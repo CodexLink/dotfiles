@@ -27,7 +27,7 @@ Set-Alias wtc OpenWTConfig
 $Env:PYTHONIOENCODING = "utf-8"			# Force Encoding to "UTF-8"
 $Env:VIRTUAL_ENV_DISABLE_PROMPT = 1
 
-# - Oh-My-Posg chips.omp.json config.
+# - Oh-My-Posh | chips.omp.json config.
 $Env:DISABLE_SEGMENT_BATTERY = $false
 $Env:DISABLE_SEGMENT_DTIME = $false
 $Env:DISABLE_SEGMENT_PROJECT_NODE = $false
@@ -40,6 +40,8 @@ $Env:DISABLE_SEGMENT_WAKATIME = $false
 # $Env:SEGMENT_PROJECT_PYTHON_ACTIVE_VENV_STR = "Env. Active"
 $Env:SEGMENT_PROJECT_PYTHON_ACTIVE_VENV_STR = ""
 $Env:WAKATIME_API_KEY = "<masked>"
+$Env:XDG_CONFIG_HOME = "$HOME/.config"
+
 # # Script Variables
 $Global:WinTermConfigFilePath = "$env:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
