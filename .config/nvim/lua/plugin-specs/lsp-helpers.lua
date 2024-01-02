@@ -28,33 +28,33 @@ return {
   },
   {
     "jay-babu/mason-null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    config = function() require("mason-null-ls").setup({ ensure_installed = nil, automatic_installation = true }) end,
     dependencies = {
       "williamboman/mason.nvim",
-      { "nvimtools/none-ls.nvim", dependencies = "nvim-lua/plenary.nvim" }
+      {
+        "nvimtools/none-ls.nvim",
+        dependencies = "nvim-lua/plenary.nvim",
+        config = function()
+          local nls = require("null-ls")
+          nls.setup({
+            sources = {
+              nls.builtins.completion.luasnip,
+              nls.builtins.completion.spell,
+              nls.builtins.diagnostics.mypy,
+              nls.builtins.formatting.black,
+              nls.builtins.formatting.eslint_d,
+              nls.builtins.formatting.fixjson,
+              nls.builtins.formatting.markdownlint,
+              nls.builtins.formatting.ruff,
+              nls.builtins.formatting.prettierd,
+              nls.builtins.formatting.remark,
+              nls.builtins.formatting.sql_formatter,
+              nls.builtins.formatting.uncrustify,
+            }
+          })
+        end,
+      }
     },
-    config = function()
-      local nls = require("null-ls")
-      nls.setup({
-        sources = {
-          nls.builtins.completion.luasnip,
-          nls.builtins.completion.spell,
-          nls.builtins.diagnostics.bandit,
-          nls.builtins.diagnostics.mypy,
-          nls.builtins.diagnostics.ruff,
-          nls.builtins.formatting.black,
-          nls.builtins.formatting.eslint_d,
-          nls.builtins.formatting.fixjson,
-          nls.builtins.formatting.markdownlint,
-          nls.builtins.formatting.prettierd,
-          nls.builtins.formatting.remark,
-          nls.builtins.formatting.sql_formatter,
-          nls.builtins.formatting.uncrustify,
-        }
-      })
-
-      require("mason-null-ls").setup({ ensure_installed = nil, automatic_installation = true })
-    end,
   },
   "neovim/nvim-lspconfig",
   "hrsh7th/cmp-nvim-lsp",
@@ -315,5 +315,5 @@ return {
       })
     end,
   },
-  { "j-hui/fidget.nvim", config = true }
+  { "j-hui/fidget.nvim", event = 'LspAttach', config = true }
 }
