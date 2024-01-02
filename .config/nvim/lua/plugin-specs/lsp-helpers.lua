@@ -17,6 +17,7 @@ return {
           "jsonls",
           "lua_ls",
           "marksman",
+          "pyright",
           "ruff_lsp",
           "sqlls",
           "tsserver",
@@ -40,7 +41,6 @@ return {
             sources = {
               nls.builtins.completion.luasnip,
               nls.builtins.completion.spell,
-              nls.builtins.diagnostics.mypy,
               nls.builtins.formatting.black,
               nls.builtins.formatting.eslint_d,
               nls.builtins.formatting.fixjson,
@@ -237,6 +237,11 @@ return {
         on_attach = on_attach
       })
 
+      lspconfig.pyright.setup({
+        capabilities = lsp_capabilities,
+        on_attach = on_attach
+      })
+
       lspconfig.ruff_lsp.setup({
         capabilities = lsp_capabilities,
         on_attach = function(client, bufnr)
@@ -246,7 +251,7 @@ return {
             "v:lua.vim.lsp.omnifunc"
           )
 
-          client.server_capabilities.hover = false
+          client.server_capabilities.hoverProvider = false
         end
       })
 
