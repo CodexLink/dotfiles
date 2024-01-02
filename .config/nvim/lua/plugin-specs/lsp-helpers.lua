@@ -17,7 +17,6 @@ return {
           "jsonls",
           "lua_ls",
           "marksman",
-          "pyright",
           "ruff_lsp",
           "sqlls",
           "tsserver",
@@ -234,11 +233,6 @@ return {
       })
 
       lspconfig.marksman.setup({
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-
-      lspconfig.pyright.setup({
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
