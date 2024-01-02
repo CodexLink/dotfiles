@@ -159,8 +159,8 @@ wk.register({
     })
   end,
     "treesj: Toggle 'One-Liner/Splitted' Style." },
-  ["<M-a>"] = { function() require("illuminate").goto_next_reference() end, "vim-illuminate: Jump to next reference" },
-  ["<M-s>"] = { function() require("illuminate").goto_prev_reference() end, "vim-illuminate: Jump to previous reference" },
+  ["<M-a>"] = { function() require("illuminate").goto_prev_reference() end, "vim-illuminate: Jump to previous reference" },
+  ["<M-s>"] = { function() require("illuminate").goto_next_reference() end, "vim-illuminate: Jump to next reference" },
   ["<M-d>"] = { function()
     notifier({
       cmd = [[ set wrap! ]],
