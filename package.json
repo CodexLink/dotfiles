@@ -9,8 +9,8 @@
     "inject-pwsh": "pwsh -NoProfile -Command \"New-ItemProperty 'HKCU:/SOFTWARE/Microsoft/Windows/CurrentVersion/Explorer/User Shell Folders' Personal -Value \"$HOME/.config\" -Type ExpandString -Force\"",
     "install-pwsh-modules": "pwsh -NoProfile -Command Install-Module z, PSReadLine, CompletionPredictor, -Force; Install-Module -Name PowerCoorLS -Repository PSGallery -Force;",
     "install-scoop-modules": "powershell -NoProfile -ExecutionPolicy Bypass -Command scoop install 7zip bat fzf git lazydocker lazygit neovim nvm pnpm pwsh python311 python312 rustup ripgrep telegram terminal-icons",
-    "to-local": "pwsh -NoProfile -Command Copy-Item .config/** $HOME/.config",
-    "to-local-nvim": "pwsh -NoProfile -Command Copy-Item .config/nvim $HOME/.config/nvim -Force",
+    "to-local": "pwsh -NoProfile -Command Copy-Item .config/** $HOME/.config -Force -Recurse",
+    "to-local-nvim": "pwsh -NoProfile -Command Copy-Item .config/nvim/** $HOME/.config/nvim -Force -Recurse",
     "to-remote-wt": "pwsh -NoProfile -Command Copy-Item ~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json ./.config/wt"
 	}
 }
