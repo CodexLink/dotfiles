@@ -178,6 +178,7 @@ wk.register({
   ["<M-z>"] = { function() vim.cmd [[ bprev ]] end, mode = { "n", "v" }, "buffer: previous" },
   ["<M-x>"] = { function() vim.cmd [[ bnext ]] end, mode = { "n", "v" }, "buffer: next" },
   ["<M-c>"] = { function() vim.cmd [[ bdelete ]] end, mode = { "n", "v" }, "buffer: delete current buffer" },
+  ["<M-n>"] = { function() vim.cmd [[ enew ]] end, mode = { "n", "v" }, "buffer: new" },
   ["<S-F3>"] = { function() require("aerial").toggle({ focus = true }) end, "aerial.nvim: Toggle (Focused)" },
   ["<Space>"] = {
     name = "LSP + LSP-Related Actions",
