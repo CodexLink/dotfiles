@@ -150,10 +150,7 @@ return {
 
       -- Load the plugin itself first before the extension.
       telescope.setup({
-        defaults = {
-          layout_config = {
-            vertical = { width = 0.5 },
-          },
+        {
           mappings = {
             i = {
               ["<C-Down>"] = actions.preview_scrolling_down,
@@ -173,6 +170,7 @@ return {
         },
         extensions = {
           file_browser = {
+            hidden = { file_browser = true, folder_browser = true },
             hijack_netrw = true
           },
           fzf = {
