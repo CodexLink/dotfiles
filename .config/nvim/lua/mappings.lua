@@ -175,6 +175,11 @@ wk.register({
       opts = mapping_default_opts
     })
   end, "utils: Code Format" },
+  ["<M-h>"] = { function() vim.cmd [[ normal h ]] end, mode = { "i" }, "cursor (on insert): move left" },
+  ["<M-j>"] = { function() vim.cmd [[ normal j ]] end, mode = { "i" }, "cursor (on insert): move down" },
+  ["<M-k>"] = { function() vim.cmd [[ normal k ]] end, mode = { "i" }, "cursor (on insert): move up" },
+  ["<M-l>"] = { function() vim.cmd [[ normal l ]] end, mode = { "i" }, "cursor (on insert): move right" },
+
   ["<M-z>"] = { function() vim.cmd [[ bprev ]] end, mode = { "n", "v" }, "buffer: previous" },
   ["<M-x>"] = { function() vim.cmd [[ bnext ]] end, mode = { "n", "v" }, "buffer: next" },
   ["<M-c>"] = { function() vim.cmd [[ bdelete ]] end, mode = { "n", "v" }, "buffer: delete current buffer" },
