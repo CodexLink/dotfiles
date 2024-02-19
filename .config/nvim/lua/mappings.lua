@@ -175,11 +175,12 @@ wk.register({
       opts = mapping_default_opts
     })
   end, "utils: Code Format" },
-  ["<M-h>"] = { function() vim.cmd [[ normal h ]] end, mode = { "i" }, "cursor (on insert): move left" },
-  ["<M-j>"] = { function() vim.cmd [[ normal j ]] end, mode = { "i" }, "cursor (on insert): move down" },
-  ["<M-k>"] = { function() vim.cmd [[ normal k ]] end, mode = { "i" }, "cursor (on insert): move up" },
-  ["<M-l>"] = { function() vim.cmd [[ normal l ]] end, mode = { "i" }, "cursor (on insert): move right" },
-
+  ["<M-h>"] = { "<C-o>h", mode = { "i" }, "cursor (on insert): move left" },
+  ["<M-H>"] = { "<C-o>B", mode = { "i" }, "cursor (on insert): move left (by word)" },
+  ["<M-j>"] = { "<C-o>j", mode = { "i" }, "cursor (on insert): move down" },
+  ["<M-k>"] = { "<C-o>k", mode = { "i" }, "cursor (on insert): move up" },
+  ["<M-l>"] = { "<C-o>l", mode = { "i" }, "cursor (on insert): move right" },
+  ["<M-L>"] = { "<C-o>B", mode = { "i" }, "cursor (on insert): move right (by word)" },
   ["<M-z>"] = { function() vim.cmd [[ bprev ]] end, mode = { "n", "v" }, "buffer: previous" },
   ["<M-x>"] = { function() vim.cmd [[ bnext ]] end, mode = { "n", "v" }, "buffer: next" },
   ["<M-c>"] = { function() vim.cmd [[ bdelete ]] end, mode = { "n", "v" }, "buffer: delete current buffer" },
@@ -194,7 +195,7 @@ wk.register({
       })
     end, "lsp: seek code action" },
     d = { function()
-      notifier({
+      notifkkier({
         cmd = vim.lsp.buf.declaration,
         opts = mapping_default_opts
       })
