@@ -4,7 +4,7 @@
 -- @info * I cannot do keybinds for LSP as they are required to be fed from the setup function argument `on_attach` on every LSP installed.
 -- @info [1] Some keybinds require using string instead of encapsulated [[]] context. This may be due to special handling after executing the function.
 -- @info [2] APIs for the plugins leveraging `telescope` are most likely not documented in terms of accessing them through APIs, the following is the command used to identify them: 'lua vim.inspect(print(require("telescope.extensions")))`
--- @info [3] To reduce telescope startup time, require("telescop").load_extension was declared from the keybinds instead before initializing them.
+-- @info [3] To reduce telescope startup time, require("telescope").load_extension was declared from the keybinds instead before initializing them.
 
 local wk = require("which-key")
 local notifier = require("utils").NotifyAfterExecution
@@ -12,8 +12,8 @@ local require_input_on_fn_call = require("utils").HandleInputToFn
 local mapping_default_opts = { animate = true, timeout = 1250, title = "Mapping-to-Execution" }
 
 wk.register({
-  ["<A-j>"] = { ":m '>+1<CR>gv=gv", "code: shift highlighted to bottom", mode = { "v" } },
-  ["<A-k>"] = { ":m '<-2<CR>gv=gv", "code: shift highlighted to top", mode = { "v" } },
+  ["<A-j>"] = { ":m '>+1<CR>gv=gv", "code: shift highlighted to bottom", mode = { "V" } },
+  ["<A-k>"] = { ":m '<-2<CR>gv=gv", "code: shift highlighted to top", mode = { "V" } },
   ["<F1>"] = { function() require("telescope.builtin").builtin() end, "telescope.nvim: Toggle 'builtin'" },
   ["<F2>"] = { function() require("trouble").toggle() end, "trouble.nvim (Diagnostics): Toggle" },
   ["<F3>"] = { function() require("aerial").toggle({ focus = false }) end, "aerial.nvim: Toggle (Unfocused)" },
@@ -195,7 +195,7 @@ wk.register({
       })
     end, "lsp: seek code action" },
     d = { function()
-      notifkkier({
+      notifier({
         cmd = vim.lsp.buf.declaration,
         opts = mapping_default_opts
       })
