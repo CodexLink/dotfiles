@@ -12,8 +12,8 @@ local require_input_on_fn_call = require("utils").HandleInputToFn
 local mapping_default_opts = { animate = true, timeout = 1250, title = "Mapping-to-Execution" }
 
 wk.register({
-  ["<A-j>"] = { ":m '>+1<CR>gv=gv", "code: shift highlighted to bottom", mode = { "V" } },
-  ["<A-k>"] = { ":m '<-2<CR>gv=gv", "code: shift highlighted to top", mode = { "V" } },
+  ["<A-j>"] = { ":m '>+1<CR>gv=gv", "code: shift highlighted to bottom", mode = "v" },
+  ["<A-k>"] = { ":m '<-2<CR>gv=gv", "code: shift highlighted to top", mode = "v" },
   ["<F1>"] = { function() require("telescope.builtin").builtin() end, "telescope.nvim: Toggle 'builtin'" },
   ["<F2>"] = { function() require("trouble").toggle() end, "trouble.nvim (Diagnostics): Toggle" },
   ["<F3>"] = { function() require("aerial").toggle({ focus = false }) end, "aerial.nvim: Toggle (Unfocused)" },
@@ -175,12 +175,12 @@ wk.register({
       opts = mapping_default_opts
     })
   end, "utils: Code Format" },
-  ["<M-h>"] = { "<C-o>h", mode = { "i" }, "cursor (on insert): move left" },
-  ["<M-H>"] = { "<C-o>B", mode = { "i" }, "cursor (on insert): move left (by word)" },
-  ["<M-j>"] = { "<C-o>j", mode = { "i" }, "cursor (on insert): move down" },
-  ["<M-k>"] = { "<C-o>k", mode = { "i" }, "cursor (on insert): move up" },
-  ["<M-l>"] = { "<C-o>l", mode = { "i" }, "cursor (on insert): move right" },
-  ["<M-L>"] = { "<C-o>B", mode = { "i" }, "cursor (on insert): move right (by word)" },
+  ["<M-h>"] = { "<C-o>h", "cursor (on insert): move left", mode = "i" },
+  ["<M-H>"] = { "<C-o>B", "cursor (on insert): move left (by word)", mode = "i" },
+  ["<M-j>"] = { "<C-o>j", "cursor (on insert): move down", mode = "i" },
+  ["<M-k>"] = { "<C-o>k", "cursor (on insert): move up", mode = "i" },
+  ["<M-l>"] = { "<C-o>l", "cursor (on insert): move right", mode = "i" },
+  ["<M-L>"] = { "<C-o>W", "cursor (on insert): move right (by word)", mode = "i"  },
   ["<M-z>"] = { function() vim.cmd [[ bprev ]] end, mode = { "n", "v" }, "buffer: previous" },
   ["<M-x>"] = { function() vim.cmd [[ bnext ]] end, mode = { "n", "v" }, "buffer: next" },
   ["<M-c>"] = { function() vim.cmd [[ bdelete ]] end, mode = { "n", "v" }, "buffer: delete current buffer" },
