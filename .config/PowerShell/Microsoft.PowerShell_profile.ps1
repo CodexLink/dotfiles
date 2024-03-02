@@ -40,6 +40,7 @@ $Env:DISABLE_SEGMENT_WAKATIME = $false
 # $Env:SEGMENT_PROJECT_PYTHON_ACTIVE_VENV_STR = "Env. Active"
 $Env:SEGMENT_PROJECT_PYTHON_ACTIVE_VENV_STR = ""
 $Env:WAKATIME_API_KEY = "<masked>"
+$Env:CODESTATS_API_KEY = "<masked>"
 $Env:XDG_CONFIG_HOME = "$HOME/.config"
 
 # # Script Variables
