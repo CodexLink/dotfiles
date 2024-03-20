@@ -145,8 +145,8 @@ wk.register({
     require("telescope").extensions.aerial.aerial()
   end,
     "telescope.nvim: Toggle 'aerial'" },
-  ["<M-q>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char", mode = { "n", "v" } },
-  ["<M-Q>"] = { function() require("hop").hint_char2() end, "hop.nvim: Hop 2 chars", mode = { "n", "v" } },
+  ["<M-q>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char", mode = { "i", "n", "v" } },
+  ["<M-Q>"] = { function() require("hop").hint_char2() end, "hop.nvim: Hop 2 chars", mode = { "i", "n", "v" } },
   ["<M-w>"] = { function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.AFTER_CURSOR }) end,
     "hop.nvim: hop below anywhere" },
   ["<M-W>"] = { function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR }) end,
