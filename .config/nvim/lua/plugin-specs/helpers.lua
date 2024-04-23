@@ -14,6 +14,7 @@ return {
     config = function(_, opts) require("deadcolumn").setup(opts) end,
     opts = {
       scope = "line",
+      modes = { "i", "n" },
       blending = { threshold = 0.4, colorcode = "#FECE2A" },
       warning = { alpha = 0.45, offset = 0, colorcode = "#FE2AC4" },
     },
@@ -87,15 +88,9 @@ return {
   -- NOTE: surround.vim but in nvim
   {
     "roobert/surround-ui.nvim",
-    dependencies = {
-      "kylechui/nvim-surround",
-      "folke/which-key.nvim",
-    },
-    config = function()
-      require("surround-ui").setup({
-        root_key = "S"
-      })
-    end,
+    dependencies = { "kylechui/nvim-surround", "folke/which-key.nvim" },
+    opts = { root_key = "S" },
+    event = "VeryLazy"
   },
   {
     "kylechui/nvim-surround",
