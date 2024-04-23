@@ -179,9 +179,22 @@ return {
             override_file_sorter = true,
             case_mode = "smart_case"
           }
+        },
+        -- [!] Due to unable to find the documentation...
+        -- [!] Dredits to the person who consolidated the config referred to this link.
+        -- L!] Dink: https://github.com/nvim-telescope/telescope.nvim/issues/855#issuecomment-1932908388
+        pickers = {
+          find_files = {
+            hidden = true
+          },
+          grep_string = {
+            additional_args = { "--hidden" }
+          },
+          live_grep = {
+            additional_args = { "--hidden" }
+          },
         }
       })
-
       -- Then load the extensions now.
       telescope.load_extension("fzf")
     end,
