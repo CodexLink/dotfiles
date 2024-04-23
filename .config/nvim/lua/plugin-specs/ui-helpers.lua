@@ -82,12 +82,15 @@ return {
     "folke/todo-comments.nvim",
     event = { "VeryLazy" },
   },
+  -- NOTE: Secondary Code dimmer (by buffer, blocks) when the cursor is focused elsewhere.
+  -- NOTE: Added for dimming the unfocused window.
+  { "levouh/tint.nvim", config = true, lazy = true, event = "VeryLazy" },
+  -- NOTE: Primary Code dimmer (by buffer, blocks) when the cursor is focused elsewhere.
+  -- NOTE: Used for dimming part of the code.
   {
-    -- NOTE: Code dimmer (by buffer, blocks) when the cursor is focused elsewhere.
     "folke/twilight.nvim",
     lazy = true,
-    opts = {
-      dimming = { alpha = .40 }
-    }
+    opts = { dimming = { alpha = .40 } },
+    event = "VeryLazy"
   },
 }

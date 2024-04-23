@@ -83,6 +83,7 @@ wk.register({
       end,
         "Preview hunk (Inlined)" },
     },
+    h = { function() require("tsht").nodes() end, "nvim-treehopper: Hop to highlight context" },
     L = { function()
       require("telescope").load_extension("lazygit")
       require("lazygit").lazygit()
@@ -120,7 +121,13 @@ wk.register({
       end,
         "possession.nvim: Load saved session (dialogue)" },
     },
-    t = { function() require("tsht").nodes() end, "nvim-treehopper: Hop to highlight context" },
+    t = { function()
+      notifier({
+        cmd = require("tint").toggle,
+        message = "tint: Inactive window dimming toggled.",
+        opts = mapping_default_opts
+      })
+    end, "twilight.nvim: Toggle inactive window dimming" },
     T = { function()
       notifier({
         cmd = require("twilight").toggle,
@@ -181,6 +188,7 @@ wk.register({
   ["<M-k>"] = { "<C-o>k", "cursor (on insert): move up", mode = "i" },
   ["<M-l>"] = { "<C-o>l", "cursor (on insert): move right", mode = "i" },
   ["<M-L>"] = { "<C-o>W", "cursor (on insert): move right (by word)", mode = "i"  },
+  ["<M-L>"] = { "<C-o>W", "cursor (on insert): move right (by word)", mode = "i" },
   ["<M-z>"] = { function() vim.cmd [[ bprev ]] end, mode = { "n", "v" }, "buffer: previous" },
   ["<M-x>"] = { function() vim.cmd [[ bnext ]] end, mode = { "n", "v" }, "buffer: next" },
   ["<M-c>"] = { function() vim.cmd [[ bdelete ]] end, mode = { "n", "v" }, "buffer: delete current buffer" },
