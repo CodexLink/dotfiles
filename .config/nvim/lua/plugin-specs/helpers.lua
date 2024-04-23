@@ -10,6 +10,16 @@ return {
     event = { "BufAdd", "BufNewFile", "BufReadPost" }
   },
   {
+    "Bekaboo/deadcolumn.nvim",
+    config = function(_, opts) require("deadcolumn").setup(opts) end,
+    opts = {
+      scope = "line",
+      blending = { threshold = 0.4, colorcode = "#FECE2A" },
+      warning = { alpha = 0.45, offset = 0, colorcode = "#FE2AC4" },
+    },
+    event = "VeryLazy"
+  },
+  {
     --- NOTE: Alternative `git diff` viewer, supported by `lazy.nvim` (package manager).
     "sindrets/diffview.nvim",
     config = true,
@@ -24,7 +34,7 @@ return {
     opts = { input_buffer_type = "dressing" }
   },
   {
-    --- NOTE: External helper tool that helps visualizesa the markdown or text file to the browser.
+    --- NOTE: External helper tool that helps visualizes a the markdown or text file to the browser.
     "iamcco/markdown-preview.nvim",
     build = function() vim.fn["mkdp#util#install"]() end,
     config = function()
@@ -75,6 +85,18 @@ return {
     }
   },
   -- NOTE: surround.vim but in nvim
+  {
+    "roobert/surround-ui.nvim",
+    dependencies = {
+      "kylechui/nvim-surround",
+      "folke/which-key.nvim",
+    },
+    config = function()
+      require("surround-ui").setup({
+        root_key = "S"
+      })
+    end,
+  },
   {
     "kylechui/nvim-surround",
     config = true,
