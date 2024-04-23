@@ -77,7 +77,6 @@ return {
         globalstatus = true,
         icons_enabled = true,
         section_separators = { left = "", right = "" },
-        -- theme = "catppuccin"
       },
       -- @note For section a, b, c, the left seperator is displayed on right side for other elements while first element is displayed at left.
       -- @note This was the same case for the section x, y, z but in opposite.
@@ -139,71 +138,142 @@ return {
     config = true,
     event = "BufReadPost",
   },
+  -- NOTE: File explorer, but in dialogue, this is very similar to `dressing.nvim`, but has all-in-one capabilities.
   {
-    -- NOTE: File explorer, but in dialogue, this is very similar to `dressing.nvim`, but has all-in-one capabilities.
-    "nvim-telescope/telescope.nvim",
-    branch = "0.1.x",
-    config = function()
-      -- NOTE:!! Since `opts` cannot recognize other plugins and there are other configs that needed to be done after initializing the plugins through `function` scope, I have to not lazy-load them and NOT load them on init.
-      local telescope = require("telescope")
-      local actions = require("telescope.actions")
-
-      -- Load the plugin itself first before the extension.
-      telescope.setup({
-        {
-          mappings = {
-            i = {
-              ["<C-Down>"] = actions.preview_scrolling_down,
-              ["<C-q>"] = actions.close,
-              ["<C-Up>"] = actions.preview_scrolling_up,
-              ["<S-Down>"] = actions.results_scrolling_down,
-              ["<S-Up>"] = actions.results_scrolling_up
+    "FabianWirth/search.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      branch = "0.1.x",
+      config = function()
+        -- NOTE:!! Since `opts` cannot recognize other plugins and there are other configs that needed to be done after initializing the plugins through `function` scope, I have to not lazy-load them and NOT load them on init.
+        local telescope = require("telescope")
+        local actions = require("telescope.actions")
+        -- Load the plugin itself first before the extension.
+        telescope.setup({
+          {
+            defaults = {
+              mappings = {
+                i = {
+                  ["<S-Down>"] = "preview_scrolling_down",
+                  ["<S-Up>"] = "preview_scrolling_up",
+                },
+                n = {
+                  ["<S-Down>"] = "preview_scrolling_down",
+                  ["<S-Up>"] = "preview_scrolling_up",
+                }
+              }
+            }
+          },
+          extensions = {
+            file_browser = {
+              hidden = { file_browser = true, folder_browser = true },
+              hijack_netrw = true
             },
-            n = {
-              ["<C-Down>"] = actions.preview_scrolling_down,
-              ["<C-Up>"] = actions.preview_scrolling_up,
-              ["q"] = actions.close,
-              ["<S-Down>"] = actions.results_scrolling_down,
-              ["<S-Up>"] = actions.results_scrolling_up
+            fzf = {
+              fuzzy = true,
+              override_generic_sorter = true,
+              override_file_sorter = true,
+              case_mode = "smart_case"
+            }
+          },
+          -- [!] Due to unable to find the documentation...
+          -- [!] Dredits to the person who consolidated the config referred to this link.
+          -- L!] Dink: https://github.com/nvim-telescope/telescope.nvim/issues/855#issuecomment-1932908388
+          pickers = {
+            find_files = {
+              hidden = true
+            },
+            grep_string = {
+              additional_args = { "--hidden" }
+            },
+            live_grep = {
+              additional_args = { "--hidden" }
+            },
+          }
+        })
+        -- Then load the extensions now.
+        telescope.load_extension("fzf")
+      end,
+      dependencies = {
+        { "nvim-lua/plenary.nvim" },
+        { "nvim-telescope/telescope-file-browser.nvim", lazy = true },
+        { 'nvim-telescope/telescope-fzf-native.nvim',   build = "make" }
+      },
+      lazy = true
+    },
+    config = function()
+      local ts_bt = require("telescope.builtin")
+      local s = require("search")
+      s.setup({
+        collections = {
+          -- Here the "git" collection is defined. It follows the same configuraton layout as tabs.
+          essentials = {
+            initial_tab = 1,
+            tabs = {
+              {
+                name = "Find Files",
+                tele_func = ts_bt.find_files
+              },
+              {
+                name = "Live Grep",
+                tele_func = ts_bt.live_grep
+              },
+              {
+                name = "Buffers",
+                tele_func = ts_bt.buffers
+              },
+              {
+                name = "File/Folder Browser",
+                tele_func = function()
+                  local ts = require("telescope")
+                  ts.load_extension("file_browser")
+                  ts.extensions.file_browser.file_browser()
+                end
+              },
+              {
+                name = "Built-In",
+                tele_func = ts_bt.builtin
+              }
+            }
+          },
+          extras = {
+            initial_tab = 1,
+            tabs = {
+              {
+                name = "Sessions",
+                tele_func = function()
+                  local ts = require("telescope")
+
+                  ts.load_extension("possession")
+                  ts.extensions.possession.list()
+                end,
+              },
+              {
+                name = "TODOs",
+                tele_func = function() vim.cmd([[ TodoTelescope ]]) end
+              },
+              {
+                name = "Notification",
+                tele_func = function() require("telescope").extensions.notify.notify() end
+              },
+              {
+                name = "Aerial",
+                tele_func = function()
+                  local ts = require("telescope")
+
+                  ts.load_extension("aerial")
+                  ts.extensions.aerial.aerial()
+                end,
+              },
+              {
+                name = "Diagnostics",
+                tele_func = function() require("telescope.builtin").diagnostics() end,
+              },
             }
           }
-        },
-        extensions = {
-          file_browser = {
-            hidden = { file_browser = true, folder_browser = true },
-            hijack_netrw = true
-          },
-          fzf = {
-            fuzzy = true,
-            override_generic_sorter = true,
-            override_file_sorter = true,
-            case_mode = "smart_case"
-          }
-        },
-        -- [!] Due to unable to find the documentation...
-        -- [!] Dredits to the person who consolidated the config referred to this link.
-        -- L!] Dink: https://github.com/nvim-telescope/telescope.nvim/issues/855#issuecomment-1932908388
-        pickers = {
-          find_files = {
-            hidden = true
-          },
-          grep_string = {
-            additional_args = { "--hidden" }
-          },
-          live_grep = {
-            additional_args = { "--hidden" }
-          },
         }
       })
-      -- Then load the extensions now.
-      telescope.load_extension("fzf")
-    end,
-    dependencies = {
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-telescope/telescope-file-browser.nvim", lazy = true },
-      { 'nvim-telescope/telescope-fzf-native.nvim',   build = "make" }
-    },
-    lazy = true
+    end
   },
   {
     -- NOTE: Displays icons, more like from the `Nerd Fonts`, note that lots of plugins depend on this plugin!
@@ -214,6 +284,7 @@ return {
       default = true
     }
   },
+  -- NOTE: Bottom panel that contains diagnostics.
   {
     "folke/trouble.nvim",
     lazy = true,

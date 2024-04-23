@@ -14,26 +14,13 @@ local mapping_default_opts = { animate = true, timeout = 1250, title = "Mapping-
 wk.register({
   ["<A-j>"] = { ":m '>+1<CR>gv=gv", "code: shift highlighted to bottom", mode = "v" },
   ["<A-k>"] = { ":m '<-2<CR>gv=gv", "code: shift highlighted to top", mode = "v" },
-  ["<F1>"] = { function() require("telescope.builtin").builtin() end, "telescope.nvim: Toggle 'builtin'" },
+  ["<F1>"] = { function() require("search").open({ collection = "essentials" }) end, "Telescope Seach: Essentials Collection opened." },
   ["<F2>"] = { function() require("trouble").toggle() end, "trouble.nvim (Diagnostics): Toggle" },
   ["<F3>"] = { function() require("aerial").toggle({ focus = false }) end, "aerial.nvim: Toggle (Unfocused)" },
   -- ["<F4>"] = { function () print end, "DAP"},
   ["<F5>"] = { function() require("lazy").home() end, "lazy.nvim: Opens UI window" },
   ["<F6>"] = { function() require("which-key").show() end, "which-key.nvim: Opens UI window for hinting keybinds" },
   ["<F7>"] = { function() require("mason.ui").open() end, "mason.nvim: Opens UI window" },
-  ["<F8>"] = { function()
-    notifier({
-      cmd = function()
-        require("telescope").load_extension("possession")
-        require("telescope")
-            .extensions.possession.list()
-      end,
-      message = "Session-to-load selection displayed.",
-      opts = mapping_default_opts
-    })
-  end,
-    "possession.nvim: session-to-load selection" },
-  ["<F9>"] = { function() vim.cmd([[ TodoTelescope ]]) end, "todo-comments.nvim: Check TODO with Telescope." },
   ["<Leader>"] = {
     a = { function()
       notifier({
@@ -96,8 +83,6 @@ wk.register({
         opts = mapping_default_opts
       })
     end, "markdown-preview.nvim: Toggle" },
-    n = { function() require("telescope").extensions.notify.notify() end,
-      "nvim-notify: Check notifications via 'Telescope'" },
     r = { function() require("ssr").open() end, "ssr.nvim: Do 'Structural Search and Replace'", mode = { "n", "x" } },
     s = {
       name = "possession.nvim: Session Management",
@@ -136,22 +121,7 @@ wk.register({
       })
     end, "twilight.nvim: Toggle code dimming" },
   },
-
-  ["<M-1>"] = { function() require("telescope.builtin").buffers() end, "telescope.nvim: Toggle buffers", mode = { "n", "v" } },
-  ["<M-2>"] = { function() require("telescope.builtin").live_grep() end, "telescope.nvim: Toggle live grep ('ripgrep')", mode = { "n", "v" } },
-  ["<M-3>"] = { function() require("telescope.builtin").find_files() end, "telescope.nvim: Toggle file search", mode = { "n", "v" } },
-  ["<M-F1>"] = { function()
-    require("telescope").load_extension("file_browser")
-    require("telescope").extensions.file_browser
-        .file_browser()
-  end,
-    "telescope.nvim: Toggle 'file browser'" },
-  ["<M-F2>"] = { function() require("telescope.builtin").diagnostics() end, "telescope.nvim: Toggle 'diagnostics'" },
-  ["<M-F3>"] = { function()
-    require("telescope").load_extension("aerial")
-    require("telescope").extensions.aerial.aerial()
-  end,
-    "telescope.nvim: Toggle 'aerial'" },
+  ["<M-F1>"] = { function() require("search").open({ collection = "extras" }) end, "Telescope Seach: Extras Collection opened." },
   ["<M-q>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char", mode = { "i", "n", "v" } },
   ["<M-Q>"] = { function() require("hop").hint_char2() end, "hop.nvim: Hop 2 chars", mode = { "i", "n", "v" } },
   ["<M-w>"] = { function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.AFTER_CURSOR }) end,
@@ -187,7 +157,7 @@ wk.register({
   ["<M-j>"] = { "<C-o>j", "cursor (on insert): move down", mode = "i" },
   ["<M-k>"] = { "<C-o>k", "cursor (on insert): move up", mode = "i" },
   ["<M-l>"] = { "<C-o>l", "cursor (on insert): move right", mode = "i" },
-  ["<M-L>"] = { "<C-o>W", "cursor (on insert): move right (by word)", mode = "i"  },
+  ["<M-L>"] = { "<C-o>W", "cursor (on insert): move right (by word)", mode = "i" },
   ["<M-L>"] = { "<C-o>W", "cursor (on insert): move right (by word)", mode = "i" },
   ["<M-z>"] = { function() vim.cmd [[ bprev ]] end, mode = { "n", "v" }, "buffer: previous" },
   ["<M-x>"] = { function() vim.cmd [[ bnext ]] end, mode = { "n", "v" }, "buffer: next" },
