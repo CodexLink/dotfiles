@@ -26,6 +26,8 @@ return {
       TelescopeResultsDiffChange = { bg = "NONE" },
       NotifyBackground = { bg = "#000000" },
       WinSeparator = { bg = "NONE", fg = "#FECE2A" },
+      CustomReferrablePriLink = { bg = "#FECE2A", fg = "NONE" },
+      CustomeReferrableSecLink = { bg = "#FE2AC4", fg = "NONE" }
     },
     integrations = {
       aerial = true,

@@ -9,6 +9,7 @@
 local vo = vim.opt
 local vg = vim.g
 
+vo.colorcolumn = "120"
 vo.cursorline = true
 vo.expandtab = true
 vo.hlsearch = false
