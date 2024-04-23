@@ -215,7 +215,6 @@ return {
     }
   },
   {
-    -- NOTE: Bottom panel that contains diagnostics.
     "folke/trouble.nvim",
     lazy = true,
     opts = {
@@ -238,6 +237,17 @@ return {
         previous = "k",
         next = "j"
       }
+    }
+  },
+  -- NOTE: Cursor Guide, used to check where are we, as if we are blind that our cursor gets lost along the way.
+  {
+    "gen740/SmoothCursor.nvim",
+    config = true,
+    event = "VeryLazy",
+    opts = {
+      type = "exp",
+      fancy = { enable = true },
+      threshold = 1,
     }
   }
 }
