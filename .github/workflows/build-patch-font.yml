@@ -26,6 +26,7 @@ jobs:
         uses: actions/setup-node@v4
 
       - name: Step 3 | Build Font
+        working-directory: font-repo
         run: |
           npm install
           npm run build -- ttf::iosevka-codex-link
