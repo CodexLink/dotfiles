@@ -31,7 +31,7 @@ jobs:
           mv ../font/private-build-plans.toml ./
           ls
           npm install
-          npm run build -- ttf::iosevka-codex-link
+          npm run build -- ttf::IosevkaCodexLink
 
       - name: Debug | Assert
         run: |
