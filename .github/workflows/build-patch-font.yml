@@ -15,11 +15,6 @@ jobs:
           sparse-checkout: |
             font/private-build-plans.toml
 
-      - name: Debug
-        run: |
-          ls
-          exit 1
-
       - name: Step 1 | Font (Iosevka) Repository Checkout
         uses: actions/checkout@v4
         with:
@@ -33,7 +28,7 @@ jobs:
       - name: Step 3 | Build Font
         working-directory: font-repo
         run: |
-          mv ../private-build-plans.toml ./
+          mv ../font/private-build-plans.toml ./
           ls
           npm install
           npm run build -- ttf::iosevka-codex-link
