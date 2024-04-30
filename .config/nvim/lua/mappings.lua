@@ -158,7 +158,6 @@ wk.register({
   ["<M-k>"] = { "<C-o>k", "cursor (on insert): move up", mode = "i" },
   ["<M-l>"] = { "<C-o>l", "cursor (on insert): move right", mode = "i" },
   ["<M-L>"] = { "<C-o>W", "cursor (on insert): move right (by word)", mode = "i" },
-  ["<M-L>"] = { "<C-o>W", "cursor (on insert): move right (by word)", mode = "i" },
   ["<M-z>"] = { function() vim.cmd [[ bprev ]] end, mode = { "n", "v" }, "buffer: previous" },
   ["<M-x>"] = { function() vim.cmd [[ bnext ]] end, mode = { "n", "v" }, "buffer: next" },
   ["<M-c>"] = { function() vim.cmd [[ bdelete ]] end, mode = { "n", "v" }, "buffer: delete current buffer" },
