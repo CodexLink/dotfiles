@@ -29,8 +29,8 @@ jobs:
         working-directory: font-repo
         run: |
           mv ../font/private-build-plans.toml ./
-          ls
           npm install
+          npm install ttfautohint
           npm run build -- ttf::IosevkaCodexLink
 
       - name: Debug | Assert
