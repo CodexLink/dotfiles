@@ -15,6 +15,11 @@ jobs:
           sparse-checkout: |
             font/private-build-plans.toml
 
+      - name: Debug
+        run: |
+          ls
+          exit 1
+
       - name: Step 1 | Font (Iosevka) Repository Checkout
         uses: actions/checkout@v4
         with:
