@@ -27,7 +27,7 @@ jobs:
 
       - name: Step 3 | Build Font
         run: |
-          npm run install
+          npm install
           npm run build -- ttf::iosevka-codex-link
 
       - name: Debug | Assert
