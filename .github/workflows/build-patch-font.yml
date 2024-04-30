@@ -55,10 +55,10 @@ jobs:
           npm install ttfautohint
           npm run build -- ttf::IosevkaCodexLink
           mv ./dist/IosevkaCodexLink/TTF/ ../font-patch/font-dist-ttf
-          ls
+          ls ../font-patcher
 
       - name: Step 7 | Patch Font
         working-directory: "font-patcher"
         run: |
-          font-patcher font-dist-ttf --complete --mono
+          ./font-patcher font-dist-ttf --complete --mono
           ls
