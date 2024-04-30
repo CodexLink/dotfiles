@@ -5,7 +5,7 @@ on:
 
 jobs:
   font-build-patch:
-    name: Font Builder + Patch | Iosevka & Nerd Fonts
+    name: Font Build + Patch | Iosevka & Nerd Fonts
     runs-on: ubuntu-latest
 
     steps:
@@ -19,10 +19,10 @@ jobs:
           
       - name: Step 2 | Setup FontForge
         run: |
-          sudo apt-get install software-properties-common
-          sudo add-apt-repository ppa:fontforge/fontforge
-          sudo apt-get update
-          sudo apt-get install python-fontforge
+          sudo apt-get install software-properties-common;
+          sudo add-apt-repository ppa:fontforge/fontforge;
+          sudo apt-get update;
+          sudo apt-get install python-fontforge;
 
       - name: Step 3 | Main Repository Checkout
         uses: actions/checkout@v4
@@ -60,5 +60,5 @@ jobs:
       - name: Step 7 | Patch Font
         working-directory: "font-patcher"
         run: |
-          font-patcher font-dist-ttf
+          font-patcher font-dist-ttf --complete --mono
           ls
