@@ -21,7 +21,7 @@ jobs:
         run: |
           sudo add-apt-repository universe
           sudo apt-get update
-          sudo apt-get install python-fontforge
+          sudo apt-get install fontforge python3-fontforge
 
       - name: Step 3 | Main Repository Checkout
         uses: actions/checkout@v4
