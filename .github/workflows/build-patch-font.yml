@@ -4,61 +4,58 @@ on:
   workflow_dispatch:
 
 jobs:
-  font-build:
-    name: Font Builder | Iosevka
+  font-build-patch:
+    name: Font Builder + Patch | Iosevka & Nerd Fonts
     runs-on: ubuntu-latest
 
     steps:
-      - name: Step 0 | Main Repository Checkout
+      - name: Step 1 | Setup Node.js
+        uses: actions/setup-node@v4
+
+      - name: Step - | Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          
+      - name: Step 2 | Setup FontForge
+        run: |
+          sudo apt-get install python-fontforge
+
+      - name: Step 3 | Main Repository Checkout
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
             font/private-build-plans.toml
 
-      - name: Step 1 | Font (Iosevka) Repository Checkout
+      - name: Step 4 | Font (Iosevka) Repository Checkout
         uses: actions/checkout@v4
         with:
+          path: font-build
           repository: be5invis/Iosevka
-          path: font-repo
           fetch-depth: 1
 
-      - name: Step 2 | Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Step 5 | Font Patcher Repository Checkout
+        uses: actions/checkout@v4
+        with:
+          path: font-patch
+          repository: ryanoasis/nerd-fonts
+          sparse-checkout: |
+            bin
+            src/glyphs
+            font-patcher
 
-      - name: Step 3 | Build Font
+      - name: Step 6 | Build Font
         working-directory: font-repo
         run: |
           mv ../font/private-build-plans.toml ./
           npm install
           npm install ttfautohint
           npm run build -- ttf::IosevkaCodexLink
-
-      - name: Debug | Assert
-        run: |
+          mv ./dist/IosevkaCodexLink/TTF/ ../font-patch/font-dist-ttf
           ls
 
-  font-patcher:
-    name: Font Patcher | Nerd Fonts
-    runs-on: ubuntu-latest
-    needs: font-build
-
-    steps:
-      - name: Step 0 | Font Patcher Repository Checkout
-        uses: actions/checkout@v4
-        with:
-          repository: be5invis/Iosevka
-          path: font-patcher
-          sparse-checkout: |
-            bin
-            src/glyphs
-            font-patcher
-
-      - name: Debug | Assert
+      - name: Step 7 | Patch Font
+        working-directory: "font-patcher"
         run: |
+          font-patcher font-dist-ttf
           ls
-
-      - name: Step - | Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-          # run:
