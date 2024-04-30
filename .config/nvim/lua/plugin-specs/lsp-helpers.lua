@@ -317,5 +317,6 @@ return {
       })
     end,
   },
-  { "j-hui/fidget.nvim", event = 'LspAttach', config = true }
+  { "j-hui/fidget.nvim",   event = "LspAttach", config = true },
+  { "dgagn/diagflow.nvim", event = "LspAttach", config = true },
 }
