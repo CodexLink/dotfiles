@@ -28,6 +28,8 @@ jobs:
       - name: Step 3 | Build Font
         working-directory: font-repo
         run: |
+          mv ../private-build-plans.toml ./
+          ls
           npm install
           npm run build -- ttf::iosevka-codex-link
 
