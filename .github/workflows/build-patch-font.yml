@@ -58,7 +58,7 @@ jobs:
           ls ../font-patch
 
       - name: Step 7 | Patch Font
-        working-directory: font-patcher
+        working-directory: font-patch
         run: |
           ./font-patcher font-dist-ttf --complete --mono
           ls
