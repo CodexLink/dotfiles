@@ -68,8 +68,8 @@ jobs:
       - name: Step 8.C | Post-Build Font (Clean-up)
         working-directory: font-build
         run: |
-          mkdir ../font-patch/font-dist-ttf/original
           mv ./dist/IosevkaCodexLink/TTF/ ../font-patch/font-dist-ttf
+          mkdir ../font-patch/font-dist-ttf/original
           mv ../font-patch/font-dist-ttf/*.ttf ../font-patch/font-dist-ttf/original
 
       - name: Step 9.A | Pre-Patch Font (Prep-Work)
