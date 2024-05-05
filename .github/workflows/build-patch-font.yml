@@ -39,6 +39,7 @@ jobs:
           fetch-depth: 1
 
       - name: Step 6 | Install Iosevka Dependencies
+        working-directory: font-build
         run: |
           npm install
           npm install ttfautohint
