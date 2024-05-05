@@ -12,12 +12,7 @@ jobs:
       - name: Step 1 | Setup Node.js
         uses: actions/setup-node@v4
 
-      - name: Step 2 | Install Iosevka Dependencies
-        run: |
-          npm install
-          npm install ttfautohint
-
-      - name: Step 3 | Setup Python
+      - name: Step 2 | Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
@@ -43,7 +38,12 @@ jobs:
           repository: be5invis/Iosevka
           fetch-depth: 1
 
-      - name: Step 6 | Font Patcher Repository Checkout
+      - name: Step 6 | Install Iosevka Dependencies
+        run: |
+          npm install
+          npm install ttfautohint
+
+      - name: Step 7 | Font Patcher Repository Checkout
         uses: actions/checkout@v4
         with:
           path: font-patch
@@ -54,28 +54,28 @@ jobs:
             font-patcher
           sparse-checkout-cone-mode: false
 
-      - name: Step 7.A | Pre-Build Font (Prep-work)
+      - name: Step 8.A | Pre-Build Font (Prep-work)
         working-directory: font-build
         run: |
           mv ../font/private-build-plans.toml ./
 
-      - name: Step 7.B | Actual Build Font
+      - name: Step 8.B | Actual Build Font
         working-directory: font-build
         run: |
           npm run build -- ttf::IosevkaCodexLink
 
-      - name: Step 7.C | Post-Build Font (Clean-up)
+      - name: Step 8.C | Post-Build Font (Clean-up)
         working-directory: font-build
         run: |
           mkdir ../font-patch/font-dist-ttf/original
           mv ./dist/IosevkaCodexLink/TTF/ ../font-patch/font-dist-ttf
           mv ../font-patch/font-dist-ttf/*.ttf ../font-patch/font-dist-ttf/original
 
-      - name: Step 8.A | Pre-Patch Font (Prep-Work)
+      - name: Step 9.A | Pre-Patch Font (Prep-Work)
         run: unset LD_LIBRARY_PATH
 
       # NOTE: Reference for fix in regards to missing Base Library: https://github.com/indygreg/PyOxidizer/issues/406
-      - name: Step 8.B | Actual Patch Font
+      - name: Step 9.B | Actual Patch Font
         working-directory: font-patch
         shell: bash
         run: |
@@ -83,7 +83,7 @@ jobs:
           ls
           ls font-dist-ttf
 
-      - name: Step 8.C | Post-Patch Font (Publish Release)
+      - name: Step 9.C | Post-Patch Font (Publish Release)
         uses: softprops/action-gh-release@v2
         with:
           prerelease: true
