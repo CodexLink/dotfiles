@@ -70,6 +70,7 @@ jobs:
         run: |
           mv ./dist/IosevkaCodexLink/TTF/ ../font-patch/font-dist-ttf
           mkdir ../font-patch/font-dist-ttf/original
+          mkdir ../font-patch/font-dist-tff/patched
           mv ../font-patch/font-dist-ttf/*.ttf ../font-patch/font-dist-ttf/original
 
       - name: Step 9.A | Pre-Patch Font (Prep-work)
@@ -80,7 +81,7 @@ jobs:
         working-directory: font-patch
         shell: bash
         run: |
-          for i in font-dist-ttf/original/*.ttf; do "fontforge -script ./font-patcher $i --complete --mono --progressbars --outputdir font-dist-ttf/patched"; done
+          for i in font-dist-ttf/original/*.ttf; do fontforge -script ./font-patcher $i --complete --mono --outputdir font-dist-ttf/patched; done
           ls
           ls font-dist-ttf
 
