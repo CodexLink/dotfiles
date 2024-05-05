@@ -15,7 +15,7 @@ jobs:
       - name: Step - | Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.9"
 
           # NOTE: Reference for repository to use for installing FontForge: https://askubuntu.com/questions/1058055/how-do-i-install-fontforge-on-kubuntu-18-04
       - name: Step 2 | Setup FontForge
@@ -60,7 +60,7 @@ jobs:
       - name: Step 7 | Patch Font
         working-directory: font-patch
         run: |
-          unset PYTHONHOME
+          unset LD_LIBRARY_PATH
           fontforge -script ./font-patcher font-dist-ttf --complete --mono
           ls
           ls font-dist-ttf
