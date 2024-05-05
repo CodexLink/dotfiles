@@ -70,7 +70,7 @@ jobs:
         run: |
           mv ./dist/IosevkaCodexLink/TTF/ ../font-patch/font-dist-ttf
           mkdir ../font-patch/font-dist-ttf/original
-          mkdir ../font-patch/font-dist-tff/patched
+          mkdir ../font-patch/font-dist-ttf/patched
           mv ../font-patch/font-dist-ttf/*.ttf ../font-patch/font-dist-ttf/original
 
       - name: Step 9.A | Pre-Patch Font (Prep-work)
