@@ -12,33 +12,38 @@ jobs:
       - name: Step 1 | Setup Node.js
         uses: actions/setup-node@v4
 
-      - name: Step - | Setup Python
+      - name: Step 2 | Install Iosevka Dependencies
+        run: |
+          npm install
+          npm install ttfautohint
+
+      - name: Step 3 | Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
       # NOTE: Reference for repository to use for installing FontForge: https://askubuntu.com/questions/1058055/how-do-i-install-fontforge-on-kubuntu-18-04
-      - name: Step 2 | Setup FontForge
+      - name: Step 3 | Setup FontForge
         run: |
           sudo add-apt-repository universe
           sudo apt-get update
           sudo apt-get install fontforge python3-fontforge
 
-      - name: Step 3 | Main Repository Checkout
+      - name: Step 4 | Main Repository Checkout
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
             font/private-build-plans.toml
           sparse-checkout-cone-mode: false
 
-      - name: Step 4 | Font (Iosevka) Repository Checkout
+      - name: Step 5 | Font (Iosevka) Repository Checkout
         uses: actions/checkout@v4
         with:
           path: font-build
           repository: be5invis/Iosevka
           fetch-depth: 1
 
-      - name: Step 5 | Font Patcher Repository Checkout
+      - name: Step 6 | Font Patcher Repository Checkout
         uses: actions/checkout@v4
         with:
           path: font-patch
@@ -49,30 +54,36 @@ jobs:
             font-patcher
           sparse-checkout-cone-mode: false
 
-      - name: Step 6 | Build Font
+      - name: Step 7.A | Pre-Build Font (Prep-work)
         working-directory: font-build
         run: |
           mv ../font/private-build-plans.toml ./
-          npm install
-          npm install ttfautohint
+
+      - name: Step 7.B | Actual Build Font
+        working-directory: font-build
+        run: |
           npm run build -- ttf::IosevkaCodexLink
-          mv ./dist/IosevkaCodexLink/TTF/ ../font-patch/font-dist-ttf
+
+      - name: Step 7.C | Post-Build Font (Clean-up)
+        working-directory: font-build
+        run: |
           mkdir ../font-patch/font-dist-ttf/original
+          mv ./dist/IosevkaCodexLink/TTF/ ../font-patch/font-dist-ttf
           mv ../font-patch/font-dist-ttf/*.ttf ../font-patch/font-dist-ttf/original
 
+      - name: Step 8.A | Pre-Patch Font (Prep-Work)
+        run: unset LD_LIBRARY_PATH
+
       # NOTE: Reference for fix in regards to missing Base Library: https://github.com/indygreg/PyOxidizer/issues/406
-      - name: Step 7 | Patch Font
+      - name: Step 8.B | Actual Patch Font
         working-directory: font-patch
         shell: bash
         run: |
-          unset LD_LIBRARY_PATH
-          for i in font-dist-ttf/original/*.ttf;
-            do "fontforge -script ./font-patcher --complete --mono --progressbars --outputdir font-dist-ttf/patched font-dist-ttf/original/$i";
-          done
+          for i in font-dist-ttf/original/*.ttf; do "fontforge -script ./font-patcher --complete --mono --progressbars --outputdir font-dist-ttf/patched $i"; done
           ls
           ls font-dist-ttf
 
-      - name: Step 8 | Publish Release
+      - name: Step 8.C | Post-Patch Font (Publish Release)
         uses: softprops/action-gh-release@v2
         with:
           prerelease: true
