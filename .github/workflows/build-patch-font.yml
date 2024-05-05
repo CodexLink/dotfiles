@@ -60,7 +60,7 @@ jobs:
 
       - name: Debug
         run: | 
-          ls ../font-patch/font-dist-ttf
+          ls font-patch/font-dist-ttf
 
 
       # NOTE: Reference for fix in regards to missing Base Library: https://github.com/indygreg/PyOxidizer/issues/406
