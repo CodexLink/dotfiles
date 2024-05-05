@@ -57,6 +57,8 @@ jobs:
           npm install ttfautohint
           npm run build -- ttf::IosevkaCodexLink
           mv ./dist/IosevkaCodexLink/TTF/ ../font-patch/font-dist-ttf
+          mkdir ../font-patch/font-dist-ttf/original
+          mv ../font-patch/font-dist-ttf/*.ttf ../font-patch/font-dist-ttf/original
 
       - name: Debug
         run: | 
@@ -68,6 +70,6 @@ jobs:
         working-directory: font-patch
         run: |
           unset LD_LIBRARY_PATH
-          fontforge -script ./font-patcher ./font-dist-ttf/** --complete --mono
+          fontforge -script ./font-patcher --complete --mono --progressbars --outputdir ./font-dist-ttf/patched ./font-dist-ttf/original/**
           ls
           ls font-dist-ttf
