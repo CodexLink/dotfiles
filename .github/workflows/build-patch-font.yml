@@ -82,17 +82,30 @@ jobs:
           for i in font-dist-ttf/original/*.ttf; do fontforge -script ./font-patcher $i --complete --mono --no-progressbars --outputdir font-dist-ttf/patched --quiet; done
           mv font-dist-ttf ../font-dist
 
-      - name: Step 10 | Pre-Commit to Repository (Invoke Date to Commit Message)
-        id: ACTION__DT_EXEC
+      - name: Additional Debug 1
         run: |
-          echo "ACTION__DT_EXEC_OUT=$(date + %m%d%Y_%H%M%S)" >> "$GITHUB_OUTPUT"
+          ls
 
-      - name: Step 9.B | Actual Commit to Repository
+      - name: Additional Debug 2
+        run: |
+          ls font-dist/
+
+      - name: Additional Debug 3
+        run: |
+          pwd
+
+      - name: Additional Debug 4
+        run: |
+          ls font-dist/original
+
+      - name: Additional Debug 5
+        run: |
+          ls font-dist/patched
+
+      - name: Step 10 | Actual Commit to Repository
         uses: EndBug/add-and-commit@v9
-        env:
-          ACTION__DT_EXEC_REF: ${{ steps.ACTION__DT_EXEC.outputs.ACTION__DT_EXEC_OUT }}
         with:
           committer_name: GitHub Actions
-          committer_email: actions@github.com
-          message: "chore(font): font build and patched since $ACTION__DT_EXEC_REF"
-          add: "font-dist/**"
+          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: "chore(font): font build and patched!"
+          add: "font-dist/**/*.ttf"
