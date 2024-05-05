@@ -63,6 +63,6 @@ jobs:
         working-directory: font-patch
         run: |
           unset LD_LIBRARY_PATH
-          fontforge -script ./font-patcher font-dist-ttf --complete --mono
+          fontforge -script ./font-patcher ./font-dist-ttf --complete --mono
           ls
           ls font-dist-ttf
