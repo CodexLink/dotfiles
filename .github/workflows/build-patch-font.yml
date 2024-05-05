@@ -9,33 +9,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - name: Step 1 | Setup Node.js
-      #   uses: actions/setup-node@v4
+      - name: Step 1 | Setup Node.js
+        uses: actions/setup-node@v4
 
       - name: Step - | Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.9"
 
-          # NOTE: Reference for repository to use for installing FontForge: https://askubuntu.com/questions/1058055/how-do-i-install-fontforge-on-kubuntu-18-04
+      # NOTE: Reference for repository to use for installing FontForge: https://askubuntu.com/questions/1058055/how-do-i-install-fontforge-on-kubuntu-18-04
       - name: Step 2 | Setup FontForge
         run: |
           sudo add-apt-repository universe
           sudo apt-get update
           sudo apt-get install fontforge python3-fontforge
 
-      # - name: Step 3 | Main Repository Checkout
-      #   uses: actions/checkout@v4
-      #   with:
-      #     sparse-checkout: |
-      #       font/private-build-plans.toml
-      #
-      # - name: Step 4 | Font (Iosevka) Repository Checkout
-      #   uses: actions/checkout@v4
-      #   with:
-      #     path: font-build
-      #     repository: be5invis/Iosevka
-      #     fetch-depth: 1
+      - name: Step 3 | Main Repository Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            font/private-build-plans.toml
+
+      - name: Step 4 | Font (Iosevka) Repository Checkout
+        uses: actions/checkout@v4
+        with:
+          path: font-build
+          repository: be5invis/Iosevka
+          fetch-depth: 1
 
       - name: Step 5 | Font Patcher Repository Checkout
         uses: actions/checkout@v4
@@ -47,16 +47,18 @@ jobs:
             src/glyphs
             font-patcher
 
-      # - name: Step 6 | Build Font
-      #   working-directory: font-build
-      #   run: |
-      #     mv ../font/private-build-plans.toml ./
-      #     npm install
-      #     npm install ttfautohint
-      #     npm run build -- ttf::IosevkaCodexLink
-      #     mv ./dist/IosevkaCodexLink/TTF/ ../font-patch/font-dist-ttf
-      #     ls ../font-patch
+      - name: Step 6 | Build Font
+        working-directory: font-build
+        run: |
+          mv ../font/private-build-plans.toml ./
+          npm install
+          npm install ttfautohint
+          npm run build -- ttf::IosevkaCodexLink
+          mv ./dist/IosevkaCodexLink/TTF/ ../font-patch/font-dist-ttf
+          ls ../font-patch
 
+
+      # NOTE: Reference for fix in regards to missing Base Library: https://github.com/indygreg/PyOxidizer/issues/406
       - name: Step 7 | Patch Font
         working-directory: font-patch
         run: |
