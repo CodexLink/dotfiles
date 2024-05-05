@@ -63,9 +63,12 @@ jobs:
       # NOTE: Reference for fix in regards to missing Base Library: https://github.com/indygreg/PyOxidizer/issues/406
       - name: Step 7 | Patch Font
         working-directory: font-patch
+        shell: bash
         run: |
           unset LD_LIBRARY_PATH
-          for i in ./font-dist-ttd/original/*.ttf; do fontforge -script ./font-patcher --complete --mono --progressbars --outputdir ./font-dist-ttf/patched ./font-dist-ttf/original/$i; done
+          for i in font-dist-ttf/original/*.ttf;
+            do "fontforge -script ./font-patcher --complete --mono --progressbars --outputdir font-dist-ttf/patched font-dist-ttf/original/$i";
+          done
           ls
           ls font-dist-ttf
 
@@ -74,4 +77,3 @@ jobs:
         with:
           prerelease: true
           files: font-patch/font-dist-ttf/**
-
