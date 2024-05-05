@@ -73,19 +73,18 @@ jobs:
           mkdir ../font-patch/font-dist-ttf/patched
           mv ../font-patch/font-dist-ttf/*.ttf ../font-patch/font-dist-ttf/original
 
-      - name: Step 9.A | Pre-Patch Font (Prep-work)
-        run: unset LD_LIBRARY_PATH
 
       # NOTE: Reference for fix in regards to missing Base Library: https://github.com/indygreg/PyOxidizer/issues/406
-      - name: Step 9.B | Actual Patch Font
+      - name: Step 9.A | Actual Patch Font
         working-directory: font-patch
         shell: bash
         run: |
+          unset LD_LIBRARY_PATH
           for i in font-dist-ttf/original/*.ttf; do fontforge -script ./font-patcher $i --complete --mono --outputdir font-dist-ttf/patched; done
           ls
           ls font-dist-ttf
 
-      - name: Step 9.C | Post-Patch Font (Publish Release)
+      - name: Step 9.B | Post-Patch Font (Publish Release)
         uses: softprops/action-gh-release@v2
         with:
           prerelease: true
