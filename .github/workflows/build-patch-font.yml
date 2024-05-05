@@ -60,8 +60,7 @@ jobs:
       - name: Step 7 | Patch Font
         working-directory: font-patch
         run: |
-          pip uninstall subprocess32
-          pip install subprocess32
+          unset PYTHONHOME
           fontforge -script ./font-patcher font-dist-ttf --complete --mono
           ls
           ls font-dist-ttf
