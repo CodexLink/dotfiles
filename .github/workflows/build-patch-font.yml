@@ -15,7 +15,7 @@ jobs:
       - name: Step - | Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.9"
+          python-version: "3.10"
 
       # NOTE: Reference for repository to use for installing FontForge: https://askubuntu.com/questions/1058055/how-do-i-install-fontforge-on-kubuntu-18-04
       - name: Step 2 | Setup FontForge
@@ -29,6 +29,7 @@ jobs:
         with:
           sparse-checkout: |
             font/private-build-plans.toml
+          sparse-checkout-cone-mode: false
 
       - name: Step 4 | Font (Iosevka) Repository Checkout
         uses: actions/checkout@v4
@@ -46,6 +47,7 @@ jobs:
             bin
             src/glyphs
             font-patcher
+          sparse-checkout-cone-mode: false
 
       - name: Step 6 | Build Font
         working-directory: font-build
@@ -55,7 +57,10 @@ jobs:
           npm install ttfautohint
           npm run build -- ttf::IosevkaCodexLink
           mv ./dist/IosevkaCodexLink/TTF/ ../font-patch/font-dist-ttf
-          ls ../font-patch
+
+      - name: Debug
+        run: | 
+          ls ../font-patch/font-dist-ttf
 
 
       # NOTE: Reference for fix in regards to missing Base Library: https://github.com/indygreg/PyOxidizer/issues/406
@@ -63,6 +68,6 @@ jobs:
         working-directory: font-patch
         run: |
           unset LD_LIBRARY_PATH
-          fontforge -script ./font-patcher ./font-dist-ttf --complete --mono
+          fontforge -script ./font-patcher ./font-dist-ttf/** --complete --mono
           ls
           ls font-dist-ttf
