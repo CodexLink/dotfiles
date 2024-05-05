@@ -1,61 +1,87 @@
-name: Font Builder + Patch to Repository Release
+name: Font Build + Patch to Repository Release
 
 on:
   workflow_dispatch:
 
 jobs:
-  font-build:
-    name: Font Builder | Iosevka
+  font-build-patch:
+    name: Font Build + Patch | Iosevka & Nerd Fonts
     runs-on: ubuntu-latest
 
     steps:
-      - name: Step 0 | Main Repository Checkout
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            font/private-build-plans.toml
-
-      - name: Step 1 | Font (Iosevka) Repository Checkout
-        uses: actions/checkout@v4
-        with:
-          repository: be5invis/Iosevka
-          path: font-repo
-          fetch-depth: 1
-
-      - name: Step 2 | Setup Node.js
+      - name: Step 1 | Setup Node.js
         uses: actions/setup-node@v4
 
-      - name: Step 3 | Build Font
+      - name: Step 2 | Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      # NOTE: Reference for repository to use for installing FontForge: https://askubuntu.com/questions/1058055/how-do-i-install-fontforge-on-kubuntu-18-04
+      - name: Step 3 | Setup FontForge
         run: |
-          npm install
-          npm run build -- ttf::iosevka-codex-link
+          sudo add-apt-repository universe
+          sudo apt-get update
+          sudo apt-get install fontforge python3-fontforge
 
-      - name: Debug | Assert
-        run: |
-          ls
+      - name: Step 4 | Main Repository Checkout
+        uses: actions/checkout@v4
 
-  font-patcher:
-    name: Font Patcher | Nerd Fonts
-    runs-on: ubuntu-latest
-    needs: font-build
-
-    steps:
-      - name: Step 0 | Font Patcher Repository Checkout
+      - name: Step 5 | Font (Iosevka) Repository Checkout
         uses: actions/checkout@v4
         with:
+          path: font-build
           repository: be5invis/Iosevka
-          path: font-patcher
+          fetch-depth: 1
+
+      - name: Step 6 | Install Iosevka Dependencies
+        working-directory: font-build
+        run: |
+          npm install
+          npm install ttfautohint
+
+      - name: Step 7 | Font Patcher Repository Checkout
+        uses: actions/checkout@v4
+        with:
+          path: font-patch
+          repository: ryanoasis/nerd-fonts
           sparse-checkout: |
             bin
             src/glyphs
             font-patcher
+          sparse-checkout-cone-mode: false
 
-      - name: Debug | Assert
+      - name: Step 8.A | Pre-Build Font (Prep-work)
+        working-directory: font-build
         run: |
-          ls
+          mv ../font/private-build-plans.toml ./
 
-      - name: Step - | Setup Python
-        uses: actions/setup-python@v5
+      - name: Step 8.B | Actual Build Font
+        working-directory: font-build
+        run: |
+          npm run build -- ttf::IosevkaCodexLink
+
+      - name: Step 8.C | Post-Build Font (Clean-up)
+        working-directory: font-build
+        run: |
+          mv ./dist/IosevkaCodexLink/TTF/ ../font-patch/font-dist-ttf
+          mkdir ../font-patch/font-dist-ttf/original
+          mkdir ../font-patch/font-dist-ttf/patched
+          mv ../font-patch/font-dist-ttf/*.ttf ../font-patch/font-dist-ttf/original
+
+      # NOTE: Reference for fix in regards to missing Base Library: https://github.com/indygreg/PyOxidizer/issues/406
+      - name: Step 9 | Actual Patch Font
+        working-directory: font-patch
+        shell: bash
+        run: |
+          unset LD_LIBRARY_PATH
+          for i in font-dist-ttf/original/*.ttf; do fontforge -script ./font-patcher $i --complete --mono --no-progressbars --outputdir font-dist-ttf/patched --quiet; done
+          mv font-dist-ttf ../font-dist
+
+      - name: Step 10 | Actual Commit to Repository
+        uses: EndBug/add-and-commit@v9
         with:
-          python-version: "3.10"
-          # run:
+          committer_name: GitHub Actions
+          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: "chore(font): font build and patched!"
+          add: "font-dist/**/*.ttf"
