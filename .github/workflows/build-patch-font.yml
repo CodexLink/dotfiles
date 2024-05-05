@@ -27,12 +27,6 @@ jobs:
       - name: Step 4 | Main Repository Checkout
         uses: actions/checkout@v4
 
-      - name: Debug 1
-        run: ls
-
-      - name: Debug 2
-        run: ls ../
-
       - name: Step 5 | Font (Iosevka) Repository Checkout
         uses: actions/checkout@v4
         with:
