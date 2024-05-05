@@ -72,7 +72,7 @@ jobs:
           mkdir ../font-patch/font-dist-ttf/original
           mv ../font-patch/font-dist-ttf/*.ttf ../font-patch/font-dist-ttf/original
 
-      - name: Step 9.A | Pre-Patch Font (Prep-Work)
+      - name: Step 9.A | Pre-Patch Font (Prep-work)
         run: unset LD_LIBRARY_PATH
 
       # NOTE: Reference for fix in regards to missing Base Library: https://github.com/indygreg/PyOxidizer/issues/406
@@ -80,7 +80,7 @@ jobs:
         working-directory: font-patch
         shell: bash
         run: |
-          for i in font-dist-ttf/original/*.ttf; do "fontforge -script ./font-patcher --complete --mono --progressbars --outputdir font-dist-ttf/patched $i"; done
+          for i in font-dist-ttf/original/*.ttf; do "fontforge -script ./font-patcher $i --complete --mono --progressbars --outputdir font-dist-ttf/patched"; done
           ls
           ls font-dist-ttf
 
