@@ -26,10 +26,6 @@ jobs:
 
       - name: Step 4 | Main Repository Checkout
         uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            font/private-build-plans.toml
-          sparse-checkout-cone-mode: false
 
       - name: Step 5 | Font (Iosevka) Repository Checkout
         uses: actions/checkout@v4
@@ -81,26 +77,6 @@ jobs:
           unset LD_LIBRARY_PATH
           for i in font-dist-ttf/original/*.ttf; do fontforge -script ./font-patcher $i --complete --mono --no-progressbars --outputdir font-dist-ttf/patched --quiet; done
           mv font-dist-ttf ../font-dist
-
-      - name: Additional Debug 1
-        run: |
-          ls
-
-      - name: Additional Debug 2
-        run: |
-          ls font-dist/
-
-      - name: Additional Debug 3
-        run: |
-          pwd
-
-      - name: Additional Debug 4
-        run: |
-          ls font-dist/original
-
-      - name: Additional Debug 5
-        run: |
-          ls font-dist/patched
 
       - name: Step 10 | Actual Commit to Repository
         uses: EndBug/add-and-commit@v9
