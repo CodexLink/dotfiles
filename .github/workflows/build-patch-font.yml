@@ -85,7 +85,7 @@ jobs:
       - name: Step 10 | Pre-Commit to Repository (Invoke Date to Commit Message)
         id: ACTION__DT_EXEC
         run: |
-          echo "ACTION__DT_EXEC_OUT=$(date + %Y-%m-%d)" >> "$GITHUB_OUTPUT"
+          echo "ACTION__DT_EXEC_OUT=$(date + %m%d%Y_%H%M%S)" >> "$GITHUB_OUTPUT"
 
       - name: Step 9.B | Actual Commit to Repository
         uses: EndBug/add-and-commit@v9
@@ -94,5 +94,5 @@ jobs:
         with:
           committer_name: GitHub Actions
           committer_email: actions@github.com
-          name: "chore(font): font build and patched since $ACTION__DT_EXEC_REF"
-          add: "font-dist"
+          message: "chore(font): font build and patched since $ACTION__DT_EXEC_REF"
+          add: "font-dist/**"
