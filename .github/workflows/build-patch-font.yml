@@ -84,4 +84,4 @@ jobs:
           committer_name: GitHub Actions
           committer_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: "chore(font): font build and patched!"
-          add: "font-dist/**/*.ttf"
+          add: "font/dist/**/*.ttf"
