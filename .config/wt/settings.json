@@ -16,6 +16,10 @@
             "keys": "ctrl+alt+c"
         },
         {
+            "command": "find",
+            "keys": "ctrl+shift+f"
+        },
+        {
             "command": 
             {
                 "action": "splitPane",
@@ -23,10 +27,6 @@
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
-        },
-        {
-            "command": "find",
-            "keys": "ctrl+shift+f"
         }
     ],
     "alwaysShowNotificationIcon": true,
@@ -46,20 +46,18 @@
     {
         "defaults": 
         {
-            "adjustIndistinguishableColors": "never",
             "antialiasingMode": "cleartype",
             "colorScheme": "Kanagawa",
             "cursorShape": "vintage",
             "experimental.retroTerminalEffect": false,
             "font": 
             {
-                "face": "Iosevka + CodexLink",
+                "face": "Iosevka+CodexLink Nerd Font Mono",
                 "size": 11.0,
                 "weight": "semi-bold"
             },
             "opacity": 60,
-            "useAcrylic": true,
-            "useAtlasEngine": false
+            "useAcrylic": true
         },
         "list": 
         [
@@ -75,16 +73,10 @@
                 "opacity": 100
             },
             {
-                "commandline": "E:\\Utilities\\PortableGit\\git-bash.exe",
-                "guid": "{6b228894-1204-4580-a30f-f56f077997a0}",
-                "hidden": false,
-                "name": "Git Bash (Spawn-Process)"
-            },
-            {
                 "commandline": "C:\\Users\\janja\\scoop\\apps\\pwsh\\current\\pwsh.exe",
                 "font": 
                 {
-                    "face": "Iosevka + CodexLink",
+                    "face": "Iosevka+CodexLink Nerd Font Mono",
                     "size": 11.0,
                     "weight": "semi-bold"
                 },
@@ -97,10 +89,9 @@
             },
             {
                 "commandline": "C:\\Users\\janja\\scoop\\apps\\pwsh\\current\\pwsh.exe -Command Start-Process -FilePath wt.exe -Verb RunAs",
-                "elevate": false,
                 "font": 
                 {
-                    "face": "Iosevka + CodexLink",
+                    "face": "Iosevka+CodexLink Nerd Font Mono",
                     "weight": "normal"
                 },
                 "guid": "{d418c317-0983-4c53-8947-b037a2dbd883}",
@@ -110,22 +101,15 @@
                 "startingDirectory": "%USERPROFILE%"
             },
             {
-                "guid": "{4427558b-ba37-501b-ad4e-74d2969d91bb}",
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": false,
-                "name": "WSL (Ubuntu 2004.2021.825.0)",
-                "source": "Windows.Terminal.Wsl"
+                "name": "Windows PowerShell"
             },
             {
-                "guid": "{60f64521-14c3-531b-aad2-328f06cad846}",
+                "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
                 "hidden": false,
-                "name": "Developer Command Prompt for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{36f35010-2eb2-5fee-b791-1c97daa6022a}",
-                "hidden": false,
-                "name": "Developer PowerShell for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
+                "name": "Ubuntu",
+                "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
             }
         ]
     },
@@ -337,6 +321,29 @@
             "selectionBackground": "#FFFFFF",
             "white": "#D3D7CF",
             "yellow": "#C4A000"
+        },
+        {
+            "background": "#300A24",
+            "black": "#171421",
+            "blue": "#0037DA",
+            "brightBlack": "#767676",
+            "brightBlue": "#08458F",
+            "brightCyan": "#2C9FB3",
+            "brightGreen": "#26A269",
+            "brightPurple": "#A347BA",
+            "brightRed": "#C01C28",
+            "brightWhite": "#F2F2F2",
+            "brightYellow": "#A2734C",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#3A96DD",
+            "foreground": "#FFFFFF",
+            "green": "#26A269",
+            "name": "Ubuntu-ColorScheme",
+            "purple": "#881798",
+            "red": "#C21A23",
+            "selectionBackground": "#FFFFFF",
+            "white": "#CCCCCC",
+            "yellow": "#A2734C"
         },
         {
             "background": "#000000",
