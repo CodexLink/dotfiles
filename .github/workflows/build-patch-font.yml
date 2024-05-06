@@ -75,7 +75,7 @@ jobs:
         shell: bash
         run: |
           unset LD_LIBRARY_PATH
-          for i in font-dist-ttf/original/*.ttf; do fontforge -script ./font-patcher $i --complete --mono --no-progressbars --outputdir font-dist-ttf/patched --quiet; done
+          for i in font-dist-ttf/original/*.ttf; do fontforge -script ./font-patcher $i --careful --complete --no-progressbars --outputdir font-dist-ttf/patched --quiet; done
           mv font-dist-ttf ../font/dist
 
       - name: Step 10 | Actual Commit to Repository
