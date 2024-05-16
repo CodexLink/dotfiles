@@ -1,11 +1,11 @@
 {
 	"name": "Vimium C",
-	"@time": "11/21/2023, 11:31:50 AM",
-	"time": 1700537510087,
+	"@time": "5/16/2024, 5:56:14 PM",
+	"time": 1715853374939,
 	"environment": {
 		"extension": "1.99.994",
 		"platform": "win",
-		"chromium": 119
+		"chromium": 124
 	},
 	"allBrowserUrls": true,
 	"exclusionRules": [
@@ -16,6 +16,10 @@
 		{
 			"passKeys": "",
 			"pattern": ":https://www.tradingview.com/chart/"
+		},
+		{
+			"passKeys": "",
+			"pattern": ":https://app.fxreplay.com/"
 		}
 	],
 	"keyLayout": 148,
