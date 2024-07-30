@@ -12,231 +12,369 @@ local require_input_on_fn_call = require("utils").HandleInputToFn
 local mapping_default_opts = { animate = true, timeout = 1250, title = "Mapping-to-Execution" }
 
 wk.register({
-  ["<A-j>"] = { ":m '>+1<CR>gv=gv", "code: shift highlighted to bottom", mode = "v" },
-  ["<A-k>"] = { ":m '<-2<CR>gv=gv", "code: shift highlighted to top", mode = "v" },
-  ["<F1>"] = { function() require("search").open({ collection = "essentials" }) end, "Telescope Seach: Essentials Collection opened." },
-  ["<F2>"] = { function() require("trouble").toggle() end, "trouble.nvim (Diagnostics): Toggle" },
-  ["<F3>"] = { function() require("aerial").toggle({ focus = false }) end, "aerial.nvim: Toggle (Unfocused)" },
-  -- ["<F4>"] = { function () print end, "DAP"},
-  ["<F5>"] = { function() require("lazy").home() end, "lazy.nvim: Opens UI window" },
-  ["<F6>"] = { function() require("which-key").show() end, "which-key.nvim: Opens UI window for hinting keybinds" },
-  ["<F7>"] = { function() require("mason.ui").open() end, "mason.nvim: Opens UI window" },
-  ["<Leader>"] = {
-    a = { function()
+  {
+    mode = "v",
+    { "<A-j>", ":m '>+1<CR>gv=gv", desc = "code: shift highlighted to bottom" },
+    { "<A-k>", ":m '<-2<CR>gv=gv", desc = "code: shift highlighted to top" }
+  },
+  { "<F1>",      function() require("search").open({ collection = "essentials" }) end, desc = "Telescope Seach: Essentials Collection opened." },
+  { "<F2>",      function() require("trouble").toggle() end,                           desc = "trouble.nvim (Diagnostics): Toggle" },
+  { "<F3>",      function() require("aerial").toggle({ focus = false }) end,           desc = "aerial.nvim: Toggle (Unfocused)" },
+  -- { "<F4>", function () print end, desc = "DAP"},
+  { "<F5>",      function() require("lazy").home() end,                                desc = "lazy.nvim: Opens UI window" },
+  { "<F6>",      function() require("which-key").show() end,                           desc = "which-key.nvim: Opens UI window for hinting keybinds" },
+  { "<F7>",      function() require("mason.ui").open() end,                            desc = "mason.nvim: Opens UI window" },
+  { "<Leader>G", group = "gitsigns.nvim" },
+  {
+    "<Leader>GD",
+    function()
       notifier({
-        cmd = require("neogen").generate,
-        message = "neogen: Code annotation added!",
+        cmd = function() require("gitsigns").diffthis("~") end,
+        message = "gitsigns: Diff view (at whole file) activated.",
         opts = mapping_default_opts
       })
-    end, "neogen: Annotate code context" },
-    G = {
-      name = "gitsigns.nvim",
-      b = { function()
-        notifier({
-          cmd = require("gitsigns").toggle_current_line_blame,
-          message = "gitsigns: Line blame toggled.",
-          opts = mapping_default_opts
-        })
-      end, "Toggle line blame" },
-      d = { function()
-        notifier({
-          cmd = require("gitsigns").diffthis,
-          message = "gitsigns: Diff view (at current line) activated.",
-          opts = mapping_default_opts
-        })
-      end,
-        "'diffthis' on current line" },
-      D = { function()
-        notifier({
-          cmd = function() require("gitsigns").diffthis("~") end,
-          message = "gitsigns: Diff view (at whole file) activated.",
-          opts = mapping_default_opts
-        })
-      end,
-        "`diffthis` on whole file" },
-      h = { function()
-        notifier({
-          cmd = require("gitsigns").preview_hunk,
-          message = "gitsigns: Hunk on current line preview, activated",
-          opts = mapping_default_opts
-        })
-      end, "Preview hunk" },
-      H = { function()
-        notifier({
-          cmd = require("gitsigns").preview_hunk_inline,
-          message = "gitsigns: Hunk on current line inline-preview, activated",
-          opts = mapping_default_opts
-        })
-      end,
-        "Preview hunk (Inlined)" },
-    },
-    h = { function() require("tsht").nodes() end, "nvim-treehopper: Hop to highlight context" },
-    L = { function()
+    end,
+    desc = "`diffthis` on whole file"
+  },
+  {
+    "<Leader>GH",
+    function()
+      notifier({
+        cmd = require("gitsigns").preview_hunk_inline,
+        message = "gitsigns: Hunk on current line preview, activated",
+        opts = mapping_default_opts
+      })
+    end,
+    desc = "Preview hunk (Inlined)"
+  },
+  {
+    "<Leader>Gb",
+    function()
+      notifier({
+        cmd = require("gitsigns").toggle_current_line_blame,
+        message = "gitsigns: Line blame toggled.",
+        opts = mapping_default_opts
+      })
+    end,
+    desc = "Toggle line blame"
+  },
+  {
+    "<Leader>Gd",
+    function()
+      notifier({
+        cmd = require("gitsigns").diffthis,
+        message = "gitsigns: Diff view (at current line) activated.",
+        opts = mapping_default_opts
+      })
+    end,
+    desc = "'diffthis' on current line"
+  },
+  {
+    "<Leader>Gh",
+    function()
+      notifier({
+        cmd = require("gitsigns").preview_hunk,
+        message = "gitsigns: Hunk on current line preview, activated",
+        opts = mapping_default_opts
+      })
+    end,
+    desc = "Preview hunk"
+  },
+  {
+    "<Leader>L",
+    function()
       require("telescope").load_extension("lazygit")
       require("lazygit").lazygit()
     end,
-      "lazygit.nvim: Toggle window" },
-    m = { function()
-      notifier({
-        cmd = [[ MarkdownPreviewToggle ]],
-        message = "Markdown Preview toggled!",
-        opts = mapping_default_opts
-      })
-    end, "markdown-preview.nvim: Toggle" },
-    r = { function() require("ssr").open() end, "ssr.nvim: Do 'Structural Search and Replace'", mode = { "n", "x" } },
-    s = {
-      name = "possession.nvim: Session Management",
-      d    = { function()
-        require_input_on_fn_call({
-          fn_reference = require("possession").delete,
-          input_options = { prompt = "Session name to delete." }
-        })
-      end, "possession.nvim: Delete session by name" },
-      s    = { function()
-        require_input_on_fn_call({
-          fn_reference = require("possession").save,
-          input_options = { prompt = "Session name to save." }
-        })
-      end, "possession.nvim: Save current session" },
-      l    = { function()
-        require_input_on_fn_call({
-          fn_reference = require("possession").load,
-          input_options = { prompt = "Session name to load. (Note: Use `telescope` to retrieve a list of sessions!)" }
-        })
-      end,
-        "possession.nvim: Load saved session (dialogue)" },
-    },
-    t = { function()
-      notifier({
-        cmd = require("tint").toggle,
-        message = "tint: Inactive window dimming toggled.",
-        opts = mapping_default_opts
-      })
-    end, "twilight.nvim: Toggle inactive window dimming" },
-    T = { function()
+    desc = "lazygit.nvim: Toggle window"
+  },
+  {
+    "<Leader>T",
+    function()
       notifier({
         cmd = require("twilight").toggle,
         message = "twilight: Code dimming toggled.",
         opts = mapping_default_opts
       })
-    end, "twilight.nvim: Toggle code dimming" },
+    end,
+    desc = "twilight.nvim: Toggle code dimming"
   },
-  ["<M-F1>"] = { function() require("search").open({ collection = "extras" }) end, "Telescope Seach: Extras Collection opened." },
-  ["<M-q>"] = { function() require("hop").hint_char1() end, "hop.nvim: Hop 1 char", mode = { "i", "n", "v" } },
-  ["<M-Q>"] = { function() require("hop").hint_char2() end, "hop.nvim: Hop 2 chars", mode = { "i", "n", "v" } },
-  ["<M-w>"] = { function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.AFTER_CURSOR }) end,
-    "hop.nvim: hop below anywhere" },
-  ["<M-W>"] = { function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR }) end,
-    "hop.nvim: hop above anywhere" },
-  ["<M-e>"] = { function()
-    notifier({
-      cmd = require("treesj").toggle,
-      message = "treesj: toggled to wrap/one-line.",
-      opts = mapping_default_opts
-    })
-  end,
-    "treesj: Toggle 'One-Liner/Splitted' Style." },
-  ["<M-a>"] = { function() require("illuminate").goto_prev_reference() end, "vim-illuminate: Jump to previous reference" },
-  ["<M-s>"] = { function() require("illuminate").goto_next_reference() end, "vim-illuminate: Jump to next reference" },
-  ["<M-d>"] = { function()
-    notifier({
-      cmd = [[ set wrap! ]],
-      message = "Code wrapping toggled.",
-      opts = mapping_default_opts
-    })
-  end, "builtin: Toggle wrap" },
-  ["<M-f>"] = { function()
-    notifier({
-      cmd = function() vim.lsp.buf.format({ async = true, bufnr = vim.fn.bufnr(), timeout = 5000 }) end,
-      message = "Formatting done!",
-      opts = mapping_default_opts
-    })
-  end, "utils: Code Format" },
-  ["<M-h>"] = { "<C-o>h", "cursor (on insert): move left", mode = "i" },
-  ["<M-H>"] = { "<C-o>B", "cursor (on insert): move left (by word)", mode = "i" },
-  ["<M-j>"] = { "<C-o>j", "cursor (on insert): move down", mode = "i" },
-  ["<M-k>"] = { "<C-o>k", "cursor (on insert): move up", mode = "i" },
-  ["<M-l>"] = { "<C-o>l", "cursor (on insert): move right", mode = "i" },
-  ["<M-L>"] = { "<C-o>W", "cursor (on insert): move right (by word)", mode = "i" },
-  ["<M-z>"] = { function() vim.cmd [[ bprev ]] end, mode = { "n", "v" }, "buffer: previous" },
-  ["<M-x>"] = { function() vim.cmd [[ bnext ]] end, mode = { "n", "v" }, "buffer: next" },
-  ["<M-c>"] = { function() vim.cmd [[ bdelete ]] end, mode = { "n", "v" }, "buffer: delete current buffer" },
-  ["<M-n>"] = { function() vim.cmd [[ enew ]] end, mode = { "n", "v" }, "buffer: new" },
-  ["<S-F3>"] = { function() require("aerial").toggle({ focus = true }) end, "aerial.nvim: Toggle (Focused)" },
-  ["<Space>"] = {
-    name = "LSP + LSP-Related Actions",
-    c = { function()
+  {
+    "<Leader>a",
+    function()
+      notifier({
+        cmd = require("neogen").generate,
+        message = "neogen: Code annotation added!",
+        opts = mapping_default_opts
+      })
+    end,
+    desc = "neogen: Annotate code context"
+  },
+  { "<Leader>h", function() require("tsht").nodes() end,       desc = "nvim-treehopper: Hop to highlight context" },
+  {
+    "<Leader>m",
+    function()
+      notifier({
+        cmd = [[ MarkdownPreviewToggle ]],
+        message = "Markdown Preview toggled!",
+        opts = mapping_default_opts
+      })
+    end,
+    desc = "markdown-preview.nvim: Toggle"
+  },
+  { "<Leader>s", group = "possession.nvim: Session Management" },
+  {
+    "<Leader>sd",
+    function()
+      require_input_on_fn_call({
+        fn_reference = require("possession").delete,
+        input_options = { prompt = "Session name to delete." }
+      })
+    end,
+    desc = "possession.nvim: Delete session by name"
+  },
+  {
+    "<Leader>sl",
+    function()
+      require_input_on_fn_call({
+        fn_reference = require("possession").load,
+        input_options = { prompt = "Session name to load. (Note: Use `telescope` to retrieve a list of sessions!)" }
+      })
+    end,
+    desc = "possession.nvim: Load saved session (dialogue)"
+  },
+  {
+    "<Leader>ss",
+    function()
+      require_input_on_fn_call({
+        fn_reference = require("possession").save,
+        input_options = { prompt = "Session name to save." }
+      })
+    end,
+    desc = "possession.nvim: Save current session"
+  },
+  {
+    "<Leader>t",
+    function()
+      notifier({
+        cmd = require("tint").toggle,
+        message = "tint: Inactive window dimming toggled.",
+        opts = mapping_default_opts
+      })
+    end,
+    desc = "twilight.nvim: Toggle inactive window dimming"
+  },
+  r = { function() require("ssr").open() end, "ssr.nvim: Do 'Structural Search and Replace'", mode = { "n", "x" } },
+  s = {
+    name = "possession.nvim: Session Management",
+    d    = { function()
+      require_input_on_fn_call({
+        fn_reference = require("possession").delete,
+        input_options = { prompt = "Session name to delete." }
+      })
+    end, "possession.nvim: Delete session by name" },
+    s    = { function()
+      require_input_on_fn_call({
+        fn_reference = require("possession").save,
+        input_options = { prompt = "Session name to save." }
+      })
+    end, "possession.nvim: Save current session" },
+    l    = { function()
+      require_input_on_fn_call({
+        fn_reference = require("possession").load,
+        input_options = { prompt = "Session name to load. (Note: Use `telescope` to retrieve a list of sessions!)" }
+      })
+    end,
+      "possession.nvim: Load saved session (dialogue)" },
+  },
+  {
+    mode = { "i", "n", "v" },
+    { "<M-F1>", function() require("search").open({ collection = "extras" }) end, desc = "Telescope Seach: Extras Collection opened." },
+    { "<M-q>",  function() require("hop").hint_char1() end,                       desc = "hop.nvim: Hop 1 char" },
+    { "<M-Q>",  function() require("hop").hint_char2() end,                       desc = "hop.nvim: Hop 2 chars" }
+  },
+  {
+    "<M-w>",
+    function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.AFTER_CURSOR }) end,
+    desc = "hop.nvim: hop below anywhere"
+  },
+  {
+    "<M-W>",
+    function() require("hop").hint_anywhere({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR }) end,
+    desc = "hop.nvim: hop above anywhere"
+  },
+  {
+    "<M-e>",
+    function()
+      notifier({
+        cmd = require("treesj").toggle,
+        message = "treesj: toggled to wrap/one-line.",
+        opts = mapping_default_opts
+      })
+    end,
+    desc = "treesj: Toggle 'One-Liner/Splitted' Style."
+  },
+  { "<M-a>", function() require("illuminate").goto_prev_reference() end, desc = "vim-illuminate: Jump to previous reference" },
+  { "<M-s>", function() require("illuminate").goto_next_reference() end, desc = "vim-illuminate: Jump to next reference" },
+  {
+    "<M-d>",
+    function()
+      notifier({
+        cmd = [[ set wrap! ]],
+        message = "Code wrapping toggled.",
+        opts = mapping_default_opts
+      })
+    end,
+    desc = "builtin: Toggle wrap"
+  },
+  {
+    "<M-f>",
+    function()
+      notifier({
+        cmd = function() vim.lsp.buf.format({ async = true, bufnr = vim.fn.bufnr(), timeout = 5000 }) end,
+        message = "Formatting done!",
+        opts = mapping_default_opts
+      })
+    end,
+    desc = "utils: Code Format"
+  },
+  {
+    mode = "i",
+    { "<M-h>", "<C-o>h", desc = "cursor (on insert): move left" },
+    { "<M-H>", "<C-o>B", desc = "cursor (on insert): move left (by word)" },
+    { "<M-j>", "<C-o>j", desc = "cursor (on insert): move down" },
+    { "<M-k>", "<C-o>k", desc = "cursor (on insert): move up" },
+    { "<M-l>", "<C-o>l", desc = "cursor (on insert): move right" },
+    { "<M-L>", "<C-o>W", desc = "cursor (on insert): move right (by word)" },
+  },
+  {
+    mode = { "n", "v" },
+    { "<M-z>", function() vim.cmd [[ bprev ]] end,   desc = "buffer: previous" },
+    { "<M-x>", function() vim.cmd [[ bnext ]] end,   desc = "buffer: next" },
+    { "<M-c>", function() vim.cmd [[ bdelete ]] end, desc = "buffer: delete current buffer" },
+    { "<M-n>", function() vim.cmd [[ enew ]] end,    desc = "buffer: new" }
+  },
+  { "<S-F3>",  function() require("aerial").toggle({ focus = true }) end, desc = "aerial.nvim: Toggle (Focused)" },
+  { "<Space>", group = "LSP + LSP-Related Actions" },
+  {
+    "<Space>c",
+    function()
       notifier({
         cmd = vim.lsp.buf.code_action,
         opts = mapping_default_opts
       })
-    end, "lsp: seek code action" },
-    d = { function()
+    end,
+    desc = "lsp: seek code action"
+  },
+  {
+    "<Space>d",
+    function()
       notifier({
         cmd = vim.lsp.buf.declaration,
         opts = mapping_default_opts
       })
-    end, "lsp: seek declaration" },
-    D = { function()
+    end,
+    desc = "lsp: seek declaration"
+  },
+  {
+    "<Space>D",
+    function()
       notifier({
         cmd = function() require("glance").open("definitions") end,
         opts = mapping_default_opts,
       })
-    end, "lsp: seek definitions" },
-    h = { function()
+    end,
+    desc = "lsp: seek definitions"
+  },
+  {
+    "<Space>h",
+    function()
       notifier({
         cmd = vim.lsp.buf.hover,
         opts = mapping_default_opts
       })
-    end, "lsp: hover for context" },
-    i = { function()
+    end,
+    desc = "lsp: hover for context"
+  },
+  {
+    "<Space>i",
+    function()
       notifier({
         cmd = function() require("glance").open("implementations") end,
         opts = mapping_default_opts
       })
-    end, "lsp: seek implementations" },
-    o = { function()
+    end,
+    desc = "lsp: seek implementations"
+  },
+  {
+    "<Space>o",
+    function()
       notifier({
         cmd = vim.diagnostic.open_float,
         opts = mapping_default_opts
       })
-    end, "lsp: float context" },
-    r = { function()
+    end,
+    desc = "lsp: float context"
+  },
+  {
+    "<Space>r",
+    function()
       notifier({
         cmd = vim.lsp.buf.rename,
         opts = mapping_default_opts
       })
-    end, "lsp: rename context" },
-    R = { ":IncRename ", "inc-rename.nvim: Rename on cursor" },
-    s = { function()
+    end,
+    desc = "lsp: rename context"
+  },
+  { "<Space>R", ":IncRename ", "inc-rename.nvim: Rename on cursor" },
+  {
+    "<Space>s",
+    function()
       notifier({
         cmd = vim.lsp.buf.signature_help,
         opts = mapping_default_opts
       })
-    end, "lsp: seek signature help" },
-    S = { function()
+    end,
+    desc = "lsp: seek signature help"
+  },
+  {
+    "<Space>S",
+    function()
       notifier({
         cmd = function() require("glance").open("references") end,
         opts = mapping_default_opts
       })
-    end, "lsp: seek references" },
-    t = { function()
+    end,
+    desc = "lsp: seek references"
+  },
+  {
+    "<Space>t",
+    function()
       notifier({
         cmd = function() require("glance").open("type_definitions") end,
         opts = mapping_default_opts
       })
-    end, "lsp: seek type definitions" },
-    x = { function()
+    end,
+    desc = "lsp: seek type definitions"
+  },
+  {
+    "<Space>x",
+    function()
       notifier({
         cmd = vim.diagnostic.goto_prev,
         opts = mapping_default_opts
       })
-    end, "lsp: go to previous" },
-    z = { function()
+    end,
+    desc = "lsp: go to previous"
+  },
+  {
+    "<Space>z",
+    function()
       notifier({
         cmd = vim.diagnostic.goto_next,
         opts = mapping_default_opts
       })
-    end, "lsp: go to next" }
+    end,
+    desc = "lsp: go to next"
   }
 })
