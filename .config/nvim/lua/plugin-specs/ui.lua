@@ -6,7 +6,7 @@ return {
   {
     -- NOTE: DAP-Equivalent for displaying code context in one sidebar.
     "stevearc/aerial.nvim",
-    dependencies = "nvim-tree/nvim-web-devicons",
+    dependencies = {"nvim-tree/nvim-web-devicons", { "echasnovski/mini.icons", version = false } },
     lazy = true,
     opts = {
       backends = { "lsp" },
