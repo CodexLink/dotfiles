@@ -11,7 +11,7 @@ local notifier = require("utils").NotifyAfterExecution
 local require_input_on_fn_call = require("utils").HandleInputToFn
 local mapping_default_opts = { animate = true, timeout = 1250, title = "Mapping-to-Execution" }
 
-wk.register({
+wk.add({
   {
     mode = "v",
     { "<A-j>", ":m '>+1<CR>gv=gv", desc = "code: shift highlighted to bottom" },
@@ -164,29 +164,7 @@ wk.register({
     end,
     desc = "twilight.nvim: Toggle inactive window dimming"
   },
-  r = { function() require("ssr").open() end, "ssr.nvim: Do 'Structural Search and Replace'", mode = { "n", "x" } },
-  s = {
-    name = "possession.nvim: Session Management",
-    d    = { function()
-      require_input_on_fn_call({
-        fn_reference = require("possession").delete,
-        input_options = { prompt = "Session name to delete." }
-      })
-    end, "possession.nvim: Delete session by name" },
-    s    = { function()
-      require_input_on_fn_call({
-        fn_reference = require("possession").save,
-        input_options = { prompt = "Session name to save." }
-      })
-    end, "possession.nvim: Save current session" },
-    l    = { function()
-      require_input_on_fn_call({
-        fn_reference = require("possession").load,
-        input_options = { prompt = "Session name to load. (Note: Use `telescope` to retrieve a list of sessions!)" }
-      })
-    end,
-      "possession.nvim: Load saved session (dialogue)" },
-  },
+  { "<Leader>r", function() require("ssr").open() end, desc = "ssr.nvim: Do 'Structural Search and Replace'",     mode = { "n", "x" } },
   {
     mode = { "i", "n", "v" },
     { "<M-F1>", function() require("search").open({ collection = "extras" }) end, desc = "Telescope Seach: Extras Collection opened." },
@@ -214,8 +192,8 @@ wk.register({
     end,
     desc = "treesj: Toggle 'One-Liner/Splitted' Style."
   },
-  { "<M-a>", function() require("illuminate").goto_prev_reference() end, desc = "vim-illuminate: Jump to previous reference" },
-  { "<M-s>", function() require("illuminate").goto_next_reference() end, desc = "vim-illuminate: Jump to next reference" },
+  { "<M-a>",     function() require("illuminate").goto_prev_reference() end, desc = "vim-illuminate: Jump to previous reference" },
+  { "<M-s>",     function() require("illuminate").goto_next_reference() end, desc = "vim-illuminate: Jump to next reference" },
   {
     "<M-d>",
     function()
@@ -326,7 +304,7 @@ wk.register({
     end,
     desc = "lsp: rename context"
   },
-  { "<Space>R", ":IncRename ", "inc-rename.nvim: Rename on cursor" },
+  { "<Space>R", ":IncRename ", desc = "inc-rename.nvim: Rename on cursor" },
   {
     "<Space>s",
     function()
