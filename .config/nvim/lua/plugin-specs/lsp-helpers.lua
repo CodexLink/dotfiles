@@ -20,7 +20,7 @@ return {
           "pyright",
           "ruff_lsp",
           "sqlls",
-          "tsserver",
+          "ts_ls",
           "yamlls",
         },
         automatic_installation = true
@@ -294,7 +294,7 @@ return {
         on_attach = on_attach
       })
 
-      lspconfig.tsserver.setup({
+      lspconfig.ts_ls.setup({
         capabilities = lsp_capabilities,
         on_attach = function(client, bufnr)
           require("twoslash-queries").attach(client, bufnr)
