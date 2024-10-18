@@ -211,16 +211,12 @@ return {
             initial_tab = 1,
             tabs = {
               {
-                name = "Find Files",
-                tele_func = ts_bt.find_files
-              },
-              {
-                name = "Live Grep",
-                tele_func = ts_bt.live_grep
-              },
-              {
                 name = "Buffers",
                 tele_func = ts_bt.buffers
+              },
+              {
+                name = "Find Files",
+                tele_func = ts_bt.find_files
               },
               {
                 name = "File/Folder Browser",
@@ -229,6 +225,10 @@ return {
                   ts.load_extension("file_browser")
                   ts.extensions.file_browser.file_browser()
                 end
+              },
+              {
+                name = "Live Grep",
+                tele_func = ts_bt.live_grep
               },
               {
                 name = "Built-In",
