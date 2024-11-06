@@ -168,4 +168,4 @@ Import-Module PowerColorLS	  			# Better LS Equivalent.
 Import-Module z 										# Directory-Jump based on History.
 
 # # Entrypoint
-oh-my-posh --config ~/chips.omp.json --init --shell pwsh | Invoke-Expression
+oh-my-posh init pwsh --config ~/chips.omp.json | Invoke-Expression
