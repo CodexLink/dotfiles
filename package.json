@@ -6,6 +6,7 @@
   "license": "MIT",
   "homepage": "https://github.com/CodexLink/dotfiles-configs-archive#readme",
   "scripts": {
+    "copy-nuphy-config": "pwsh -NoProfile -Command Copy-Item -Path ~/Downloads/NuPhy_Air60_HE_All_Config.json -Destination ./kb -Force -Confirm",
     "inject-pwsh": "pwsh -NoProfile -Command \"New-ItemProperty 'HKCU:/SOFTWARE/Microsoft/Windows/CurrentVersion/Explorer/User Shell Folders' Personal -Value \"$HOME/.config\" -Type ExpandString -Force\"",
     "install-pwsh-modules": "pwsh -NoProfile -Command Install-Module z, PSReadLine, CompletionPredictor -Force; Install-Module -Name PowerColorLS -Repository PSGallery -Force;",
     "prep-scoop": "powershell -NoProfile -ExecutionPolicy Bypass -Command scoop install git; scoop bucket add extras; scoop bucket add versions; scoop install pwsh gcc nvm",
