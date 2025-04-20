@@ -18,7 +18,7 @@ return {
           "lua_ls",
           "marksman",
           "pyright",
-          "ruff_lsp",
+          "ruff",
           "sqlls",
           "ts_ls",
           "yamlls",
@@ -239,7 +239,7 @@ return {
         on_attach = on_attach
       })
 
-      lspconfig.ruff_lsp.setup({
+      lspconfig.ruff.setup({
         capabilities = lsp_capabilities,
         on_attach = function(client, bufnr)
           vim.api.nvim_buf_set_option(
