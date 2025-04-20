@@ -18,7 +18,7 @@ wk.add({
     { "<A-k>", ":m '<-2<CR>gv=gv", desc = "code: shift highlighted to top" }
   },
   { "<F1>",      function() require("search").open({ collection = "essentials" }) end, desc = "Telescope Seach: Essentials Collection opened." },
-  { "<F2>",      function() require("trouble").toggle() end,                           desc = "trouble.nvim (Diagnostics): Toggle" },
+  { "<F2>",      function() require("trouble").toggle("diagnostics") end,              desc = "trouble.nvim (Diagnostics): Toggle" },
   { "<F3>",      function() require("aerial").toggle({ focus = false }) end,           desc = "aerial.nvim: Toggle (Unfocused)" },
   -- { "<F4>", function () print end, desc = "DAP"},
   { "<F5>",      function() require("lazy").home() end,                                desc = "lazy.nvim: Opens UI window" },
@@ -164,7 +164,7 @@ wk.add({
     end,
     desc = "twilight.nvim: Toggle inactive window dimming"
   },
-  { "<Leader>r", function() require("ssr").open() end, desc = "ssr.nvim: Do 'Structural Search and Replace'",     mode = { "n", "x" } },
+  { "<Leader>r", function() require("ssr").open() end,                       desc = "ssr.nvim: Do 'Structural Search and Replace'", mode = { "n", "x" } },
   {
     mode = { "i", "n", "v" },
     { "<M-F1>", function() require("search").open({ collection = "extras" }) end, desc = "Telescope Seach: Extras Collection opened." },
