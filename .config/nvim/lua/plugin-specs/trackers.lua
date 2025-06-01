@@ -5,6 +5,6 @@
 
 return {
   { "wakatime/vim-wakatime",        event = "VeryLazy" },
-  { "vyfor/cord.nvim",              build = ":Cord update",
+  { "vyfor/cord.nvim",              build = ":Cord update" },
   { "YannickFricke/codestats.nvim", config = function() require("codestats-nvim").setup() end, dependencies = "nvim-lua/plenary.nvim", event = "VeryLazy" } -- [1]
 }
