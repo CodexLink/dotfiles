@@ -5,6 +5,26 @@
 
 return {
   { "wakatime/vim-wakatime",        event = "VeryLazy" },
-  { "vyfor/cord.nvim",              build = ":Cord update" },
+  {
+    "vyfor/cord.nvim",
+    build = ":Cord update",
+    opts = function()
+      return {
+        text = {
+          editing = function(opts)
+            local text = string.format('Editing %s - %s:%s', opts.filename, opts.cursor_line, opts.cursor_char)
+            if vim.bo.modified then text = text .. '[+]' end
+            return text
+          end
+        },
+        hooks = {
+          post_activity = function(_, activity)
+            local version = vim.version()
+            activity.assets.small_text = string.format('Neovim %s.%s.%s', version.major, version.minor, version.patch)
+          end
+        }
+      }
+    end
+  },
   { "YannickFricke/codestats.nvim", config = function() require("codestats-nvim").setup() end, dependencies = "nvim-lua/plenary.nvim", event = "VeryLazy" } -- [1]
 }
