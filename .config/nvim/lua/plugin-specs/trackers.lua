@@ -10,17 +10,27 @@ return {
     build = ":Cord update",
     opts = function()
       return {
-        text = {
-          editing = function(opts)
-            local text = string.format('Editing %s - %s:%s', opts.filename, opts.cursor_line, opts.cursor_char)
-            if vim.bo.modified then text = text .. '[+]' end
-            return text
-          end
+        buttons = {
+          {
+            label = function(_)
+              return 'View My Profile'
+            end,
+            url = function(_)
+              return 'https://github.com/CodexLink'
+            end
+          }
         },
         hooks = {
           post_activity = function(_, activity)
             local version = vim.version()
             activity.assets.small_text = string.format('Neovim %s.%s.%s', version.major, version.minor, version.patch)
+          end
+        },
+        text = {
+          editing = function(opts)
+            local text = string.format('Editing %s - %s:%s', opts.filename, opts.cursor_line, opts.cursor_char)
+            if vim.bo.modified then text = text .. '[+]' end
+            return text
           end
         }
       }
