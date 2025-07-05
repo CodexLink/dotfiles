@@ -63,7 +63,7 @@
     {
         "defaults": 
         {
-            "adjustIndistinguishableColors": "always",
+            "adjustIndistinguishableColors": "never",
             "antialiasingMode": "cleartype",
             "bellStyle": "taskbar",
             "colorScheme": "Kanagawa",
@@ -76,9 +76,9 @@
                 "size": 11,
                 "weight": "semi-bold"
             },
-            "opacity": 100,
+            "opacity": 60,
             "showMarksOnScrollbar": true,
-            "useAcrylic": true
+            "useAcrylic": false
         },
         "list": 
         [
@@ -116,7 +116,7 @@
                 "hidden": false,
                 "intenseTextStyle": "all",
                 "name": "PowerShell",
-                "opacity": 60,
+                "opacity": 70,
                 "showMarksOnScrollbar": true,
                 "source": "Windows.Terminal.PowershellCore"
             },
