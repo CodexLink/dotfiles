@@ -14,11 +14,23 @@ return {
         'engineering'
       }
 
+      -- Find substring, not exact string.
       local is_blacklisted = function(opts)
-        return vim.tbl_contains(blacklist, opts.workspace)
+        for _, word in ipairs(blacklist) do
+          if string.find(opts.workspace, word) then
+            return true
+          end
+        end
+
+        return false
       end
 
       return {
+        idle = {
+          details = function(opts)
+            return string.format('Taking a break, probably breaking down right now.')
+          end
+        },
         buttons = {
           {
             label = function(_)
@@ -36,7 +48,6 @@ return {
           end
         },
         text = {
-
           viewing = function(opts)
             if is_blacklisted(opts) then
               local text = string.format('Viewing (%s:%s)', opts.cursor_line, opts.cursor_char)
@@ -65,7 +76,7 @@ return {
           end,
           workspace = function(opts)
             if is_blacklisted(opts) then
-              return 'The fuck you are looking at? Secret :3'
+              return 'The fuck you looking at? :3'
             end
 
             return string.format('Working on %s', opts.workspace)
