@@ -9,6 +9,15 @@ return {
     "vyfor/cord.nvim",
     build = ":Cord update",
     opts = function()
+      local blacklist = {
+        'science',
+        'engineering'
+      }
+
+      local is_blacklisted = function(opts)
+        return vim.tbl_contains(blacklist, opts.workspace)
+      end
+
       return {
         buttons = {
           {
@@ -27,10 +36,39 @@ return {
           end
         },
         text = {
-          editing = function(opts)
-            local text = string.format('Editing %s - %s:%s', opts.filename, opts.cursor_line, opts.cursor_char)
-            if vim.bo.modified then text = text .. '[+]' end
+
+          viewing = function(opts)
+            if is_blacklisted(opts) then
+              local text = string.format('Viewing (%s:%s)', opts.cursor_line, opts.cursor_char)
+
+              if vim.bo.modified then text = text .. ' [+]' end
+              return text
+            end
+
+            local text = string.format('Viewing %s (%s:%s)', opts.filename, opts.cursor_line, opts.cursor_char)
+
+            if vim.bo.modified then text = text .. ' [+]' end
             return text
+          end,
+          editing = function(opts)
+            if is_blacklisted(opts) then
+              local text = string.format('Editing (%s:%s)', opts.cursor_line, opts.cursor_char)
+
+              if vim.bo.modified then text = text .. ' [+]' end
+              return text
+            end
+
+            local text = string.format('Editing %s (%s:%s)', opts.filename, opts.cursor_line, opts.cursor_char)
+
+            if vim.bo.modified then text = text .. ' [+]' end
+            return text
+          end,
+          workspace = function(opts)
+            if is_blacklisted(opts) then
+              return 'The fuck you are looking at? Secret :3'
+            end
+
+            return string.format('Working on %s', opts.workspace)
           end
         }
       }
