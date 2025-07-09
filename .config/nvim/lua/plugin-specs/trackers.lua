@@ -33,7 +33,7 @@ return {
         },
         idle = {
           details = function(opts)
-            return string.format('Taking a break, probably breaking down right now.')
+            return string.format('Looking at your beauty :3')
           end
         },
         buttons = {
