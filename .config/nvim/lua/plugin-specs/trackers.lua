@@ -81,7 +81,7 @@ return {
           end,
           workspace = function(opts)
             if is_blacklisted(opts) then
-              return 'The fuck you looking at? :3'
+              return 'Hi~! Did you miss me? :3 (Elysia)'
             end
 
             return string.format('Working on %s', opts.workspace)
