@@ -26,6 +26,11 @@ return {
       end
 
       return {
+        editor = {
+          client = '469726647545757741',
+          tooltip = 'A yes, a CLI Editor with "look ma, no mouse!" :3',
+          icons = nil
+        },
         idle = {
           details = function(opts)
             return string.format('Taking a break, probably breaking down right now.')
