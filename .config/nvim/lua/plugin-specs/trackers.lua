@@ -28,7 +28,7 @@ return {
       return {
         editor = {
           client = '469726647545757741',
-          tooltip = 'A yes, a CLI Editor with "look ma, no mouse!" :3',
+          tooltip = 'Ahh yes, a CLI Editor that makes you say: "look ma, no mouse!" :3',
           icons = nil
         },
         idle = {
@@ -79,7 +79,7 @@ return {
             if vim.bo.modified then text = text .. ' [+]' end
             return text
           end,
-          workspace = function(opts) return 'Hi~! Did you miss me? :3 — Elysia' end,
+          workspace = function(opts) return 'Elysia: Hi~! Did you miss me? :3' end,
         }
       }
     end
