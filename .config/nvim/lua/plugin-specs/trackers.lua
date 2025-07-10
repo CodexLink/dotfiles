@@ -79,13 +79,7 @@ return {
             if vim.bo.modified then text = text .. ' [+]' end
             return text
           end,
-          workspace = function(opts)
-            if is_blacklisted(opts) then
-              return 'Hi~! Did you miss me? :3 (Elysia)'
-            end
-
-            return string.format('Working on %s', opts.workspace)
-          end
+          workspace = function(opts) return 'Hi~! Did you miss me? :3 — Elysia' end,
         }
       }
     end
