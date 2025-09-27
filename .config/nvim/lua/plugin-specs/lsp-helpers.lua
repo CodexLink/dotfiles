@@ -188,7 +188,7 @@ return {
 
 
       -- ! Setup `lspconfig`
-      local lspconfig = require("lspconfig")
+      local lspconfig = vim.lsp.config
       local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
       local on_attach = function(_, bufnr)
@@ -199,47 +199,55 @@ return {
         )
       end
 
-      lspconfig.cssmodules_ls.setup({
+      lspconfig("cssmodules_ls", {
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
+      vim.lsp.enable({ "cssmodules_ls" })
 
-      lspconfig.dockerls.setup({
+      lspconfig("dockerls", {
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
+      vim.lsp.enable({ "dockerls" })
 
-      lspconfig.eslint.setup({
+      lspconfig("eslint", {
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
+      vim.lsp.enable({ "eslint" })
 
-      lspconfig.graphql.setup({
+      lspconfig("graphql", {
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
+      vim.lsp.enable({ "graphql" })
 
-      lspconfig.html.setup({
+      lspconfig("html", {
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
+      vim.lsp.enable({ "html" })
 
-      lspconfig.jsonls.setup({
+      lspconfig("jsonls", {
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
+      vim.lsp.enable({ "jsonls" })
 
-      lspconfig.marksman.setup({
+      lspconfig("marksman", {
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
+      vim.lsp.enable({ "marksman" })
 
-      lspconfig.pyright.setup({
+      lspconfig("pyright", {
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
+      vim.lsp.enable({ "pyright" })
 
-      lspconfig.ruff.setup({
+      lspconfig("ruff", {
         capabilities = lsp_capabilities,
         on_attach = function(client, bufnr)
           vim.api.nvim_buf_set_option(
@@ -251,13 +259,15 @@ return {
           client.server_capabilities.hoverProvider = false
         end
       })
+      vim.lsp.enable({ "ruff" })
 
-      lspconfig.sqlls.setup({
+      lspconfig("sqlls", {
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
+      vim.lsp.enable({ "sqlls" })
 
-      lspconfig.lua_ls.setup({
+      lspconfig("lua_ls", {
         capabilities = lsp_capabilities,
         on_attach = on_attach,
         settings = {
@@ -283,18 +293,21 @@ return {
           }
         }
       })
+      vim.lsp.enable({ "lua_ls" })
 
-      lspconfig.svelte.setup({
+      lspconfig("svelte", {
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
+      vim.lsp.enable({ "svelte" })
 
-      lspconfig.tailwindcss.setup({
+      lspconfig("tailwindcss", {
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
+      vim.lsp.enable({ "tailwindcss" })
 
-      lspconfig.ts_ls.setup({
+      lspconfig("ts_ls", {
         capabilities = lsp_capabilities,
         on_attach = function(client, bufnr)
           require("twoslash-queries").attach(client, bufnr)
@@ -305,16 +318,19 @@ return {
           )
         end
       })
+      vim.lsp.enable({ "ts_ls" })
 
-      lspconfig.volar.setup({
+      lspconfig("vue_ls", {
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
+      vim.lsp.enable({ "vue_ls" })
 
-      lspconfig.yamlls.setup({
+      lspconfig("yamlls", {
         capabilities = lsp_capabilities,
         on_attach = on_attach
       })
+      vim.lsp.enable({ "yamlls" })
     end,
   },
   { "j-hui/fidget.nvim",   event = "LspAttach", config = true },
