@@ -41,7 +41,6 @@ return {
             sources = {
               nls.builtins.completion.luasnip,
               nls.builtins.completion.spell,
-              nls.builtins.formatting.black,
               nls.builtins.formatting.markdownlint,
               nls.builtins.formatting.prettierd,
               nls.builtins.formatting.remark,
