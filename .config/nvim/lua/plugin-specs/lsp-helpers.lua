@@ -6,7 +6,7 @@
 return {
   {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = { "williamboman/mason.nvim", build = ":MasonUpdate", cmd = "Mason", config = true},
+    dependencies = { "williamboman/mason.nvim", build = ":MasonUpdate", cmd = "Mason", config = true },
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("mason-lspconfig").setup({
@@ -55,30 +55,6 @@ return {
     },
   },
   {
-    "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" }
-  },
-  {
-    "hrsh7th/cmp-nvim-lsp",
-    lazy = true
-  },
-  {
-    "hrsh7th/cmp-buffer",
-    lazy = true
-  },
-  {
-    "hrsh7th/cmp-path",
-    lazy = true
-  },
-  {
-    "hrsh7th/cmp-cmdline",
-    lazy = true
-  },
-  {
-    "onsails/lspkind.nvim",
-    lazy = true
-  },
-  {
     "L3MON4D3/LuaSnip",
     dependencies = "rafamadriz/friendly-snippets",
     lazy = true,
@@ -87,10 +63,111 @@ return {
     end
   },
   {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = "hrsh7th/cmp-nvim-lsp",
+    config = function()
+      local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      local on_attach = function(_, bufnr)
+        vim.api.nvim_buf_set_option(
+          bufnr,
+          "omnifunc",
+          "v:lua.vim.lsp.omnifunc"
+        )
+      end
+
+      local lspconfig = vim.lsp.config
+
+      -- List of all LSP servers with their configurations
+      local servers = {
+        { "cssmodules_ls", { capabilities = lsp_capabilities, on_attach = on_attach } },
+        { "dockerls",      { capabilities = lsp_capabilities, on_attach = on_attach } },
+        { "eslint",        { capabilities = lsp_capabilities, on_attach = on_attach } },
+        { "graphql",       { capabilities = lsp_capabilities, on_attach = on_attach } },
+        { "html",          { capabilities = lsp_capabilities, on_attach = on_attach } },
+        { "jsonls",        { capabilities = lsp_capabilities, on_attach = on_attach } },
+        { "marksman",      { capabilities = lsp_capabilities, on_attach = on_attach } },
+        { "pyright",       { capabilities = lsp_capabilities, on_attach = on_attach } },
+        {
+          "ruff",
+          {
+            capabilities = lsp_capabilities,
+            on_attach = function(client, bufnr)
+              vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+              client.server_capabilities.hoverProvider = false
+            end
+          }
+        },
+        { "sqlls",       { capabilities = lsp_capabilities, on_attach = on_attach } },
+        {
+          "lua_ls",
+          {
+            capabilities = lsp_capabilities,
+            on_attach = on_attach,
+            settings = {
+              Lua = {
+                completion = {
+                  callSnippet = "Replace",
+                  displayContext = 1
+                },
+                defaultConfig = {
+                  indent_style = "tab",
+                  indent_size = "2",
+                },
+                diagnostics = { globals = { "vim" } },
+                hints = { enable = true },
+                runtime = { version = "Lua 5.4" },
+                telemetry = { enable = true }
+              }
+            }
+          }
+        },
+        { "svelte",      { capabilities = lsp_capabilities, on_attach = on_attach } },
+        { "tailwindcss", { capabilities = lsp_capabilities, on_attach = on_attach } },
+        {
+          "ts_ls",
+          {
+            capabilities = lsp_capabilities,
+            on_attach = function(client, bufnr)
+              -- Only attach twoslash if available
+              local has_twoslash, twoslash = pcall(require, "twoslash-queries")
+              if has_twoslash then
+                twoslash.attach(client, bufnr)
+              end
+              vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+            end
+          }
+        },
+        { "vls",    { capabilities = lsp_capabilities, on_attach = on_attach } },
+        { "yamlls", { capabilities = lsp_capabilities, on_attach = on_attach } },
+      }
+
+      -- Configure and enable all LSP servers using vim.lsp.config() and vim.lsp.enable()
+      for _, server in ipairs(servers) do
+        local name = server[1]
+        local config = server[2]
+
+        -- Use vim.lsp.config() to configure the server
+        vim.lsp.config(name, config)
+
+        -- Use vim.lsp.enable() to enable the server
+        vim.lsp.enable(name)
+      end
+    end
+  },
+  {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
-    dependencies =
-    "saadparwaiz1/cmp_luasnip",
+    dependencies = {
+      "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "onsails/lspkind.nvim",
+      "neovim/nvim-lspconfig"
+    },
     config = function()
       -- Instantiations
       local cmp_types = require("cmp.types")
@@ -111,7 +188,7 @@ return {
       cmp.setup({
         completion = {
           completeopt = "menu,menuone,noinsert",
-          keyword_length = 4
+          keyword_length = 1,
         },
         experimental = {
           ghost_text = true
@@ -169,18 +246,51 @@ return {
           end, { "i", "s" }),
         },
         sources = {
-          {
-            name = "buffer",
-            option = { keyword_length = 2 }
-          },
-          { name = "nvim_lsp" },
-          {
-            name = "luasnip",
-            option = { show_autosnippets = true }
-          },
-          { name = "path" }
+          { name = "nvim_lsp", priority = 1000, group_index = 1 },
+          { name = "buffer",   priority = 750,  option = { keyword_length = 3 },       group_index = 2 },
+          { name = "path",     priority = 500,  group_index = 3 },
+          { name = "luasnip",  priority = 250,  option = { show_autosnippets = true }, group_index = 4 },
         },
-        snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
+        -- Additional sorting to prefer LSP
+        sorting = {
+          priority_weight = 2,
+          comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.recently_used,
+            cmp.config.compare.locality,
+
+            function(entry1, entry2)
+              local kind1 = entry1:get_kind()
+              local kind2 = entry2:get_kind()
+              local types = require("cmp.types")
+
+              local deprioritized_kinds = {
+                types.lsp.CompletionItemKind.Snippet,
+                types.lsp.CompletionItemKind.Text,
+              }
+
+              local kind1_deprioritized = vim.tbl_contains(deprioritized_kinds, kind1)
+              local kind2_deprioritized = vim.tbl_contains(deprioritized_kinds, kind2)
+
+              -- If only kind1 is deprioritized, it should come after kind2
+              if kind1_deprioritized and not kind2_deprioritized then
+                return false
+              end
+              -- If only kind2 is deprioritized, it should come after kind1
+              if kind2_deprioritized and not kind1_deprioritized then
+                return true
+              end
+
+              -- Otherwise, no preference
+              return nil
+            end,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+          },
+        },
         window = {
           completion = cmp.config.window.bordered({
             border = "rounded",
@@ -196,158 +306,6 @@ return {
         "confirm_done",
         cmp_autopairs.on_confirm_done()
       )
-
-      -- 'cmd' integration.
-      cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } })
-      })
-
-
-      -- ! Setup `lspconfig`
-      local lspconfig = vim.lsp.config
-      local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-      local on_attach = function(_, bufnr)
-        vim.api.nvim_buf_set_option(
-          bufnr,
-          "omnifunc",
-          "v:lua.vim.lsp.omnifunc"
-        )
-      end
-
-      lspconfig("cssmodules_ls", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-      vim.lsp.enable({ "cssmodules_ls" })
-
-      lspconfig("dockerls", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-      vim.lsp.enable({ "dockerls" })
-
-      lspconfig("eslint", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-      vim.lsp.enable({ "eslint" })
-
-      lspconfig("graphql", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-      vim.lsp.enable({ "graphql" })
-
-      lspconfig("html", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-      vim.lsp.enable({ "html" })
-
-      lspconfig("jsonls", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-      vim.lsp.enable({ "jsonls" })
-
-      lspconfig("marksman", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-      vim.lsp.enable({ "marksman" })
-
-      lspconfig("pyright", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-      vim.lsp.enable({ "pyright" })
-
-      lspconfig("ruff", {
-        capabilities = lsp_capabilities,
-        on_attach = function(client, bufnr)
-          vim.api.nvim_buf_set_option(
-            bufnr,
-            "omnifunc",
-            "v:lua.vim.lsp.omnifunc"
-          )
-
-          client.server_capabilities.hoverProvider = false
-        end
-      })
-      vim.lsp.enable({ "ruff" })
-
-      lspconfig("sqlls", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-      vim.lsp.enable({ "sqlls" })
-
-      lspconfig("lua_ls", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach,
-        settings = {
-          Lua = {
-            completion = {
-              callSnippet = "Replace",
-              displayContext = 1
-            },
-            defaultConfig = {
-              indent_style = "tab",
-              indent_size = "2",
-            },
-            diagnostics = { globals = { "vim" } },
-            hints = {
-              enable = true
-            },
-            runtime = {
-              version = "Lua 5.4"
-            },
-            telemetry = {
-              enable = true
-            }
-          }
-        }
-      })
-      vim.lsp.enable({ "lua_ls" })
-
-      lspconfig("svelte", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-      vim.lsp.enable({ "svelte" })
-
-      lspconfig("tailwindcss", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-      vim.lsp.enable({ "tailwindcss" })
-
-      lspconfig("ts_ls", {
-        capabilities = lsp_capabilities,
-        on_attach = function(client, bufnr)
-          require("twoslash-queries").attach(client, bufnr)
-          vim.api.nvim_buf_set_option(
-            bufnr,
-            "omnifunc",
-            "v:lua.vim.lsp.omnifunc"
-          )
-        end
-      })
-      vim.lsp.enable({ "ts_ls" })
-
-      lspconfig("vue_ls", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-      vim.lsp.enable({ "vue_ls" })
-
-      lspconfig("yamlls", {
-        capabilities = lsp_capabilities,
-        on_attach = on_attach
-      })
-      vim.lsp.enable({ "yamlls" })
     end,
   },
   { "j-hui/fidget.nvim",   event = "LspAttach", opts = {} },
