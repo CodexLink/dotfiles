@@ -6,7 +6,7 @@ return {
   {
     -- NOTE: DAP-Equivalent for displaying code context in one sidebar.
     "stevearc/aerial.nvim",
-    dependencies = {"nvim-tree/nvim-web-devicons", { "echasnovski/mini.icons", version = false } },
+    dependencies = { "nvim-tree/nvim-web-devicons", { "echasnovski/mini.icons", version = false } },
     lazy = true,
     opts = {
       backends = { "lsp" },
@@ -23,6 +23,7 @@ return {
   {
     -- NOTE: VSCode style code context previewer, binds to LSP actions.
     "DNLHC/glance.nvim",
+    lazy = true,
     config = function()
       local glance = require("glance")
       local glance_actions = glance.actions
@@ -41,12 +42,11 @@ return {
         }
       })
     end,
-    lazy = true
   },
   -- NOTE: Indention guider, useful on identifying space or tabs on code.
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = "BufReadPost",
+    event = { "BufReadPost", "BufNewFile" },
     main = "ibl",
     opts = { indent = { char = "┃" } }
   },
@@ -136,18 +136,20 @@ return {
   {
     "petertriho/nvim-scrollbar",
     config = true,
-    event = "BufReadPost",
+    event = { "BufReadPost", "BufNewFile" },
   },
   -- NOTE: File explorer, but in dialogue, this is very similar to `dressing.nvim`, but has all-in-one capabilities.
   {
     "FabianWirth/search.nvim",
+    lazy = true,
     dependencies = {
       "nvim-telescope/telescope.nvim",
+      lazy = true,
       branch = "0.1.x",
       config = function()
         -- NOTE:!! Since `opts` cannot recognize other plugins and there are other configs that needed to be done after initializing the plugins through `function` scope, I have to not lazy-load them and NOT load them on init.
         local telescope = require("telescope")
-        local actions = require("telescope.actions")
+
         -- Load the plugin itself first before the extension.
         telescope.setup({
           {
@@ -198,12 +200,12 @@ return {
         { "nvim-lua/plenary.nvim" },
         { "nvim-telescope/telescope-file-browser.nvim", lazy = true },
         { 'nvim-telescope/telescope-fzf-native.nvim',   build = "make" }
-      },
-      lazy = true
+      }
     },
     config = function()
       local ts_bt = require("telescope.builtin")
       local s = require("search")
+
       s.setup({
         collections = {
           -- Here the "git" collection is defined. It follows the same configuraton layout as tabs.

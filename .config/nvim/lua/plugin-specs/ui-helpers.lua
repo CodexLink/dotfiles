@@ -32,9 +32,8 @@ return {
   {
     -- NOTE: Displays git states from each line either by blame or by hunk (changes from that line).
     "lewis6991/gitsigns.nvim",
-    event = "VeryLazy",
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
-      require("scrollbar.handlers.gitsigns").setup()
       -- NOTE: Since we overriden the config field of this plugin spec, we have to re-establish this plugin's setup.
       -- NOTE: We cannot use `opts` field anymore because of the potential conflict configuration with the `config` field.
       require("gitsigns").setup({
@@ -50,6 +49,11 @@ return {
         }
       })
 
+      -- Setup scrollbar integration after load.
+      vim.schedule(function()
+        require("scrollbar.handlers.gitsigns").setup()
+      end)
+
       -- Preference: Just wanted to enable it already.
       require("gitsigns").toggle_current_line_blame()
     end,
@@ -58,19 +62,20 @@ return {
   {
     -- NOTE: Colorizes any string that states a color.
     "NvChad/nvim-colorizer.lua",
+    event = { "BufReadPost", "BufNewFile" },
     config = true,
-    event = { "BufAdd", "BufNewFile", "BufReadPost" }
   },
   {
     -- NOTE: Displays context per indentation to see what part of code scope are we based on the cursor position.
     -- This just visually supports `aerial.nvim`.
     "haringsrob/nvim_context_vt",
-    event = { "BufAdd", "BufNewFile", "BufReadPost" },
+    event = { "BufNewFile", "BufReadPost" },
   },
   {
     -- NOTE: Display notification from the right side, similar to modern game notification system.
     -- NOTE: Lazy-loaded because only my own config will use this plugin.
     "rcarriga/nvim-notify",
+    lazy = true,
     config = function(_, opts)
       require("notify").setup(opts)
       vim.notify = require("notify")
@@ -80,11 +85,11 @@ return {
   {
     -- NOTE: Better alternative for `GIX DECO Comments` plugin from VSCode
     "folke/todo-comments.nvim",
-    event = { "VeryLazy" },
+    event = { "BufReadPost", "BufNewFile" },
   },
   -- NOTE: Secondary Code dimmer (by buffer, blocks) when the cursor is focused elsewhere.
   -- NOTE: Added for dimming the unfocused window.
-  { "levouh/tint.nvim", config = true, lazy = true, event = "VeryLazy" },
+  { "levouh/tint.nvim", config = true, event = "WinEnter" },
   -- NOTE: Primary Code dimmer (by buffer, blocks) when the cursor is focused elsewhere.
   -- NOTE: Used for dimming part of the code.
   {

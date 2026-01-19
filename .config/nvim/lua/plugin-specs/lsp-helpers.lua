@@ -7,6 +7,7 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim", config = true },
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = {
@@ -23,13 +24,14 @@ return {
           "ts_ls",
           "yamlls",
         },
-        automatic_installation = true
+        automatic_installation = false
       })
     end,
   },
   {
     "jay-babu/mason-null-ls.nvim",
-    config = function() require("mason-null-ls").setup({ ensure_installed = nil, automatic_installation = true }) end,
+    event = { "BufReadPre", "BufNewFile" },
+    config = function() require("mason-null-ls").setup({ ensure_installed = nil, automatic_installation = false }) end,
     dependencies = {
       "williamboman/mason.nvim",
       {
@@ -52,25 +54,41 @@ return {
       }
     },
   },
-  "neovim/nvim-lspconfig",
-  "hrsh7th/cmp-nvim-lsp",
-  "hrsh7th/cmp-buffer",
-  "hrsh7th/cmp-path",
-  "hrsh7th/cmp-cmdline",
+  {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" }
+  },
+  {
+    "hrsh7th/cmp-nvim-lsp",
+    lazy = true
+  },
+  {
+    "hrsh7th/cmp-buffer",
+    lazy = true
+  },
+  {
+    "hrsh7th/cmp-path",
+    lazy = true
+  },
+  {
+    "hrsh7th/cmp-cmdline",
+    lazy = true
+  },
   {
     "onsails/lspkind.nvim",
-    {
-      "L3MON4D3/LuaSnip",
-      dependencies = "rafamadriz/friendly-snippets",
-      config = function(
-      )
-        require("luasnip.loaders.from_vscode").lazy_load()
-      end
-    }
+    lazy = true
+  },
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = "rafamadriz/friendly-snippets",
+    lazy = true,
+    config = function()
+      require("luasnip.loaders.from_vscode").lazy_load()
+    end
   },
   {
     "hrsh7th/nvim-cmp",
-    event = { "BufReadPost", "BufNewFile", "InsertEnter" },
+    event = "InsertEnter",
     dependencies =
     "saadparwaiz1/cmp_luasnip",
     config = function()
@@ -332,6 +350,6 @@ return {
       vim.lsp.enable({ "yamlls" })
     end,
   },
-  { "j-hui/fidget.nvim",   event = "LspAttach", config = true },
+  { "j-hui/fidget.nvim",   event = "LspAttach", opts = {} },
   { "dgagn/diagflow.nvim", event = "LspAttach", config = true },
 }

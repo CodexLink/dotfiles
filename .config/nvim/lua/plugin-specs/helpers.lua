@@ -15,7 +15,7 @@ return {
     opts = {
       scope = "line",
       modes = { "i", "n" },
-      blending = { threshold = 0.4, colorcode = "#FECE2A" },
+      blending = { threshold = 0.4, colorcode = "#FECE2A", hlgroup = { 'NonText', 'bg' }, },
       warning = { alpha = 0.45, offset = 0, colorcode = "#FE2AC4" },
     },
     event = "VeryLazy"

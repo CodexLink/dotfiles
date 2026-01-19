@@ -24,7 +24,8 @@ local function WakaTimeCLITodayProcessor()
   local _, __ = uv.spawn("wakatime-cli", { args = { "--today" }, stdio = { nil, process_stdout, nil } },
     function(code, signal)
       if (code > 1) then
-        require("notify")("WakaTime CLI returned an error code of " .. code .. " | Signal:" .. signal)
+        -- The require("notify") should be able to override the `vim.notify`.
+        vim.notify("WakaTime CLI returned an error code of " .. code .. " | Signal:" .. signal)
         return
       end
       process_stdout:close()
@@ -46,13 +47,24 @@ SetFnInterval(5, WakaTimeCLITodayProcessor)
 --- DRY caller for the asynchronous notification.
 ---@params ctx, a table that contains the following: [ message<string>, level<number>, opts<table<string, any>>]
 local function _call_async_notifier(ctx)
-  local _async_provider = require("plenary.async")
-  local _notify_async = require("notify").async
+  local has_notify, notfiy = pcall(require, "notify")
 
-  _async_provider.run(function()
-    _notify_async(ctx.message or "Notification has been called without further context.",
-      ctx.level or vim.log.levels.INFO, ctx.opts or {})
-  end)
+  if has_notify then
+    local _async_provider = require("plenary.async")
+    local _notify_async = require("notify").async
+
+    _async_provider.run(function()
+      _notify_async(ctx.message or "Notification has been called without further context.",
+        ctx.level or vim.log.levels.INFO, ctx.opts or {})
+    end)
+
+    -- Fallback.
+  else
+    vim.notify(
+      ctx.message or "Notification has been called without further context.",
+      ctx.level or vim.log.levels.INFO
+    )
+  end
 end
 
 -- TODO: Implement case string + argument concatenation until actual use-case has been identified.
