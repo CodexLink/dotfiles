@@ -6,7 +6,7 @@
 return {
   {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = { "williamboman/mason.nvim", config = true },
+    dependencies = { "williamboman/mason.nvim", build = ":MasonUpdate", cmd = "Mason", config = true},
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("mason-lspconfig").setup({
