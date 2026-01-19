@@ -153,12 +153,16 @@ return {
     "folke/which-key.nvim",
     lazy = true,
     opts = {
+      defer = function(ctx)
+        -- These are known conflicts because `Comment.nvim` uses it, defer it in the meantime.
+        return vim.list_contains({ "gc", "gcc", "gb", "gbc" }, ctx.operator)
+      end,
+      
       layout = {
         spacing = 5,
         align = "center"
       },
-      operators = { gc = "Comments" },
-      popup_mappings = {
+      keys = {
         scroll_down = "<PageDown>",
         scroll_up = "<PageUp>"
       },
